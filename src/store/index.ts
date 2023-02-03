@@ -11,5 +11,8 @@ export const store = configureStore({
     getDefaultMiddleware({ serializableCheck: false }),
 });
 
+export type Store = typeof store;
+export type Reducer = typeof rootReducer;
+export type State = ReturnType<Reducer>;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
