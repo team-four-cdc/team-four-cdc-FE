@@ -6,18 +6,34 @@ export default function Navbar() {
   const itemMenus = [
     {
       name: 'Pembaca',
+      login: '/',
+      register: '/',
     },
     {
       name: 'Penulis',
+      login: '/',
+      register: '/',
     },
   ];
-  const menu = (
-    <Menu>
-      {itemMenus.map((menu: any, index: any) => {
-        return <Menu.Item key={index}>{menu.name}</Menu.Item>;
-      })}
-    </Menu>
-  );
+
+  function menu(type: string) {
+    return (
+      <Menu>
+        {itemMenus.map((menu: any, index: any) => {
+          return type == 'login' ? (
+            <Menu.Item key={index}>
+              <Link href={menu.login}>{menu.name}</Link>
+            </Menu.Item>
+          ) : (
+            <Menu.Item key={index}>
+              <Link href={menu.register}>{menu.name}</Link>
+            </Menu.Item>
+          );
+        })}
+      </Menu>
+    );
+  }
+
   return (
     <div className="flex flex-row bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
       <div className="p-20">
@@ -27,14 +43,14 @@ export default function Navbar() {
       </div>
       <div className="flex p-20px flex-row space-x-30px ml-auto">
         <Link href={'/'}>Lihat Artikel</Link>
-        <Dropdown overlay={menu} trigger={['click']}>
+        <Dropdown overlay={menu('login')} trigger={['click']}>
           <a>
             <Space>
               Masuk Akun <CaretDownFilled />
             </Space>
           </a>
         </Dropdown>
-        <Dropdown overlay={menu} trigger={['click']}>
+        <Dropdown overlay={menu('register')} trigger={['click']}>
           <a>
             <Space>
               Registrasi <CaretDownFilled />
