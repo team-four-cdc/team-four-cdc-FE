@@ -4,7 +4,13 @@ interface StandardButtonProps extends ButtonProps {
   label?: string;
 }
 
-export default function StyledButton(props: StandardButtonProps) {
+/**
+ * Button element
+ * @param label the text that appears inside the button
+ * @param ... props from Ant Design <Button/> element, including `onClick()`
+ * @returns {JSX.Element} button element
+ */
+export default function StyledButton(props: StandardButtonProps): JSX.Element {
   return (
     <Button {...props} style={{ borderRadius: '2em' }}>
       {props.label}
