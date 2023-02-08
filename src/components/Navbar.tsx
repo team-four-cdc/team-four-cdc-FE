@@ -10,7 +10,7 @@ export default function Navbar() {
   );
   return (
     <div className="flex flex-row bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
-      <div className="p-20">
+      <div>
         <Typography.Text className="text-30px !text-secondary-color">
           BacaAku
         </Typography.Text>
