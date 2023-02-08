@@ -16,6 +16,19 @@ module.exports = {
       'radius-20px': '20px',
       'radius-100px': '100px',
     },
+    spacing: {
+      '20px': '20px',
+      '30px': '30px',
+    },
+    fontSize: {
+      '30px': '30px',
+      '20px': '20px',
+      '12px': '12px',
+      '18px': '18px',
+    },
+    boxShadow: {
+      'primary-box-shadow': '0px 4px 10px rgba(85, 80, 80, 0.3)',
+    },
   },
   plugins: [],
   corePlugins: {
