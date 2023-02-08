@@ -6,13 +6,13 @@ export default function Navbar() {
   const itemMenus = [
     {
       name: 'Pembaca',
-      login: '/',
-      register: '/',
+      login: '/login-pembaca',
+      register: '/register-pembaca',
     },
     {
       name: 'Penulis',
-      login: '/',
-      register: '/',
+      login: '/login-pembaca',
+      register: '/register-pembaca',
     },
   ];
 
