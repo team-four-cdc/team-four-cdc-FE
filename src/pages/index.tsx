@@ -1,4 +1,4 @@
-import Heads from '@/PagesSection/Head/Head';
+import Heads from '@/layout/Head/Head';
 import { AppDispatch, RootState } from '@/store';
 import { getNews } from '@/store/news/newsSlice';
 import { Typography } from 'antd';
