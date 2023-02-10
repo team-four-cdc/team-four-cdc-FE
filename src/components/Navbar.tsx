@@ -1,13 +1,39 @@
-import { Dropdown, Menu, Typography } from 'antd';
+import { CaretDownFilled } from '@ant-design/icons';
+import { Dropdown, Menu, Space, Typography } from 'antd';
 import Link from 'next/link';
 
 export default function Navbar() {
-  const menu = (
-    <Menu>
-      <Menu.Item>item 1</Menu.Item>
-      <Menu.Item>item 2</Menu.Item>
-    </Menu>
-  );
+  const itemMenus = [
+    {
+      name: 'Pembaca',
+      login: '/login-pembaca',
+      register: '/register-pembaca',
+    },
+    {
+      name: 'Penulis',
+      login: '/login-pembaca',
+      register: '/register-pembaca',
+    },
+  ];
+
+  function menu(type: string) {
+    return (
+      <Menu>
+        {itemMenus.map((menu: any, index: any) => {
+          return type == 'login' ? (
+            <Menu.Item key={index}>
+              <Link href={menu.login}>{menu.name}</Link>
+            </Menu.Item>
+          ) : (
+            <Menu.Item key={index}>
+              <Link href={menu.register}>{menu.name}</Link>
+            </Menu.Item>
+          );
+        })}
+      </Menu>
+    );
+  }
+
   return (
     <div className="flex flex-row bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
       <div className="p-20">
@@ -17,10 +43,20 @@ export default function Navbar() {
       </div>
       <div className="flex p-20px flex-row space-x-30px ml-auto">
         <Link href={'/'}>Lihat Artikel</Link>
-        <Dropdown overlay={menu}>
-          <a>Masuk Akun</a>
+        <Dropdown overlay={menu('login')} trigger={['click']}>
+          <a>
+            <Space>
+              Masuk Akun <CaretDownFilled />
+            </Space>
+          </a>
         </Dropdown>
-        <Link href={'/'}>Registrasi</Link>
+        <Dropdown overlay={menu('register')} trigger={['click']}>
+          <a>
+            <Space>
+              Registrasi <CaretDownFilled />
+            </Space>
+          </a>
+        </Dropdown>
       </div>
     </div>
   );

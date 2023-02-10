@@ -1,4 +1,3 @@
-import Navbar from '@/components/Navbar';
 import Heads from '@/layout/Head/Head';
 import { AppDispatch, RootState } from '@/store';
 import { getNews } from '@/store/news/newsSlice';
@@ -22,7 +21,6 @@ export default function Home() {
     <>
       <Heads title="BacaAku" />
       <main>
-        <Navbar />
         <div className="flex h-screen w">
           <div className="m-auto">
             <Typography.Title
