@@ -18,12 +18,6 @@ export default function TextInput(props: TextInputProps): JSX.Element {
     ...props,
     'aria-label': props.label,
     style: {
-      borderRadius: '3em',
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingTop: 6,
-      paddingBottom: 6,
-      fontSize: 14,
       ...props.style,
     },
   };
@@ -37,7 +31,7 @@ export default function TextInput(props: TextInputProps): JSX.Element {
       {props.type === 'password' ? (
         <Input.Password {...allProps} />
       ) : (
-        <Input {...allProps} />
+        <Input {...allProps} className="px-10 py-6 text-14px rounded-full" />
       )}
 
       {props.helperText ? (
