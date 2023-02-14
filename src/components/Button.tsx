@@ -12,7 +12,7 @@ interface StandardButtonProps extends ButtonProps {
  */
 export default function StyledButton(props: StandardButtonProps): JSX.Element {
   return (
-    <Button {...props} className={'rounded-full' + (props.className ?? '')}>
+    <Button {...props} className={(props.className ?? '') + ' rounded-full'}>
       {props.label}
     </Button>
   );
