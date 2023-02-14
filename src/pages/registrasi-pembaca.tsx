@@ -24,8 +24,9 @@ export default function RegistrasiPembaca() {
   function register() {
     setLoading(true);
     setTimeout(() => {
+      alert('Not implemented');
       setLoading(false);
-    }, 1500);
+    }, 100);
   }
 
   return (
