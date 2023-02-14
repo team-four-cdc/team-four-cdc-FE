@@ -17,6 +17,7 @@ export default function TextInput(props: TextInputProps): JSX.Element {
   const allProps = {
     ...props,
     'aria-label': props.label,
+    className: 'px-2.5 py-1.5 text-14px rounded-full' + (props.className ?? ''),
     style: {
       ...props.style,
     },
@@ -31,7 +32,7 @@ export default function TextInput(props: TextInputProps): JSX.Element {
       {props.type === 'password' ? (
         <Input.Password {...allProps} />
       ) : (
-        <Input {...allProps} className="px-10 py-6 text-14px rounded-full" />
+        <Input {...allProps} />
       )}
 
       {props.helperText ? (

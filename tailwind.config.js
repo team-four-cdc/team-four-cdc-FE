@@ -35,6 +35,15 @@ module.exports = {
       minWidth: {
         '150px': '150px',
       },
+      backgroundColor: {
+        // high-contrast background colors for debugging
+        'debug-red': '#ff0000',
+        'debug-green': '#00ff00',
+        'debug-blue': '#0000ff',
+        'debug-cyan': '#00ffff',
+        'debug-pink': '#ff00ff',
+        'debug-yellow': '#ffff00',
+      },
     },
   },
   plugins: [],
