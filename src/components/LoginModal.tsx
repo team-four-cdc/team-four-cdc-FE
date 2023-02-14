@@ -1,4 +1,4 @@
-import { Modal, ModalProps, Typography } from 'antd';
+import { Form, Modal, ModalProps, Typography } from 'antd';
 import TextInput from '@/components/TextInput';
 import StyledButton from '@/components/Button';
 import Link from 'next/link';
@@ -12,10 +12,15 @@ interface Props extends ModalProps {
 
 const LoginModal = (props: Props) => {
   const { visible, role, ...modalProps } = props;
+  const [form] = Form.useForm();
 
   const text = {
     pembaca: 'Login dulu yuk, agar dapat membaca lebih menyenangkan dengan',
     penulis: 'Bagikan tulisanmu untuk pembaca, ayo gabung sebagai penulis',
+  };
+
+  const onFinish = (values: any) => {
+    console.log(values);
   };
 
   return (
@@ -37,24 +42,48 @@ const LoginModal = (props: Props) => {
           BacaAku
         </Typography.Paragraph>
       </div>
-      <TextInput
-        label="Email"
-        className="mt-10px mb-35px"
-        placeholder="Silakan tulis email"
-      />
-      <TextInput
-        type="password"
-        label="Password"
-        className="mt-10px mb-35px"
-        placeholder="Silakan tulis email"
-      />
-      <div className="text-center">
-        <StyledButton type="primary" label="Login" className="mb-10px" />
-        <Typography.Paragraph className="mb-0 text-12px">
-          Anda belum punya akun ?
-          <Link href="/registrasi-pembaca"> Registrasi </Link>
-        </Typography.Paragraph>
-      </div>
+      <Form form={form} onFinish={onFinish} autoComplete="off">
+        <Form.Item
+          className="mb-35px"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your email!',
+            },
+          ]}
+        >
+          <TextInput
+            label="Email"
+            className="mt-10px"
+            placeholder="Silakan tulis email"
+          />
+        </Form.Item>
+        <Form.Item
+          className="mb-35px"
+          name="password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
+        >
+          <TextInput
+            type="password"
+            label="Password"
+            className="mt-10px"
+            placeholder="Silakan tulis email"
+          />
+        </Form.Item>
+        <div className="text-center">
+          <StyledButton
+            type="primary"
+            label="Login"
+            htmlType="submit"
+            className="mb-10px"
+          />
+          <Typography.Paragraph className="mb-0 text-12px">
+            Anda belum punya akun ?
+            <Link href={`/registrasi-${role}`}> Registrasi </Link>
+          </Typography.Paragraph>
+        </div>
+      </Form>
     </Modal>
   );
 };
