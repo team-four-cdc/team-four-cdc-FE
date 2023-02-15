@@ -33,6 +33,7 @@ export default function Navbar() {
           return type == 'login' ? (
             <Menu.Item key={index}>
               <Button
+                className="bg-transparent"
                 type="text"
                 onClick={() => onClickLoginButton(menu.login)}
               >
