@@ -30,15 +30,15 @@ export default function RegistrasiPembaca() {
   }
 
   return (
-    <div className="pt-4 px-2">
+    <div className="flex flex-wrap justify-center px-2 py-8 gap-14">
       <Image
         src={Illustration}
         alt="Registrasi sebagai pembaca"
-        className="align-top hidden sm:inline-block"
+        className="hidden align-top sm:inline-block"
         width={400}
       />
 
-      <div className="inline-block align-top align-center ml-4">
+      <div className="inline-block ml-4 align-top align-center">
         <div>
           <Typography.Title className="mb-1">Daftar</Typography.Title>
           <Typography.Text>

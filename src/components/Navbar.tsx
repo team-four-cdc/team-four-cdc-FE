@@ -1,8 +1,8 @@
 import { CaretDownFilled } from '@ant-design/icons';
-import { Button, Dropdown, Menu, Space, Typography } from 'antd';
+import { Button, Dropdown, Menu, Space } from 'antd';
 import classNames from 'classnames';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoginModal, { UserRole } from './LoginModal';
 
 interface NavbarProps {
@@ -62,13 +62,17 @@ export default function Navbar(props: NavbarProps) {
     );
   }
 
+  useEffect(() => {
+    setShowLoginModal(false);
+  }, [props.Router]);
+
   return (
     <>
-      <div className="fixed flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
+      <div className="flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
         <div>
-          <Typography.Text className="text-30px !text-secondary-color">
+          <Link href={'/'} className="text-30px !text-secondary-color">
             BacaAku
-          </Typography.Text>
+          </Link>
         </div>
         <div className="flex flex-row ml-auto p-20px space-x-30px">
           <Link
