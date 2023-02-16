@@ -57,7 +57,7 @@ export default function RegistrasiPembaca() {
             value={email}
             required
           />
-          <div className="h-3" />
+          <div className="h-5" />
           <TextInput
             id="password"
             type="password"
@@ -67,7 +67,7 @@ export default function RegistrasiPembaca() {
             value={password}
             required
           />
-          <div className="h-4" />
+          <div className="h-5" />
           <div className="text-center">
             <StyledButton
               type="primary"
