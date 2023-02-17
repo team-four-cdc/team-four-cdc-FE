@@ -9,4 +9,8 @@ module.exports = withLess({
     },
   },
   reactStrictMode: true,
+  staticPageGenerationTimeout: 1000,
+  images:{
+    unoptimized:true,
+  }
 });
