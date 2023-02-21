@@ -1,14 +1,20 @@
+import { authApi, newsApi } from '@/services';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import newsReducer from './news/newsSlice';
+import authReducer from '@/store/auth/authSlice';
 
 export const rootReducer = combineReducers({
-  news: newsReducer,
+  auth: authReducer,
+  [authApi.reducerPath]: authApi.reducer,
+  [newsApi.reducerPath]: newsApi.reducer,
 });
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
+    getDefaultMiddleware({ serializableCheck: false }).concat([
+      authApi.middleware,
+      newsApi.middleware,
+    ]),
 });
 
 export type Store = typeof store;
