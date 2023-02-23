@@ -10,13 +10,13 @@ const persistConfig = {
   whitelist: ['auth'],
 };
 
-export const rootReducer = combineReducers({
+const rootReducer = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
   [newsApi.reducerPath]: newsApi.reducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+export const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
