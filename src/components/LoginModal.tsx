@@ -53,11 +53,7 @@ const LoginModal = (props: Props) => {
             },
           ]}
         >
-          <TextInput
-            label="Email"
-            className="mt-10px"
-            placeholder="Silakan tulis email"
-          />
+          <TextInput label="Email" placeholder="Silakan tulis email" />
         </Form.Item>
         <Form.Item
           className="mb-35px"
@@ -67,7 +63,6 @@ const LoginModal = (props: Props) => {
           <TextInput
             type="password"
             label="Password"
-            className="mt-10px"
             placeholder="Silakan tulis email"
           />
         </Form.Item>

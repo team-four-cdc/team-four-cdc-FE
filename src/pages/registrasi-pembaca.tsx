@@ -38,7 +38,7 @@ export default function RegistrasiPembaca() {
         width={400}
       />
 
-      <div className="inline-block ml-4 align-top align-center">
+      <div className="inline-block ml-4 align-top align-center w-1/2">
         <div>
           <Typography.Title className="mb-1">Daftar</Typography.Title>
           <Typography.Text>
