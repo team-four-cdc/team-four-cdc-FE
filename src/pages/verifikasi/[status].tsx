@@ -7,12 +7,13 @@ export default function Verifikasi() {
   const [, , secondUrl] = Router.asPath.split('/');
 
   function UrlVerified(url: any) {
-    if (url == 'success') {
-      return 0;
-    } else if (url == 'error') {
-      return 1;
-    } else {
-      return 2;
+    switch (url) {
+      case 'success':
+        return 0;
+      case 'error':
+        return 1;
+      default:
+        return 2;
     }
   }
 
