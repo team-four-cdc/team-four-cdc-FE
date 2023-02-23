@@ -4,14 +4,12 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoginModal, { UserRole } from './LoginModal';
+import { useRouter } from 'next/router';
 
-interface NavbarProps {
-  Router: any;
-}
-
-export default function Navbar(props: NavbarProps) {
+export default function Navbar() {
   const [userRole, setUserRole] = useState<UserRole>('pembaca');
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const Router = useRouter();
 
   const onClickLoginButton = (role: UserRole) => {
     setUserRole(role);
@@ -50,7 +48,7 @@ export default function Navbar(props: NavbarProps) {
               <Link
                 href={menu.register}
                 className={classNames({
-                  'text-success-color': props.Router == menu.register,
+                  'text-success-color': Router.asPath == menu.register,
                 })}
               >
                 {menu.name}
@@ -64,7 +62,7 @@ export default function Navbar(props: NavbarProps) {
 
   useEffect(() => {
     setShowLoginModal(false);
-  }, [props.Router]);
+  }, [Router.asPath]);
 
   return (
     <>
@@ -78,7 +76,7 @@ export default function Navbar(props: NavbarProps) {
           <Link
             href={'/'}
             className={classNames({
-              'text-success-color': props.Router == '/',
+              'text-success-color': Router.asPath == '/',
             })}
           >
             Lihat Artikel
@@ -87,7 +85,7 @@ export default function Navbar(props: NavbarProps) {
             overlay={menu('login')}
             trigger={['click']}
             className={classNames('cursor-pointer hover:text-success-color', {
-              'text-success-color': props.Router == '/login-pembaca',
+              'text-success-color': Router.asPath == '/login-pembaca',
             })}
           >
             <Space>
@@ -99,8 +97,8 @@ export default function Navbar(props: NavbarProps) {
             trigger={['click']}
             className={classNames('cursor-pointer hover:text-success-color', {
               'text-success-color':
-                props.Router == '/registrasi-pembaca' ||
-                props.Router == '/registrasi-penulis',
+                Router.asPath == '/registrasi-pembaca' ||
+                Router.asPath == '/registrasi-penulis',
             })}
           >
             <Space>
