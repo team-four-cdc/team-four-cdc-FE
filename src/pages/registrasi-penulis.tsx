@@ -13,13 +13,13 @@ export default function RegistrasiPenulis() {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    if (event.target.name === 'fullName') {
+    if (event.target.id === 'fullName') {
       setFullName(event.target.value);
     }
-    if (event.target.name === 'email') {
+    if (event.target.id === 'email') {
       setEmail(event.target.value);
     }
-    if (event.target.name === 'password') {
+    if (event.target.id === 'password') {
       setPassword(event.target.value);
     }
   }
