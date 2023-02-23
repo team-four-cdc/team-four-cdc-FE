@@ -38,7 +38,6 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
 
   return (
     <div className="grid min-h-full px-6 py-24 bg-white place-items-center sm:py-32 lg:px-8">
-      {console.log('content', contents)}
       <div>
         <Image
           src={contents[props.status].image}
