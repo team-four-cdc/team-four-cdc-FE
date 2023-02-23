@@ -1,22 +1,23 @@
 import { RootState } from '@/store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-interface SignUpResponse {
-  message: string;
-}
-
-interface SignUpRequest {
-  username: string;
+interface AuthRequest {
+  fullname?: string;
+  email: string;
   password: string;
-}
-
-interface VerifyResponse {
-  user: any;
-  token: string;
 }
 
 interface VerifyRequest {
   token: string;
+}
+
+interface AuthResponse {
+  user: any;
+  token: string;
+}
+
+interface RegisterResponse {
+  message: string;
 }
 
 export const authApi = createApi({
@@ -32,16 +33,23 @@ export const authApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    signup: builder.mutation<SignUpResponse, SignUpRequest>({
+    register: builder.mutation<RegisterResponse, AuthRequest>({
       query: (payload) => ({
-        url: '/signup',
+        url: '/register',
         method: 'POST',
         body: payload,
       }),
     }),
-    verify: builder.mutation<VerifyResponse, VerifyRequest>({
+    verify: builder.mutation<AuthResponse, VerifyRequest>({
       query: (payload) => ({
         url: '/verify',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
+    login: builder.mutation<AuthResponse, AuthRequest>({
+      query: (payload) => ({
+        url: '/login',
         method: 'POST',
         body: payload,
       }),
@@ -49,4 +57,5 @@ export const authApi = createApi({
   }),
 });
 
-export const { useSignupMutation, useVerifyMutation } = authApi;
+export const { useRegisterMutation, useVerifyMutation, useLoginMutation } =
+  authApi;
