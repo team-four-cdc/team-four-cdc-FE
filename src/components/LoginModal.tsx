@@ -42,6 +42,7 @@ const LoginModal = (props: Props) => {
   return (
     <Modal
       {...modalProps}
+      forceRender
       centered
       visible={visible}
       closable={false}
