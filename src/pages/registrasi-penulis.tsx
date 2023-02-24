@@ -4,7 +4,7 @@ import { EditFilled } from '@ant-design/icons';
 import { Typography } from 'antd';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
-import Illustration from '../../public/register-illustration-author.svg';
+import Illustration from '../../public/register-illustration-creator.svg';
 
 export default function RegistrasiPenulis() {
   const [fullName, setFullName] = useState<string>('');
