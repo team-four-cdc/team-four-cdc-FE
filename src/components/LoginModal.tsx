@@ -39,6 +39,10 @@ const LoginModal = (props: Props) => {
       });
   };
 
+  const onRedirect = () => {
+    setVisibility(false);
+  };
+
   return (
     <Modal
       {...modalProps}
@@ -71,23 +75,33 @@ const LoginModal = (props: Props) => {
           ]}
         >
           <TextInput
+            type="email"
             label="Email"
-            className="mt-10px"
             placeholder="Silakan tulis email"
           />
         </Form.Item>
         <Form.Item
-          className="mb-35px"
+          className="mb-10px"
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
           <TextInput
             type="password"
             label="Password"
-            className="mt-10px"
             placeholder="Silakan tulis password"
           />
         </Form.Item>
+        <div className="text-right mb-30px">
+          <Typography.Paragraph className="mb-0 text-12px ">
+            <Link
+              href={`/lupa-password`}
+              onClick={onRedirect}
+              className="text-black hover:text-secondary-color"
+            >
+              Lupa password
+            </Link>
+          </Typography.Paragraph>
+        </div>
         <div className="text-center">
           <StyledButton
             type="primary"
@@ -98,7 +112,10 @@ const LoginModal = (props: Props) => {
           />
           <Typography.Paragraph className="mb-0 text-12px">
             Anda belum punya akun ?
-            <Link href={`/registrasi-${role}`}> Registrasi </Link>
+            <Link href={`/registrasi-${role}`} onClick={onRedirect}>
+              {' '}
+              Registrasi
+            </Link>
           </Typography.Paragraph>
         </div>
       </Form>
