@@ -19,7 +19,7 @@ export function checkEmail(email: string): boolean {
 
   // email should include @,
   // and it should not be at the beginning or the end
-  if (email.includes('@') && (email.startsWith('@') || email.endsWith('@'))) {
+  if (!email.includes('@') || email.startsWith('@') || email.endsWith('@')) {
     return false;
   }
 
@@ -33,7 +33,7 @@ export function checkEmail(email: string): boolean {
     return false;
   }
 
-  // forbidden domain names
+  // domain names forbidden from use in real email addresses
   if (
     domain.endsWith('.test') ||
     domain.endsWith('.example') ||
