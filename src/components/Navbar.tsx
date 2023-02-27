@@ -29,6 +29,30 @@ export default function Navbar() {
     },
   ];
 
+  const itemNavbar = [
+    {
+      name: 'Lihat Artikel',
+      type: 'link',
+      url: '/lihat-artikel',
+      show: '',
+    },
+    {
+      name: 'Masuk Akun',
+      type: 'dropdown',
+      menu: 'login',
+      url: '/login-pembaca',
+      show: '',
+    },
+    {
+      name: 'Buat Akun',
+      type: 'dropdown',
+      menu: 'register',
+      url: '/registrasi-pembaca',
+      url2: 'registrasi-penulis',
+      show: '',
+    },
+  ];
+
   function menu(type: string) {
     return (
       <Menu>
@@ -60,51 +84,57 @@ export default function Navbar() {
     );
   }
 
+  const NavbarWrapp = (
+    <>
+      {itemNavbar.map((navbar: any) => {
+        switch (navbar.type) {
+          case 'link':
+            return (
+              <Link
+                href={'/lihat-artikel'}
+                className={classNames({
+                  'text-success-color': Router.asPath == navbar.url,
+                })}
+              >
+                {navbar.name}
+              </Link>
+            );
+          case 'dropdown':
+            return (
+              <Dropdown
+                overlay={menu(navbar.menu)}
+                trigger={['click']}
+                className={classNames(
+                  'cursor-pointer hover:text-success-color',
+                  {
+                    'text-success-color': Router.asPath == navbar.url,
+                  }
+                )}
+              >
+                <Space>
+                  {navbar.name} <CaretDownFilled />
+                </Space>
+              </Dropdown>
+            );
+        }
+      })}
+    </>
+  );
+
   useEffect(() => {
     setShowLoginModal(false);
   }, [Router.asPath]);
 
   return (
     <>
-      <div className="flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
+      <div className="sticky top-0 flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
         <div>
           <Link href={'/'} className="text-30px !text-secondary-color">
             BacaAku
           </Link>
         </div>
         <div className="flex flex-row ml-auto p-20px space-x-30px">
-          <Link
-            href={'/'}
-            className={classNames({
-              'text-success-color': Router.asPath == '/',
-            })}
-          >
-            Lihat Artikel
-          </Link>
-          <Dropdown
-            overlay={menu('login')}
-            trigger={['click']}
-            className={classNames('cursor-pointer hover:text-success-color', {
-              'text-success-color': Router.asPath == '/login-pembaca',
-            })}
-          >
-            <Space>
-              Masuk Akun <CaretDownFilled />
-            </Space>
-          </Dropdown>
-          <Dropdown
-            overlay={menu('register')}
-            trigger={['click']}
-            className={classNames('cursor-pointer hover:text-success-color', {
-              'text-success-color':
-                Router.asPath == '/registrasi-pembaca' ||
-                Router.asPath == '/registrasi-penulis',
-            })}
-          >
-            <Space>
-              Buat Akun <CaretDownFilled />
-            </Space>
-          </Dropdown>
+          {NavbarWrapp}
         </div>
       </div>
       <LoginModal
