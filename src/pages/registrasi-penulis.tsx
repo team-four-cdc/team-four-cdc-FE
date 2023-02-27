@@ -4,14 +4,18 @@ import { EditFilled } from '@ant-design/icons';
 import { Typography } from 'antd';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
-import Illustration from '../../public/register-illustration-reader.svg';
+import Illustration from '../../public/register-illustration-creator.svg';
 
-export default function RegistrasiPembaca() {
+export default function RegistrasiPenulis() {
+  const [fullName, setFullName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isLoading, setLoading] = useState<boolean>(false);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    if (event.target.id === 'fullName') {
+      setFullName(event.target.value);
+    }
     if (event.target.id === 'email') {
       setEmail(event.target.value);
     }
@@ -42,12 +46,22 @@ export default function RegistrasiPembaca() {
         <div>
           <Typography.Title className="mb-1">Daftar</Typography.Title>
           <Typography.Text>
-            Ingin baca artikel lebih lengkap? Daftar dulu agar kamu menikmati
-            dalam membaca
+            Punya berita, cerita, atau ilmu menarik yang ingin kamu bagikan, dan
+            ingin mendapat hasil dari menulis? Gabung yuk sebagai penulis
           </Typography.Text>
         </div>
 
         <div className="mt-6">
+          <TextInput
+            id="fullName"
+            type="text"
+            label="Nama Penulis"
+            placeholder="Silahkan tulis nama"
+            onChange={handleChange}
+            value={fullName}
+            required
+          />
+          <div className="h-5" />
           <TextInput
             id="email"
             type="email"
