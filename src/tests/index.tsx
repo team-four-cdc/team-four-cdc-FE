@@ -6,7 +6,7 @@ import {
   RenderOptions,
   RenderResult,
 } from '@testing-library/react';
-import { rootReducer, State, Store } from '@/store';
+import { persistedReducer, State, Store } from '@/store';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
@@ -22,8 +22,10 @@ const render = <
   ui: ReactElement,
   options: ExtraOptions & RenderOptions<Q, C> = {}
 ): RenderResult<Q, C> & { store: Store } => {
-  const { store = configureStore({ reducer: rootReducer }), ...renderOptions } =
-    options;
+  const {
+    store = configureStore({ reducer: persistedReducer }),
+    ...renderOptions
+  } = options;
 
   const Wrapper: FunctionComponent = ({ children }: any) => {
     return <Provider store={store}>{children}</Provider>;

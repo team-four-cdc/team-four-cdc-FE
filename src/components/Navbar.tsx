@@ -111,6 +111,7 @@ export default function Navbar(props: NavbarProps) {
       </div>
       <LoginModal
         visible={showLoginModal}
+        setVisibility={setShowLoginModal}
         role={userRole}
         onCancel={() => setShowLoginModal(false)}
       />
