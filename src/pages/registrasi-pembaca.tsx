@@ -13,10 +13,10 @@ export default function RegistrasiPembaca() {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    if (event.target.name === 'email') {
+    if (event.target.id === 'email') {
       setEmail(event.target.value);
     }
-    if (event.target.name === 'password') {
+    if (event.target.id === 'password') {
       setPassword(event.target.value);
     }
   }
@@ -41,7 +41,7 @@ export default function RegistrasiPembaca() {
           width={400}
         />
 
-        <div className="inline-block ml-4 align-top align-center">
+        <div className="inline-block w-11/12 ml-4 align-top align-center sm:w-4/5 lg:w-1/2">
           <div>
             <Typography.Title className="mb-1">Daftar</Typography.Title>
             <Typography.Text>
