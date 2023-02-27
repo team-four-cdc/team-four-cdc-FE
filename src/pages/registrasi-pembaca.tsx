@@ -6,6 +6,7 @@ import { Form, Typography } from 'antd';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import Illustration from '../../public/register-illustration-reader.svg';
+import Heads from '@/layout/Head/Head';
 
 export default function RegistrasiPembaca() {
   const [email, setEmail] = useState<string>('');
@@ -52,21 +53,24 @@ export default function RegistrasiPembaca() {
   }
 
   return (
-    <div className="flex flex-wrap justify-center px-2 py-8 gap-14">
-      <Image
-        src={Illustration}
-        alt="Registrasi sebagai pembaca"
-        className="hidden align-top sm:inline-block"
-        width={400}
-      />
+    <>
+      <Heads title="Registrasi Pembaca" showNavbar={true} />
+      <div className="flex flex-wrap justify-center px-2 py-8 gap-14">
+        <Image
+          src={Illustration}
+          alt="Registrasi sebagai pembaca"
+          className="hidden align-top sm:inline-block"
+          width={400}
+        />
 
-      <div className="inline-block ml-4 align-top align-center w-11/12 sm:w-4/5 lg:w-1/2">
-        <div>
-          <Typography.Title className="mb-1">Daftar</Typography.Title>
-          <Typography.Text>
-            Ingin baca artikel lebih lengkap? Daftar dulu agar kamu menikmati
-            dalam membaca
-          </Typography.Text>
+        <div className="inline-block w-11/12 ml-4 align-top align-center sm:w-4/5 lg:w-1/2">
+          <div>
+            <Typography.Title className="mb-1">Daftar</Typography.Title>
+            <Typography.Text>
+              Ingin baca artikel lebih lengkap? Daftar dulu agar kamu menikmati
+              dalam membaca
+            </Typography.Text>
+          </div>
         </div>
 
         <Form
@@ -129,9 +133,32 @@ export default function RegistrasiPembaca() {
               icon={<EditFilled />}
               loading={isLoading}
             />
+            <div className="h-5" />
+            <TextInput
+              id="password"
+              type="password"
+              label="Password"
+              placeholder="Silahkan tulis password"
+              onChange={handleChange}
+              value={password}
+              required
+            />
+            <div className="h-5" />
+            <div className="text-center">
+              <StyledButton
+                type="primary"
+                label="Daftarkan Akun"
+                className="self-center"
+                icon={<EditFilled />}
+                loading={isLoading}
+                onClick={() => {
+                  register();
+                }}
+              />
+            </div>
           </div>
         </Form>
       </div>
-    </div>
+    </>
   );
 }

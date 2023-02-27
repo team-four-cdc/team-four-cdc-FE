@@ -1,15 +1,33 @@
+import { authApi, newsApi } from '@/services';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import newsReducer from './news/newsSlice';
+import authReducer from '@/store/auth/authSlice';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
 
-export const rootReducer = combineReducers({
-  news: newsReducer,
+const persistConfig = {
+  storage,
+  key: 'root',
+  whitelist: ['auth'],
+};
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  [authApi.reducerPath]: authApi.reducer,
+  [newsApi.reducerPath]: newsApi.reducer,
 });
+
+export const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
+    getDefaultMiddleware({ serializableCheck: false }).concat([
+      authApi.middleware,
+      newsApi.middleware,
+    ]),
 });
+
+export const persistor = persistStore(store);
 
 export type Store = typeof store;
 export type Reducer = typeof rootReducer;

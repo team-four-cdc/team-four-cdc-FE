@@ -4,14 +4,12 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoginModal, { UserRole } from './LoginModal';
+import { useRouter } from 'next/router';
 
-interface NavbarProps {
-  Router: any;
-}
-
-export default function Navbar(props: NavbarProps) {
+export default function Navbar() {
   const [userRole, setUserRole] = useState<UserRole>('pembaca');
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const Router = useRouter();
 
   const onClickLoginButton = (role: UserRole) => {
     setUserRole(role);
@@ -28,6 +26,30 @@ export default function Navbar(props: NavbarProps) {
       name: 'Penulis',
       login: 'penulis',
       register: '/registrasi-penulis',
+    },
+  ];
+
+  const itemNavbar = [
+    {
+      name: 'Lihat Artikel',
+      type: 'link',
+      url: '/lihat-artikel',
+      show: '',
+    },
+    {
+      name: 'Masuk Akun',
+      type: 'dropdown',
+      menu: 'login',
+      url: '/login-pembaca',
+      show: '',
+    },
+    {
+      name: 'Buat Akun',
+      type: 'dropdown',
+      menu: 'register',
+      url: '/registrasi-pembaca',
+      url2: 'registrasi-penulis',
+      show: '',
     },
   ];
 
@@ -50,7 +72,7 @@ export default function Navbar(props: NavbarProps) {
               <Link
                 href={menu.register}
                 className={classNames({
-                  'text-success-color': props.Router == menu.register,
+                  'text-success-color': Router.asPath == menu.register,
                 })}
               >
                 {menu.name}
@@ -62,55 +84,62 @@ export default function Navbar(props: NavbarProps) {
     );
   }
 
+  const NavbarWrapp = (
+    <>
+      {itemNavbar.map((navbar: any) => {
+        switch (navbar.type) {
+          case 'link':
+            return (
+              <Link
+                href={'/lihat-artikel'}
+                className={classNames({
+                  'text-success-color': Router.asPath == navbar.url,
+                })}
+              >
+                {navbar.name}
+              </Link>
+            );
+          case 'dropdown':
+            return (
+              <Dropdown
+                overlay={menu(navbar.menu)}
+                trigger={['click']}
+                className={classNames(
+                  'cursor-pointer hover:text-success-color',
+                  {
+                    'text-success-color': Router.asPath == navbar.url,
+                  }
+                )}
+              >
+                <Space>
+                  {navbar.name} <CaretDownFilled />
+                </Space>
+              </Dropdown>
+            );
+        }
+      })}
+    </>
+  );
+
   useEffect(() => {
     setShowLoginModal(false);
-  }, [props.Router]);
+  }, [Router.asPath]);
 
   return (
     <>
-      <div className="flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
+      <div className="sticky top-0 flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
         <div>
           <Link href={'/'} className="text-30px !text-secondary-color">
             BacaAku
           </Link>
         </div>
         <div className="flex flex-row ml-auto p-20px space-x-30px">
-          <Link
-            href={'/'}
-            className={classNames({
-              'text-success-color': props.Router == '/',
-            })}
-          >
-            Lihat Artikel
-          </Link>
-          <Dropdown
-            overlay={menu('login')}
-            trigger={['click']}
-            className={classNames('cursor-pointer hover:text-success-color', {
-              'text-success-color': props.Router == '/login-pembaca',
-            })}
-          >
-            <Space>
-              Masuk Akun <CaretDownFilled />
-            </Space>
-          </Dropdown>
-          <Dropdown
-            overlay={menu('register')}
-            trigger={['click']}
-            className={classNames('cursor-pointer hover:text-success-color', {
-              'text-success-color':
-                props.Router == '/registrasi-pembaca' ||
-                props.Router == '/registrasi-penulis',
-            })}
-          >
-            <Space>
-              Buat Akun <CaretDownFilled />
-            </Space>
-          </Dropdown>
+          {NavbarWrapp}
         </div>
       </div>
       <LoginModal
         visible={showLoginModal}
+        setVisibility={setShowLoginModal}
         role={userRole}
         onCancel={() => setShowLoginModal(false)}
       />

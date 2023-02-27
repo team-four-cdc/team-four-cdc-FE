@@ -1,5 +1,3 @@
-export * from './storage';
-
 /**
  * Checks if email address is valid.
  * This check allows all valid email addresses including rare formats (and some invalid ones).

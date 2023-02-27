@@ -5,14 +5,12 @@ import StyledButton from './Button';
 import { EyeOutlined } from '@ant-design/icons';
 
 interface StandardVerifiedPageProps {
-  status: 'success' | 'warning' | 'error';
+  status: any;
 }
 
-export default function VerifiedPage(
-  props: StandardVerifiedPageProps
-): JSX.Element {
-  const contents = {
-    success: {
+export default function VerifiedPage(props: StandardVerifiedPageProps) {
+  const contents = [
+    {
       image: '/verifiedSuccess.svg',
       title: 'Verifikasi Berhasil',
       description:
@@ -20,7 +18,7 @@ export default function VerifiedPage(
       labelButton: 'Halaman BacaAku',
       isSuccess: true,
     },
-    error: {
+    {
       image: '/verifiedFailed.svg',
       title: 'Verifikasi gagal',
       description:
@@ -28,7 +26,7 @@ export default function VerifiedPage(
       labelButton: 'Kembali Registrasi',
       isSuccess: false,
     },
-    warning: {
+    {
       image: '/verifiedWarning.svg',
       title: 'Maaf Terjadi Kesalahan',
       description:
@@ -36,9 +34,10 @@ export default function VerifiedPage(
       labelButton: 'Kembali Beranda',
       isSuccess: false,
     },
-  };
+  ];
+
   return (
-    <div className="grid min-h-full place-items-center bg-white py-24 px-6 sm:py-32 lg:px-8">
+    <div className="grid min-h-full px-6 py-24 bg-white place-items-center sm:py-32 lg:px-8">
       <div>
         <Image
           src={contents[props.status].image}
