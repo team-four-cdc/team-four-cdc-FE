@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <>
-      <Heads title="BacaAku" />
+      <Heads showNavbar={true} title="BacaAku" />
       <main>
         <div className="flex h-screen w">
           <div className="m-auto">
