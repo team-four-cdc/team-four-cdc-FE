@@ -139,6 +139,7 @@ export default function Navbar() {
       </div>
       <LoginModal
         visible={showLoginModal}
+        setVisibility={setShowLoginModal}
         role={userRole}
         onCancel={() => setShowLoginModal(false)}
       />
