@@ -1,5 +1,6 @@
 import { RootState } from '@/store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
 
 interface AuthRequest {
   fullname?: string;
@@ -8,7 +9,7 @@ interface AuthRequest {
 }
 
 interface VerifyRequest {
-  token: string;
+  code: string;
 }
 
 interface AuthResponse {
@@ -32,6 +33,11 @@ export const authApi = createApi({
       return headers;
     },
   }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (builder) => ({
     register: builder.mutation<RegisterResponse, AuthRequest>({
       query: (payload) => ({

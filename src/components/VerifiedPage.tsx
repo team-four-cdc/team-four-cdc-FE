@@ -5,12 +5,14 @@ import StyledButton from './Button';
 import { EyeOutlined } from '@ant-design/icons';
 
 interface StandardVerifiedPageProps {
-  status: any;
+  status: 'success' | 'failed' | 'error';
 }
 
 export default function VerifiedPage(props: StandardVerifiedPageProps) {
-  const contents = [
-    {
+  const { status = 'error' } = props;
+
+  const contents = {
+    success: {
       image: '/verifiedSuccess.svg',
       title: 'Verifikasi Berhasil',
       description:
@@ -18,7 +20,7 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
       labelButton: 'Halaman BacaAku',
       isSuccess: true,
     },
-    {
+    failed: {
       image: '/verifiedFailed.svg',
       title: 'Verifikasi gagal',
       description:
@@ -26,7 +28,7 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
       labelButton: 'Kembali Registrasi',
       isSuccess: false,
     },
-    {
+    error: {
       image: '/verifiedWarning.svg',
       title: 'Maaf Terjadi Kesalahan',
       description:
@@ -34,34 +36,34 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
       labelButton: 'Kembali Beranda',
       isSuccess: false,
     },
-  ];
+  };
 
   return (
     <div className="grid min-h-full px-6 py-24 bg-white place-items-center sm:py-32 lg:px-8">
       <div>
         <Image
-          src={contents[props.status].image}
+          src={contents[status].image}
           alt="Image Notification"
-          width={336} // set width to 200px
-          height={231} // set height to 150px
+          width={336}
+          height={231}
         />
       </div>
       <div className="mt-10">
         <Typography.Text className="text-30px !text-primary-color">
-          {contents[props.status].title}
+          {contents[status].title}
         </Typography.Text>
       </div>
       <div className="my-10">
         <Typography.Text className="text-14px !text-primary-color">
-          {contents[props.status].description}
+          {contents[status].description}
         </Typography.Text>
       </div>
       <div>
         <StyledButton
-          label={contents[props.status].labelButton}
-          type={contents[props.status].isSuccess ? 'primary' : 'default'}
+          label={contents[status].labelButton}
+          type={contents[status].isSuccess ? 'primary' : 'default'}
           size="large"
-          icon={contents[props.status].isSuccess ? <EyeOutlined /> : null}
+          icon={contents[status].isSuccess ? <EyeOutlined /> : null}
         />
       </div>
     </div>

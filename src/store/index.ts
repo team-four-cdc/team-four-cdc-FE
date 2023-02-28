@@ -3,6 +3,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from '@/store/auth/authSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
+import { createWrapper } from 'next-redux-wrapper';
 
 const persistConfig = {
   storage,
@@ -28,6 +29,8 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+export const wrapper = createWrapper(() => store);
 
 export type Store = typeof store;
 export type Reducer = typeof rootReducer;
