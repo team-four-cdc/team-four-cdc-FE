@@ -71,93 +71,71 @@ export default function RegistrasiPembaca() {
               dalam membaca
             </Typography.Text>
           </div>
-        </div>
 
-        <Form
-          form={creatorRegForm}
-          className="mt-6"
-          onFinish={() => register()}
-        >
-          <Form.Item
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: 'Email harus diisi',
-              },
-              {
-                type: 'email',
-                message: 'Email harus diisi dengan format ____@____.___',
-              },
-            ]}
+          <Form
+            form={creatorRegForm}
+            className="mt-6"
+            onFinish={() => register()}
           >
-            <TextInput
-              id="email"
-              type="email"
-              label="Email"
-              placeholder="Silahkan tulis email"
-              onChange={handleChange}
-              value={email}
-            />
-          </Form.Item>
-          <div className="h-5" />
-          <Form.Item
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: 'Password harus diisi',
-              },
-              {
-                min: 8,
-                message: 'Panjang password minimum 8 karakter',
-              },
-            ]}
-          >
-            <TextInput
-              id="password"
-              type="password"
-              label="Password"
-              placeholder="Silahkan tulis password"
-              onChange={handleChange}
-              value={password}
-            />
-          </Form.Item>
-          <div className="h-5" />
-          <div className="text-center">
-            <StyledButton
-              type="primary"
-              htmlType="submit"
-              label="Daftarkan Akun"
-              className="self-center"
-              icon={<EditFilled />}
-              loading={isLoading}
-            />
+            <Form.Item
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: 'Email harus diisi',
+                },
+                {
+                  type: 'email',
+                  message: 'Email harus diisi dengan format ____@____.___',
+                },
+              ]}
+            >
+              <TextInput
+                id="email"
+                type="email"
+                label="Email"
+                placeholder="Silahkan tulis email"
+                onChange={handleChange}
+                value={email}
+              />
+            </Form.Item>
             <div className="h-5" />
-            <TextInput
-              id="password"
-              type="password"
-              label="Password"
-              placeholder="Silahkan tulis password"
-              onChange={handleChange}
-              value={password}
-              required
-            />
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: 'Password harus diisi',
+                },
+                {
+                  min: 8,
+                  message: 'Panjang password minimum 8 karakter',
+                },
+              ]}
+            >
+              <TextInput
+                id="password"
+                type="password"
+                label="Password"
+                placeholder="Silahkan tulis password"
+                onChange={handleChange}
+                value={password}
+              />
+            </Form.Item>
             <div className="h-5" />
             <div className="text-center">
               <StyledButton
                 type="primary"
+                htmlType="submit"
                 label="Daftarkan Akun"
                 className="self-center"
                 icon={<EditFilled />}
                 loading={isLoading}
-                onClick={() => {
-                  register();
-                }}
               />
+              <div className="h-5" />
             </div>
-          </div>
-        </Form>
+          </Form>
+        </div>
       </div>
     </>
   );
