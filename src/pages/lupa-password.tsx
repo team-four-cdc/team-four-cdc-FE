@@ -23,7 +23,7 @@ export default function LupaPassword() {
   function sendEmail() {
     setLoading(true);
     setTimeout(() => {
-      alert('Not implemented');
+      // alert('Not implemented');
       setLoading(false);
     }, 100);
   }
@@ -56,12 +56,12 @@ export default function LupaPassword() {
             placeholder="Silahkan tulis email"
             onChange={handleChange}
             value={email}
-            required
           />
         </Form.Item>
         <div className="text-center mt-7">
           <StyledButton
             type="primary"
+            htmlType="submit"
             label="Kirim Email"
             className="self-center"
             loading={isLoading}
