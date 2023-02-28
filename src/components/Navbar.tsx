@@ -86,11 +86,12 @@ export default function Navbar() {
 
   const NavbarWrapp = (
     <>
-      {itemNavbar.map((navbar: any) => {
+      {itemNavbar.map((navbar: any, index: number) => {
         switch (navbar.type) {
           case 'link':
             return (
               <Link
+                key={index}
                 href={'/lihat-artikel'}
                 className={classNames({
                   'text-success-color': Router.asPath == navbar.url,
@@ -102,6 +103,7 @@ export default function Navbar() {
           case 'dropdown':
             return (
               <Dropdown
+                key={index}
                 overlay={menu(navbar.menu)}
                 trigger={['click']}
                 className={classNames(
