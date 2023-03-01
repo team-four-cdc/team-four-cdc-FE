@@ -27,7 +27,6 @@ test('text input works', async () => {
   expect(emailField).toHaveValue(textEmail);
 });
 
-// for some reason, the HTML for the form error messages cannot be detected
 test('all fields are required', async () => {
   const user = userEvent.setup();
   render(<RegistrasiPenulis />);

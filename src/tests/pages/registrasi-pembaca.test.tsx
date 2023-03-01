@@ -1,6 +1,6 @@
 import RegistrasiPembaca from '@/pages/registrasi-pembaca';
 import { render } from '@/tests';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { store } from '@/store';
 
@@ -23,4 +23,15 @@ test('text input works', async () => {
   await user.type(emailField[1], text);
   expect(emailField[0]).toHaveValue(text);
   expect(emailField[1]).toHaveValue(text);
+});
+
+test('all fields are required', async () => {
+  const user = userEvent.setup();
+  render(<RegistrasiPembaca />, { store });
+  const submitButton = screen.getByText(/daftarkan akun/i);
+  await user.click(submitButton);
+  await waitFor(() => {
+    const errorMessages = screen.getAllByText(/harus diisi/i);
+    expect(errorMessages.length).toBeGreaterThan(0);
+  });
 });
