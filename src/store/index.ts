@@ -3,7 +3,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from '@/store/auth/authSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
-import { createWrapper } from 'next-redux-wrapper';
+import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 
 const persistConfig = {
   storage,
@@ -11,11 +11,23 @@ const persistConfig = {
   whitelist: ['auth'],
 };
 
-const rootReducer = combineReducers({
+const combinedReducer = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
   [newsApi.reducerPath]: newsApi.reducer,
 });
+
+const rootReducer: typeof combinedReducer = (state, action) => {
+  if (action.type === HYDRATE) {
+    const nextState = {
+      ...state,
+      ...action.payload,
+    };
+    return nextState;
+  } else {
+    return combinedReducer(state, action);
+  }
+};
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
 

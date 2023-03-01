@@ -26,10 +26,10 @@ export default function Verifikasi(props: Props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
-    const code = context.query.code as string;
+    const generateCode = context.query.code as string;
 
     const response = await store.dispatch(
-      authApi.endpoints.verify.initiate({ code })
+      authApi.endpoints.verify.initiate({ generateCode })
     );
 
     const status = 'error' in response ? 'failed' : 'success';

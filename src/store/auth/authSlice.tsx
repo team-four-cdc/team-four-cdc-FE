@@ -2,13 +2,13 @@ import { authApi } from '@/services';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {
-  user: any;
+  email: any;
   token: string | null;
   isLogin: boolean;
 }
 
 const initialState: AuthState = {
-  user: null,
+  email: null,
   token: null,
   isLogin: false,
 };
@@ -24,7 +24,7 @@ const authSlice = createSlice({
       authApi.endpoints.verify.matchFulfilled,
       (state, { payload }) => {
         state.token = payload.token;
-        state.user = payload.user;
+        state.email = payload.email;
         state.isLogin = true;
       }
     );
@@ -32,7 +32,7 @@ const authSlice = createSlice({
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
         state.token = payload.token;
-        state.user = payload.user;
+        state.email = payload.email;
         state.isLogin = true;
       }
     );
