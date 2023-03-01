@@ -6,7 +6,11 @@ import { useEffect, useState } from 'react';
 import LoginModal, { UserRole } from './LoginModal';
 import { useRouter } from 'next/router';
 
-export default function Navbar() {
+interface NavbarProps {
+  showWrapperOption: boolean;
+}
+
+export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   const [userRole, setUserRole] = useState<UserRole>('pembaca');
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const Router = useRouter();
@@ -48,7 +52,7 @@ export default function Navbar() {
       type: 'dropdown',
       menu: 'register',
       url: '/registrasi-pembaca',
-      url2: 'registrasi-penulis',
+      url2: '/registrasi-penulis',
       show: '',
     },
   ];
@@ -107,7 +111,9 @@ export default function Navbar() {
                 className={classNames(
                   'cursor-pointer hover:text-success-color',
                   {
-                    'text-success-color': Router.asPath == navbar.url,
+                    'text-success-color':
+                      Router.asPath == navbar.url ||
+                      Router.asPath == navbar.url2,
                   }
                 )}
               >
@@ -133,9 +139,11 @@ export default function Navbar() {
             BacaAku
           </Link>
         </div>
-        <div className="flex flex-row ml-auto p-20px space-x-30px">
-          {NavbarWrapp}
-        </div>
+        {showWrapperOption && (
+          <div className="flex flex-row ml-auto p-20px space-x-30px">
+            {NavbarWrapp}
+          </div>
+        )}
       </div>
       <LoginModal
         visible={showLoginModal}
