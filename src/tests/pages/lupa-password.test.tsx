@@ -1,36 +1,21 @@
 import LupaPassword from '@/pages/lupa-password';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import { render } from '@/tests';
 import userEvent from '@testing-library/user-event';
-
-// fix for window.matchMedia is not a function
-beforeAll(() => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: jest.fn().mockImplementation((query) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(), // Deprecated
-      removeListener: jest.fn(), // Deprecated
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    })),
-  });
-});
+import { store } from '@/store';
 
 test('Render Lupa Password', async () => {
   const user = userEvent.setup();
   const textEmail = 'kresnataWorld@gmail.com';
-  render(<LupaPassword />);
-  const emailField = screen.getByPlaceholderText(/email/i);
-  await user.type(emailField, textEmail);
-  expect(emailField).toHaveValue(textEmail);
+  render(<LupaPassword />, { store });
+  const emailField = screen.getAllByPlaceholderText(/email/i);
+  await user.type(emailField[1], textEmail);
+  expect(emailField[1]).toHaveValue(textEmail);
 });
 
 test('Required Field', async () => {
   const user = userEvent.setup();
-  render(<LupaPassword />);
+  render(<LupaPassword />, { store });
   const submitEmail = screen.getByText(/kirim email/i);
   await user.click(submitEmail);
   await waitFor(() => {
