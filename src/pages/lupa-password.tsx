@@ -24,7 +24,7 @@ export default function LupaPassword() {
   function sendEmail() {
     setLoading(true);
     setTimeout(() => {
-      alert('Not implemented');
+      // alert('Not implemented');
       setLoading(false);
     }, 100);
   }
