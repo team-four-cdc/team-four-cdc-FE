@@ -1,14 +1,35 @@
 import Heads from '@/layout/Head/Head';
 import VerifiedPage from '@/components/VerifiedPage';
-import { wrapper } from '@/store';
-import { authApi } from '@/services';
+import { useEffect, useState } from 'react';
+import { useVerifyMutation } from '@/services';
+import { useRouter } from 'next/router';
+import { Spin } from 'antd';
 
-interface Props {
-  status: 'success' | 'failed' | 'error';
-}
+type Status = 'success' | 'failed' | 'error';
 
-export default function Verifikasi(props: Props) {
-  const { status } = props;
+export default function Verifikasi() {
+  const { query } = useRouter();
+  const [verify, { isLoading, isUninitialized }] = useVerifyMutation();
+  const [status, setStatus] = useState<Status>('error');
+
+  useEffect(() => {
+    const code = query.code as string;
+    if (code) {
+      verify({ generateCode: code })
+        .unwrap()
+        .then(() => setStatus('success'))
+        .catch(() => setStatus('failed'));
+    }
+  }, [query.code, verify]);
+
+  if (isUninitialized || isLoading)
+    return (
+      <div className="flex h-screen w">
+        <div className="m-auto">
+          <Spin spinning size="large" />
+        </div>
+      </div>
+    );
 
   return (
     <>
@@ -23,19 +44,3 @@ export default function Verifikasi(props: Props) {
     </>
   );
 }
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const generateCode = context.query.code as string;
-
-    const response = await store.dispatch(
-      authApi.endpoints.verify.initiate({ generateCode })
-    );
-
-    const status = 'error' in response ? 'failed' : 'success';
-
-    return {
-      props: { status },
-    };
-  }
-);
