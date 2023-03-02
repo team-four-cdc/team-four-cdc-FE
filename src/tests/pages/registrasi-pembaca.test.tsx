@@ -1,39 +1,37 @@
 import RegistrasiPembaca from '@/pages/registrasi-pembaca';
-import { render, screen } from '@testing-library/react';
+import { render } from '@/tests';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-// fix for window.matchMedia is not a function
-beforeAll(() => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: jest.fn().mockImplementation((query) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(), // Deprecated
-      removeListener: jest.fn(), // Deprecated
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    })),
-  });
-});
+import { store } from '@/store';
 
 test('should render essential UI components', () => {
-  render(<RegistrasiPembaca />);
-  const emailField = screen.getByPlaceholderText(/email/i);
-  const passwordField = screen.getByPlaceholderText(/password/i);
+  render(<RegistrasiPembaca />, { store });
+  const emailField = screen.getAllByPlaceholderText(/email/i);
+  const passwordField = screen.getAllByPlaceholderText(/password/i);
   const signupButton = screen.getByRole('button', { name: /daftarkan akun/i });
-  expect(emailField).toBeInTheDocument();
-  expect(passwordField).toBeInTheDocument();
+  expect(emailField[0]).toBeInTheDocument();
+  expect(passwordField[0]).toBeInTheDocument();
   expect(signupButton).toBeInTheDocument();
 });
 
 test('text input works', async () => {
   const user = userEvent.setup();
   const text = 'asdfghjkl';
-  render(<RegistrasiPembaca />);
-  const emailField = screen.getByPlaceholderText(/email/i);
-  await user.type(emailField, text);
-  expect(emailField).toHaveValue(text);
+  render(<RegistrasiPembaca />, { store });
+  const emailField = screen.getAllByPlaceholderText(/email/i);
+  await user.type(emailField[0], text);
+  await user.type(emailField[1], text);
+  expect(emailField[0]).toHaveValue(text);
+  expect(emailField[1]).toHaveValue(text);
+});
+
+test('all fields are required', async () => {
+  const user = userEvent.setup();
+  render(<RegistrasiPembaca />, { store });
+  const submitButton = screen.getByText(/daftarkan akun/i);
+  await user.click(submitButton);
+  await waitFor(() => {
+    const errorMessages = screen.getAllByText(/harus diisi/i);
+    expect(errorMessages.length).toBeGreaterThan(0);
+  });
 });
