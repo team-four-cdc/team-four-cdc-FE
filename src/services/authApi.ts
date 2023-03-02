@@ -8,11 +8,11 @@ interface AuthRequest {
 }
 
 interface VerifyRequest {
-  token: string;
+  generateCode: string;
 }
 
 interface AuthResponse {
-  user: any;
+  email: any;
   token: string;
 }
 
@@ -42,7 +42,7 @@ export const authApi = createApi({
     }),
     verify: builder.mutation<AuthResponse, VerifyRequest>({
       query: (payload) => ({
-        url: '/verify',
+        url: '/user/registration/verification',
         method: 'POST',
         body: payload,
       }),
