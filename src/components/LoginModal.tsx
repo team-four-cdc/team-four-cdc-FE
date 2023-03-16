@@ -94,7 +94,7 @@ const LoginModal = (props: Props) => {
         <div className="text-right mb-30px">
           <Typography.Paragraph className="mb-0 text-12px ">
             <Link
-              href={`/lupa-password`}
+              href={`/lupa-password?role=${role}`}
               onClick={onRedirect}
               className="text-black hover:text-secondary-color"
             >
