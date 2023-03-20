@@ -15,7 +15,7 @@ export default function Verifikasi() {
   useEffect(() => {
     const code = query.code as string;
     if (code) {
-      verify({ generateCode: code })
+      verify({ token: code })
         .unwrap()
         .then(() => setStatus('success'))
         .catch(() => setStatus('failed'));

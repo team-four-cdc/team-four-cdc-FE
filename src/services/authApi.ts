@@ -2,13 +2,15 @@ import { RootState } from '@/store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface AuthRequest {
-  fullname?: string;
+  role: string;
   email: string;
   password: string;
+  author?: string;
+  fullname?: string;
 }
 
 interface VerifyRequest {
-  generateCode: string;
+  token: string;
 }
 
 interface AuthResponse {
@@ -17,7 +19,8 @@ interface AuthResponse {
 }
 
 interface RegisterResponse {
-  message: string;
+  status: string;
+  data: any;
 }
 
 export const authApi = createApi({
@@ -35,14 +38,14 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     register: builder.mutation<RegisterResponse, AuthRequest>({
       query: (payload) => ({
-        url: '/register',
+        url: '/user/register',
         method: 'POST',
         body: payload,
       }),
     }),
     verify: builder.mutation<AuthResponse, VerifyRequest>({
       query: (payload) => ({
-        url: '/user/registration/verification',
+        url: '/user/verify',
         method: 'POST',
         body: payload,
       }),

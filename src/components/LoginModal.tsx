@@ -23,12 +23,21 @@ const LoginModal = (props: Props) => {
     penulis: 'Bagikan tulisanmu untuk pembaca, ayo gabung sebagai penulis',
   };
 
+  const roles = {
+    pembaca: 'reader',
+    penulis: 'creator',
+  };
+
   useEffect(() => {
     if (!visible) form.resetFields();
   }, [form, visible]);
 
   const onFinish = (values: any) => {
-    login(values)
+    login({
+      role: roles[role],
+      email: values['login-email'],
+      password: values['login-password'],
+    })
       .unwrap()
       .then(() => {
         notification.success({ message: 'Success' });
@@ -66,7 +75,7 @@ const LoginModal = (props: Props) => {
       <Form form={form} onFinish={onFinish} autoComplete="off">
         <Form.Item
           className="mb-35px"
-          name="email"
+          name="login-email"
           rules={[
             {
               required: true,
@@ -82,7 +91,7 @@ const LoginModal = (props: Props) => {
         </Form.Item>
         <Form.Item
           className="mb-10px"
-          name="password"
+          name="login-password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
           <TextInput
