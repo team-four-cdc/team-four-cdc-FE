@@ -15,10 +15,11 @@ export default function RegistrasiPembaca() {
     register({ ...values, role: 'reader', full_name: 'test', author: 'test' })
       .unwrap()
       .then((res) => {
-        notification.success({ message: res?.data?.message });
+        notification.success({ message: res?.data?.message || 'Success' });
+        creatorRegForm.resetFields();
       })
       .catch((err) => {
-        notification.error({ message: err?.data?.message });
+        notification.error({ message: err?.data?.message || 'Error' });
       });
   }
 
