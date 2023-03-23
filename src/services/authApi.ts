@@ -9,18 +9,14 @@ interface AuthRequest {
   fullname?: string;
 }
 
+interface AuthResponse {
+  status: string;
+  message: string;
+  data?: any;
+}
+
 interface VerifyRequest {
   token: string;
-}
-
-interface AuthResponse {
-  email: any;
-  token: string;
-}
-
-interface RegisterResponse {
-  status: string;
-  data: any;
 }
 
 export const authApi = createApi({
@@ -36,7 +32,7 @@ export const authApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    register: builder.mutation<RegisterResponse, AuthRequest>({
+    register: builder.mutation<AuthResponse, AuthRequest>({
       query: (payload) => ({
         url: '/user/register',
         method: 'POST',
@@ -51,10 +47,10 @@ export const authApi = createApi({
       }),
     }),
     login: builder.mutation<AuthResponse, AuthRequest>({
-      query: (payload) => ({
-        url: '/login',
+      query: ({ role, ...body }) => ({
+        url: `/auth/login/${role}`,
         method: 'POST',
-        body: payload,
+        body,
       }),
     }),
   }),
