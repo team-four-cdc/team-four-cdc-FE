@@ -12,7 +12,12 @@ export default function RegistrasiPembaca() {
   const [register, result] = useRegisterMutation();
 
   function onFinish(values: any) {
-    register({ ...values, role: 'reader', full_name: 'test', author: 'test' })
+    register({
+      ...values,
+      role: 'reader',
+      full_name: values.email, // TODO: should be updated once required field in Registraion API updated
+      author: values.email, // TODO: should be updated once required field in Registraion API updated
+    })
       .unwrap()
       .then((res) => {
         notification.success({ message: res?.data?.message || 'Success' });
