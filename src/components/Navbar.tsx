@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoginModal, { UserRole } from './LoginModal';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 interface NavbarProps {
   showWrapperOption: boolean;
@@ -15,6 +16,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const Router = useRouter();
 
+  const { auth } = useSelector((state: any) => state);
   const onClickLoginButton = (role: UserRole) => {
     setUserRole(role);
     setShowLoginModal(true);
@@ -38,14 +40,12 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
       name: 'Lihat Artikel',
       type: 'link',
       url: '/lihat-artikel',
-      show: '',
     },
     {
       name: 'Masuk Akun',
       type: 'dropdown',
       menu: 'login',
       url: '/login-pembaca',
-      show: '',
     },
     {
       name: 'Buat Akun',
@@ -53,42 +53,111 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
       menu: 'register',
       url: '/registrasi-pembaca',
       url2: '/registrasi-penulis',
-      show: '',
+    },
+  ];
+
+  const itemNavbarLogin = [
+    {
+      name: 'Lihat Artikel',
+      type: 'link',
+      url: '/lihat-artikel',
+    },
+    {
+      name: 'Daftar Artikelmu',
+      type: 'link',
+      url: '/daftar-artikel',
+    },
+    {
+      name: `Hi ${'nama kamu'}`,
+      type: 'dropdown',
+      menu: 'logout',
+      url: '/registrasi-pembaca',
     },
   ];
 
   function menu(type: string) {
     return (
       <Menu>
-        {itemMenus.map((menu: any, index: any) => {
-          return type == 'login' ? (
-            <Menu.Item key={index}>
-              <Button
-                className="bg-transparent"
-                type="text"
-                onClick={() => onClickLoginButton(menu.login)}
-              >
-                {menu.name}
-              </Button>
-            </Menu.Item>
-          ) : (
-            <Menu.Item key={index}>
-              <Link
-                href={menu.register}
-                className={classNames({
-                  'text-success-color': Router.asPath == menu.register,
-                })}
-              >
-                {menu.name}
-              </Link>
-            </Menu.Item>
-          );
-        })}
+        {type == 'logout' ? (
+          <Menu.Item>
+            <Button
+              className="bg-transparent"
+              type="text"
+              onClick={() => 'logout'}
+            >
+              Keluar
+            </Button>
+          </Menu.Item>
+        ) : (
+          itemMenus.map((menu: any, index: any) => {
+            return type == 'login' ? (
+              <Menu.Item key={index}>
+                <Button
+                  className="bg-transparent"
+                  type="text"
+                  onClick={() => onClickLoginButton(menu.login)}
+                >
+                  {menu.name}
+                </Button>
+              </Menu.Item>
+            ) : (
+              <Menu.Item key={index}>
+                <Link
+                  href={menu.register}
+                  className={classNames({
+                    'text-success-color': Router.asPath == menu.register,
+                  })}
+                >
+                  {menu.name}
+                </Link>
+              </Menu.Item>
+            );
+          })
+        )}
       </Menu>
     );
   }
 
-  const NavbarWrapp = (
+  const NavbarWrapp = auth.isLogin ? (
+    <>
+      {itemNavbarLogin.map((navbar: any, index: number) => {
+        switch (navbar.type) {
+          case 'link':
+            return (
+              <Link
+                key={index}
+                href={'/lihat-artikel'}
+                className={classNames({
+                  'text-success-color': Router.asPath == navbar.url,
+                })}
+              >
+                {navbar.name}
+              </Link>
+            );
+          case 'dropdown':
+            return (
+              <Dropdown
+                key={index}
+                overlay={menu(navbar.menu)}
+                trigger={['click']}
+                className={classNames(
+                  'cursor-pointer hover:text-success-color',
+                  {
+                    'text-success-color':
+                      Router.asPath == navbar.url ||
+                      Router.asPath == navbar.url2,
+                  }
+                )}
+              >
+                <Space>
+                  {navbar.name} <CaretDownFilled />
+                </Space>
+              </Dropdown>
+            );
+        }
+      })}
+    </>
+  ) : (
     <>
       {itemNavbar.map((navbar: any, index: number) => {
         switch (navbar.type) {
