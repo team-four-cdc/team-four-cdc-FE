@@ -16,7 +16,7 @@ interface Props extends ModalProps {
 const LoginModal = (props: Props) => {
   const { visible, setVisibility, role, ...modalProps } = props;
   const [form] = Form.useForm();
-  const [login, result] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   const text = {
     pembaca: 'Login dulu yuk, agar dapat membaca lebih menyenangkan dengan',
@@ -117,7 +117,7 @@ const LoginModal = (props: Props) => {
             label="Login"
             htmlType="submit"
             className="mb-10px"
-            loading={result.isLoading}
+            loading={isLoading}
           />
           <Typography.Paragraph className="mb-0 text-12px">
             Anda belum punya akun ?

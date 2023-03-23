@@ -9,7 +9,7 @@ import { useRegisterMutation } from '@/services';
 
 export default function RegistrasiPembaca() {
   const [creatorRegForm] = Form.useForm();
-  const [register, result] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
   function onFinish(values: any) {
     register({
@@ -103,7 +103,7 @@ export default function RegistrasiPembaca() {
                 label="Daftarkan Akun"
                 className="self-center"
                 icon={<EditFilled />}
-                loading={result.isLoading}
+                loading={isLoading}
               />
               <div className="h-5" />
             </div>
