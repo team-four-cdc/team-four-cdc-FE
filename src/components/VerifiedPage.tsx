@@ -3,6 +3,7 @@ import { Typography } from 'antd';
 import Image from 'next/image';
 import StyledButton from './Button';
 import { EyeOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 
 interface StandardVerifiedPageProps {
   status: 'success' | 'failed' | 'error';
@@ -10,6 +11,7 @@ interface StandardVerifiedPageProps {
 
 export default function VerifiedPage(props: StandardVerifiedPageProps) {
   const { status = 'error' } = props;
+  const router = useRouter();
 
   const contents = {
     success: {
@@ -18,6 +20,7 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
       description:
         'Selamat verifikasi anda berhasil, silakan nikmati membaca artikel secara lengkap',
       labelButton: 'Halaman BacaAku',
+      urlRedirect: '/',
       isSuccess: true,
     },
     failed: {
@@ -25,7 +28,8 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
       title: 'Verifikasi gagal',
       description:
         'Mohon maaf verifikasi anda gagal, silakan mencoba untuk mendaftar kembali',
-      labelButton: 'Kembali Registrasi',
+      labelButton: 'Kembali Beranda',
+      urlRedirect: '/',
       isSuccess: false,
     },
     error: {
@@ -34,6 +38,7 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
       description:
         'Hallo maaf, saat ini halaman yang anda tuju sedang ada masalah. Silakan ke Beranda',
       labelButton: 'Kembali Beranda',
+      urlRedirect: '/',
       isSuccess: false,
     },
   };
@@ -64,6 +69,7 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
           type={contents[status].isSuccess ? 'primary' : 'default'}
           size="large"
           icon={contents[status].isSuccess ? <EyeOutlined /> : null}
+          onClick={() => router.push(contents[status].urlRedirect)}
         />
       </div>
     </div>
