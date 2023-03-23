@@ -13,14 +13,14 @@ export default function Verifikasi() {
   const [status, setStatus] = useState<Status>('error');
 
   useEffect(() => {
-    const code = query.code as string;
-    if (code) {
-      verify({ generateCode: code })
+    const token = query.token as string;
+    if (token) {
+      verify({ token })
         .unwrap()
         .then(() => setStatus('success'))
         .catch(() => setStatus('failed'));
     }
-  }, [query.code, verify]);
+  }, [query.token, verify]);
 
   if (isUninitialized || isLoading)
     return (
