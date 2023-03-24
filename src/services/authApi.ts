@@ -9,6 +9,13 @@ interface AuthRequest {
   fullname?: string;
 }
 
+interface ForgotPassRequest {
+  email: string;
+  role: string;
+}
+
+type ForgotPassResponse = any
+
 interface VerifyRequest {
   token: string;
 }
@@ -52,7 +59,14 @@ export const authApi = createApi({
     }),
     login: builder.mutation<AuthResponse, AuthRequest>({
       query: (payload) => ({
-        url: '/login',
+        url: `/auth/login/${payload.role}`,
+        method: 'POST',
+        body: payload,
+      }),
+    }),
+    forgotPassword: builder.mutation<ForgotPassResponse, ForgotPassRequest>({
+      query: (payload) => ({
+        url: `/auth/send-email/${payload.role}`,
         method: 'POST',
         body: payload,
       }),
@@ -60,5 +74,5 @@ export const authApi = createApi({
   }),
 });
 
-export const { useRegisterMutation, useVerifyMutation, useLoginMutation } =
+export const { useRegisterMutation, useVerifyMutation, useLoginMutation, useForgotPasswordMutation } =
   authApi;
