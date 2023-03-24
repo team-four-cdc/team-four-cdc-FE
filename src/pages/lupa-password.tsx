@@ -35,6 +35,7 @@ export default function LupaPassword() {
       .catch((err) => {
         notification.error({ message: err?.message });
       });
+
   };
 
   // placeholder function
