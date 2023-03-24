@@ -44,7 +44,7 @@ const LoginModal = (props: Props) => {
         setVisibility(false);
       })
       .catch((err) => {
-        notification.error({ message: err?.message });
+        notification.error({ message: err?.data });
       });
   };
 
