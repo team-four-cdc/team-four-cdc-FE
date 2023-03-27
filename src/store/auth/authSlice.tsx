@@ -5,12 +5,14 @@ interface AuthState {
   email: any;
   token: string | null;
   isLogin: boolean;
+  role: string | null;
 }
 
 const initialState: AuthState = {
   email: null,
   token: null,
   isLogin: false,
+  role: null,
 };
 
 const authSlice = createSlice({
