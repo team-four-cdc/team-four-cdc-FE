@@ -2,15 +2,15 @@ import { authApi } from '@/services';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {
-  role: any;
   token: string | null;
   isLogin: boolean;
+  role: string | null;
 }
 
 const initialState: AuthState = {
-  role: null,
   token: null,
   isLogin: false,
+  role: null,
 };
 
 const authSlice = createSlice({
