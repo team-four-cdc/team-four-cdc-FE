@@ -20,7 +20,7 @@ export default function RegistrasiPenulis() {
     })
       .unwrap()
       .then((res) => {
-        notification.success({ message: res?.data?.message || 'Success' });
+        notification.success({ message: res?.message || 'Success' });
         creatorRegForm.resetFields();
       })
       .catch((err) => {

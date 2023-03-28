@@ -1,4 +1,3 @@
-import { RootState } from '@/store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface AuthRequest {
@@ -9,34 +8,21 @@ interface AuthRequest {
   fullname?: string;
 }
 
+interface AuthResponse {
+  status: string;
+  message: string;
+  data?: any;
+}
+
 interface VerifyRequest {
   token: string;
 }
 
-interface AuthResponse {
-  email: any;
-  token: string;
-}
-
-interface RegisterResponse {
-  status: string;
-  data: any;
-}
-
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL }),
   endpoints: (builder) => ({
-    register: builder.mutation<RegisterResponse, AuthRequest>({
+    register: builder.mutation<AuthResponse, AuthRequest>({
       query: (payload) => ({
         url: '/user/register',
         method: 'POST',
@@ -51,10 +37,10 @@ export const authApi = createApi({
       }),
     }),
     login: builder.mutation<AuthResponse, AuthRequest>({
-      query: (payload) => ({
-        url: '/login',
+      query: ({ role, ...body }) => ({
+        url: `/auth/login/${role}`,
         method: 'POST',
-        body: payload,
+        body,
       }),
     }),
   }),
