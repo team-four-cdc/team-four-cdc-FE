@@ -19,7 +19,7 @@ describe('Registration API', () => {
     fullName: '',
   };
 
-  test('request is correct', () => {
+  it('request is correct', () => {
     fetchMock.mockResponse(JSON.stringify({}));
     return store
       .dispatch(authApi.endpoints.register.initiate(successPayload))
@@ -31,7 +31,7 @@ describe('Registration API', () => {
       });
   });
 
-  test('successful response', () => {
+  it('successful response', () => {
     const response = { status: 'fulfilled', message: 'success' };
     fetchMock.mockResponse(JSON.stringify(response));
     return store
@@ -44,7 +44,7 @@ describe('Registration API', () => {
       });
   });
 
-  test('unsuccessful response', () => {
+  it('unsuccessful response', () => {
     fetchMock.mockReject(new Error('Internal Server Error'));
     return store
       .dispatch(authApi.endpoints.register.initiate(errorPayload))
@@ -64,7 +64,7 @@ describe('Verify API', () => {
     token: '',
   };
 
-  test('request is correct', () => {
+  it('request is correct', () => {
     fetchMock.mockResponse(JSON.stringify({}));
     return store
       .dispatch(authApi.endpoints.verify.initiate(successPayload))
@@ -76,7 +76,7 @@ describe('Verify API', () => {
       });
   });
 
-  test('successful response', () => {
+  it('successful response', () => {
     const response = { status: 'fulfilled', message: 'success' };
     fetchMock.mockResponse(JSON.stringify(response));
     return store
@@ -89,7 +89,7 @@ describe('Verify API', () => {
       });
   });
 
-  test('unsuccessful response', () => {
+  it('unsuccessful response', () => {
     fetchMock.mockReject(new Error('Internal Server Error'));
     return store
       .dispatch(authApi.endpoints.verify.initiate(errorPayload))
@@ -113,7 +113,7 @@ describe('Login API', () => {
     role: '',
   };
 
-  test('request is correct', () => {
+  it('request is correct', () => {
     fetchMock.mockResponse(JSON.stringify({}));
     return store
       .dispatch(authApi.endpoints.login.initiate(successPayload))
@@ -127,7 +127,7 @@ describe('Login API', () => {
       });
   });
 
-  test('successful response', () => {
+  it('successful response', () => {
     const response = { status: 'fulfilled', message: 'success' };
     fetchMock.mockResponse(JSON.stringify(response));
     return store
@@ -140,7 +140,7 @@ describe('Login API', () => {
       });
   });
 
-  test('unsuccessful response', () => {
+  it('unsuccessful response', () => {
     fetchMock.mockReject(new Error('Internal Server Error'));
     return store
       .dispatch(authApi.endpoints.login.initiate(errorPayload))

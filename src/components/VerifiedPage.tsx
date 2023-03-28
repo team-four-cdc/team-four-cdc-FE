@@ -25,7 +25,7 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
     },
     failed: {
       image: '/verifiedFailed.svg',
-      title: 'Verifikasi gagal',
+      title: 'Verifikasi Gagal',
       description:
         'Mohon maaf verifikasi anda gagal, silakan mencoba untuk mendaftar kembali',
       labelButton: 'Kembali Beranda',
