@@ -26,7 +26,7 @@ export default function LupaPassword() {
     forgotPassword({
       email,
       // TODO: placeholder
-      role: 'creator'
+      role: router.query.role ? router.query.role as string : 'creator'
     })
       .unwrap()
       .then(() => {
