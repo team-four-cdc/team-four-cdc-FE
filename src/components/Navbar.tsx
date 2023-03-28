@@ -1,11 +1,12 @@
 import { CaretDownFilled } from '@ant-design/icons';
-import { Button, Dropdown, Menu, Space } from 'antd';
+import { Button, Dropdown, Menu, Space, Typography } from 'antd';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoginModal, { UserRole } from './LoginModal';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetAuth } from '@/store/auth/authSlice';
 
 interface NavbarProps {
   showWrapperOption: boolean;
@@ -15,7 +16,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   const [userRole, setUserRole] = useState<UserRole>('pembaca');
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const Router = useRouter();
-
+  const dispatch = useDispatch();
   const { auth } = useSelector((state: any) => state);
   const onClickLoginButton = (role: UserRole) => {
     setUserRole(role);
@@ -83,7 +84,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
             <Button
               className="bg-transparent"
               type="text"
-              onClick={() => 'logout'}
+              onClick={() => dispatch(resetAuth())}
             >
               Keluar
             </Button>
@@ -120,42 +121,53 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
 
   const NavbarWrapp = auth.isLogin ? (
     <>
-      {itemNavbarLogin.map((navbar: any, index: number) => {
-        switch (navbar.type) {
-          case 'link':
-            return (
-              <Link
-                key={index}
-                href={'/lihat-artikel'}
-                className={classNames({
-                  'text-success-color': Router.asPath == navbar.url,
-                })}
-              >
-                {navbar.name}
-              </Link>
-            );
-          case 'dropdown':
-            return (
-              <Dropdown
-                key={index}
-                overlay={menu(navbar.menu)}
-                trigger={['click']}
-                className={classNames(
-                  'cursor-pointer hover:text-success-color',
-                  {
-                    'text-success-color':
-                      Router.asPath == navbar.url ||
-                      Router.asPath == navbar.url2,
-                  }
-                )}
-              >
-                <Space>
-                  {navbar.name} <CaretDownFilled />
-                </Space>
-              </Dropdown>
-            );
-        }
-      })}
+      {auth.role == 'pembaca' ? (
+        itemNavbarLogin.map((navbar: any, index: number) => {
+          switch (navbar.type) {
+            case 'link':
+              return (
+                <Link
+                  key={index}
+                  href={'/lihat-artikel'}
+                  className={classNames({
+                    'text-success-color': Router.asPath == navbar.url,
+                  })}
+                >
+                  {navbar.name}
+                </Link>
+              );
+            case 'dropdown':
+              return (
+                <Dropdown
+                  key={index}
+                  overlay={menu(navbar.menu)}
+                  trigger={['click']}
+                  className={classNames(
+                    'cursor-pointer hover:text-success-color',
+                    {
+                      'text-success-color':
+                        Router.asPath == navbar.url ||
+                        Router.asPath == navbar.url2,
+                    }
+                  )}
+                >
+                  <Space>
+                    {navbar.name} <CaretDownFilled />
+                  </Space>
+                </Dropdown>
+              );
+          }
+        })
+      ) : (
+        <>
+          <div className="flex items-center justify-center gap-8">
+            <div className="w-10 h-10 rounded-full bg-primary-color" />
+            <Typography.Paragraph className="mb-0 font-normal text-14px text-secondary-color">
+              Selamat Datang, {'nama penulis'}
+            </Typography.Paragraph>
+          </div>
+        </>
+      )}
     </>
   ) : (
     <>
@@ -205,7 +217,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   return (
     <>
       <div className="sticky top-0 flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
-        <div>
+        <div className="flex items-center justify-center">
           <Link href={'/'} className="text-30px !text-secondary-color">
             BacaAku
           </Link>

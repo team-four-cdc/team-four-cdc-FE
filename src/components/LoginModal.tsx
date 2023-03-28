@@ -39,12 +39,12 @@ const LoginModal = (props: Props) => {
       password: values['login-password'],
     })
       .unwrap()
-      .then(() => {
-        notification.success({ message: 'Success' });
+      .then((res) => {
+        notification.success({ message: res?.message || 'Success' });
         setVisibility(false);
       })
       .catch((err) => {
-        notification.error({ message: err?.data });
+        notification.error({ message: err?.data?.message || 'Error' });
       });
   };
 

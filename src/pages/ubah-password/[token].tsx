@@ -2,37 +2,17 @@ import StyledButton from '@/components/Button';
 import TextInput from '@/components/TextInput';
 import Heads from '@/layout/Head/Head';
 import { Form, Typography } from 'antd';
-import { useState, ChangeEvent } from 'react';
+import { useRouter } from 'next/router';
 
 export default function UbahPassword() {
-  const [password, setPassword] = useState<string>('');
-  const [newPassword, setNewPassword] = useState<string>('');
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const { query } = useRouter();
+  // using for API if API Provided
+  console.log('QUERY', query);
   const [form] = Form.useForm();
-
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    if (event.target.id === 'password') {
-      setPassword(event.target.value);
-    }
-  }
-
-  function handleChangeNewPassword(event: ChangeEvent<HTMLInputElement>) {
-    if (event.target.id === 'newPassword') {
-      setNewPassword(event.target.value);
-    }
-  }
-
   const onFinish = (values: any) => {
-    console.log(values);
+    // using for call API After API Provided
+    console.log('hasil', values);
   };
-
-  // placeholder function
-  function sendEmail() {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
-  }
 
   return (
     <>
@@ -65,8 +45,6 @@ export default function UbahPassword() {
               type="password"
               label="Password Baru"
               placeholder="Password Baru anda"
-              onChange={handleChange}
-              value={password}
             />
           </Form.Item>
           <Form.Item
@@ -98,8 +76,6 @@ export default function UbahPassword() {
               type="password"
               label="Konfirmasi Password Baru"
               placeholder="Mohon untuk periksa kembali password anda"
-              onChange={handleChangeNewPassword}
-              value={newPassword}
             />
           </Form.Item>
           <div className="text-center mt-7">
@@ -108,10 +84,6 @@ export default function UbahPassword() {
               type="primary"
               label="Ganti Password"
               className="self-center"
-              loading={isLoading}
-              onClick={() => {
-                sendEmail();
-              }}
             />
           </div>
         </Form>
