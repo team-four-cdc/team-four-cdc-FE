@@ -52,7 +52,7 @@ export const authApi = createApi({
     }),
     forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordRequest>({
       query: (payload) => ({
-        url: '/login',
+        url: `/auth/send-email/${payload.role}`,
         method: 'POST',
         body: payload,
       }),
