@@ -14,6 +14,17 @@ interface AuthResponse {
   data?: any;
 }
 
+interface ChangePasswordRequest {
+  newPassword: string;
+  resetPasswordToken: any;
+}
+
+interface ChangePasswordResponse {
+  status: string;
+  message: string;
+  data?: any;
+}
+
 interface VerifyRequest {
   token: string;
 }
@@ -43,8 +54,19 @@ export const authApi = createApi({
         body,
       }),
     }),
+    ubahPass: builder.mutation<ChangePasswordResponse, ChangePasswordRequest>({
+      query: (payload) => ({
+        url: '/auth/reset-password',
+        method: 'PUT',
+        body: payload,
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation, useVerifyMutation, useLoginMutation } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useVerifyMutation,
+  useLoginMutation,
+  useUbahPassMutation,
+} = authApi;

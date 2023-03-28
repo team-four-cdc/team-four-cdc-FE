@@ -1,17 +1,27 @@
 import StyledButton from '@/components/Button';
 import TextInput from '@/components/TextInput';
 import Heads from '@/layout/Head/Head';
-import { Form, Typography } from 'antd';
+import { useUbahPassMutation } from '@/services';
+import { Form, Typography, notification } from 'antd';
 import { useRouter } from 'next/router';
 
 export default function UbahPassword() {
   const { query } = useRouter();
-  // using for API if API Provided
-  console.log('QUERY', query);
   const [form] = Form.useForm();
+  const [UbahPassword, { isLoading }] = useUbahPassMutation();
   const onFinish = (values: any) => {
-    // using for call API After API Provided
-    console.log('hasil', values);
+    UbahPassword({
+      newPassword: values.newPassword,
+      resetPasswordToken: query.token,
+    })
+      .unwrap()
+      .then((res) => {
+        notification.success({ message: res?.message || 'Success' });
+        form.resetFields();
+      })
+      .catch((err) => {
+        notification.error({ message: err?.data?.message || 'Error' });
+      });
   };
 
   return (
@@ -84,6 +94,7 @@ export default function UbahPassword() {
               type="primary"
               label="Ganti Password"
               className="self-center"
+              loading={isLoading}
             />
           </div>
         </Form>
