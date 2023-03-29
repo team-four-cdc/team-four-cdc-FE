@@ -1,10 +1,16 @@
 import { authApi } from '@/services';
 import { createSlice } from '@reduxjs/toolkit';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
+
+interface DecodedToken extends JwtPayload {
+  email: string;
+  role: 'reader' | 'creator' | null;
+}
 
 interface AuthState {
   token: string | null;
   isLogin: boolean;
-  role: string | null;
+  role: 'reader' | 'creator' | null;
 }
 
 const initialState: AuthState = {
@@ -22,16 +28,20 @@ const authSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.verify.matchFulfilled,
       (state, { payload }) => {
-        state.role = payload.data?.role;
-        state.token = payload.data?.token;
+        const token = payload.data?.token;
+        const { role = null } = token ? jwt_decode<DecodedToken>(token) : {};
+        state.role = role;
+        state.token = token;
         state.isLogin = true;
       }
     );
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
-        state.role = payload.data?.role;
-        state.token = payload.data?.token;
+        const token = payload.data?.token;
+        const { role = null } = token ? jwt_decode<DecodedToken>(token) : {};
+        state.role = role;
+        state.token = token;
         state.isLogin = true;
       }
     );

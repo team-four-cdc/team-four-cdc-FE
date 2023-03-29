@@ -121,7 +121,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
 
   const NavbarWrapp = auth.isLogin ? (
     <>
-      {auth.role == 'pembaca' ? (
+      {auth.role == 'reader' ? (
         itemNavbarLogin.map((navbar: any, index: number) => {
           switch (navbar.type) {
             case 'link':
