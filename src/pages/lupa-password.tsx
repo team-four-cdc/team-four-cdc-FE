@@ -9,9 +9,8 @@ import { useState, ChangeEvent } from 'react';
 
 export default function LupaPassword() {
   const [email, setEmail] = useState<string>('');
-  const [_isLoading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
-  const router = useRouter()
+  const router = useRouter();
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -21,12 +20,11 @@ export default function LupaPassword() {
   }
 
   const onFinish = (values: any) => {
-    const { email } = values
-    sendEmail()
+    const { email } = values;
     forgotPassword({
       email,
       // TODO: placeholder
-      role: router.query.role !== 'pembaca' ? 'creator' : 'reader'
+      role: router.query.role !== 'pembaca' ? 'creator' : 'reader',
     })
       .unwrap()
       .then(() => {
@@ -35,17 +33,7 @@ export default function LupaPassword() {
       .catch((err) => {
         notification.error({ message: err?.message });
       });
-
   };
-
-  // placeholder function
-  function sendEmail() {
-    setLoading(true);
-    setTimeout(() => {
-      // alert('Not implemented');
-      setLoading(false);
-    }, 100);
-  }
 
   return (
     <>
@@ -102,7 +90,7 @@ export default function LupaPassword() {
               icon={<ArrowLeftOutlined />}
               loading={isLoading}
               onClick={() => {
-                router.push('/')
+                router.push('/');
               }}
             />
           </div>
