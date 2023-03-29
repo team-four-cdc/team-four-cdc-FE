@@ -8,6 +8,13 @@ interface AuthRequest {
   fullname?: string;
 }
 
+interface ForgotPasswordRequest {
+  role: string;
+  email: string;
+}
+
+type ForgotPasswordResponse = any;
+
 interface AuthResponse {
   status: string;
   message: string;
@@ -43,8 +50,22 @@ export const authApi = createApi({
         body,
       }),
     }),
+    forgotPassword: builder.mutation<
+      ForgotPasswordResponse,
+      ForgotPasswordRequest
+    >({
+      query: (payload) => ({
+        url: `/auth/send-email/${payload.role}`,
+        method: 'POST',
+        body: payload,
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation, useVerifyMutation, useLoginMutation } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useVerifyMutation,
+  useLoginMutation,
+  useForgotPasswordMutation,
+} = authApi;

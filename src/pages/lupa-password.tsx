@@ -1,14 +1,17 @@
 import StyledButton from '@/components/Button';
 import TextInput from '@/components/TextInput';
 import Heads from '@/layout/Head/Head';
+import { useForgotPasswordMutation } from '@/services';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Form, Typography } from 'antd';
+import { Form, Typography, notification } from 'antd';
+import { useRouter } from 'next/router';
 import { useState, ChangeEvent } from 'react';
 
 export default function LupaPassword() {
   const [email, setEmail] = useState<string>('');
-  const [isLoading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
+  const router = useRouter();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.id === 'email') {
@@ -17,17 +20,20 @@ export default function LupaPassword() {
   }
 
   const onFinish = (values: any) => {
-    console.log(values);
+    const { email } = values;
+    forgotPassword({
+      email,
+      // TODO: placeholder
+      role: router.query.role !== 'pembaca' ? 'creator' : 'reader',
+    })
+      .unwrap()
+      .then(() => {
+        notification.success({ message: 'Success' });
+      })
+      .catch((err) => {
+        notification.error({ message: err?.message });
+      });
   };
-
-  // placeholder function
-  function sendEmail() {
-    setLoading(true);
-    setTimeout(() => {
-      // alert('Not implemented');
-      setLoading(false);
-    }, 100);
-  }
 
   return (
     <>
@@ -74,9 +80,6 @@ export default function LupaPassword() {
               label="Kirim Email"
               className="self-center"
               loading={isLoading}
-              onClick={() => {
-                sendEmail();
-              }}
             />
           </div>
           <div className="mt-5 text-center">
@@ -87,7 +90,7 @@ export default function LupaPassword() {
               icon={<ArrowLeftOutlined />}
               loading={isLoading}
               onClick={() => {
-                sendEmail();
+                router.push('/');
               }}
             />
           </div>
