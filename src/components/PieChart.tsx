@@ -3,12 +3,16 @@ import { Pie } from '@ant-design/plots';
 const PieChart = () => {
   const data = [
     {
-      type: 'Read',
-      value: 73,
+      type: 'Article B',
+      value: 2200000,
     },
     {
-      type: 'Sales',
-      value: 27,
+      type: 'Article C',
+      value: 1800000,
+    },
+    {
+      type: 'Article A',
+      value: 6000000,
     },
   ];
 
@@ -19,7 +23,15 @@ const PieChart = () => {
       colorField="type"
       legend={false}
       label={false}
-      color={['#5ABF41', '#B8FFA7']}
+      color={['#78DB5F', '#B8FFA7', '#5ABF41']}
+      tooltip={{
+        formatter: (data: any) => {
+          return {
+            name: data.type,
+            value: `Rp.${new Intl.NumberFormat('id-ID').format(data.value)}`,
+          };
+        },
+      }}
     />
   );
 };
