@@ -1,3 +1,4 @@
+import { formatCurrency } from '@/utils';
 import { Pie } from '@ant-design/plots';
 
 const PieChart = () => {
@@ -28,7 +29,7 @@ const PieChart = () => {
         formatter: (data: any) => {
           return {
             name: data.type,
-            value: `Rp.${new Intl.NumberFormat('id-ID').format(data.value)}`,
+            value: formatCurrency({ value: data.value }),
           };
         },
       }}
