@@ -47,4 +47,22 @@ describe('Login Modal Component', () => {
       expect(message).toBeInTheDocument();
     });
   });
+
+  it('closes modal when user click lupa password button', async () => {
+    const user = userEvent.setup();
+    const setVisibility = jest.fn(() => false);
+    render(
+      <LoginModal
+        visible={true}
+        setVisibility={setVisibility}
+        role="pembaca"
+      />,
+      { store }
+    );
+    const loginButton = screen.getByText(/lupa password/i);
+    await user.click(loginButton);
+    await waitFor(() => {
+      expect(setVisibility).toBeCalled();
+    });
+  });
 });
