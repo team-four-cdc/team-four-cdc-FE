@@ -1,7 +1,13 @@
 import React, { ReactElement } from 'react';
 import Heads from '@/layout/Head/Head';
 import { Col, Layout, Row, Typography } from 'antd';
-import { Column, ColumnConfig } from '@ant-design/plots';
+import { ColumnConfig } from '@ant-design/plots';
+import dynamic from 'next/dynamic';
+
+const Column = dynamic(
+  () => import('@ant-design/charts').then(({ Column }) => Column),
+  { ssr: false }
+);
 
 const { Title } = Typography;
 
