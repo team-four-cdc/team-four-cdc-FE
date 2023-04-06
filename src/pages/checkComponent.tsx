@@ -32,6 +32,7 @@ export default function CheckComponent() {
 
   const dataArticle = [
     {
+      id: 1,
       preview: 'https://i.pravatar.cc/',
       title: 'Judulrd',
       desc: 'Hac adipiscing ridiculus per Conubia',
@@ -64,8 +65,8 @@ export default function CheckComponent() {
 
   return (
     <>
-      <ArticleList items={data} />
-      <DrawerNavigation items={dataArticle} />
+      <ArticleList items={dataArticle} />
+      <DrawerNavigation items={data} />
     </>
   );
 }
