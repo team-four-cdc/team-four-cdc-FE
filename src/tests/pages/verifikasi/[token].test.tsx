@@ -26,7 +26,7 @@ describe('Verification Page', () => {
     });
   });
 
-  it('shows message failed when verification failed', async () => {
+  it('shows failed message when verification failed', async () => {
     render(<Verifikasi />, { store });
     fetchMock.mockReject(new Error('Internal Server Error'));
     await waitFor(() => {
