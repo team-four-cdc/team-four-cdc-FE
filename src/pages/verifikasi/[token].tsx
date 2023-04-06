@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useVerifyMutation } from '@/services';
 import { useRouter } from 'next/router';
 import { Spin } from 'antd';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '@/store/auth/authSlice';
 
 type Status = 'success' | 'failed' | 'error';
 
@@ -11,16 +13,20 @@ export default function Verifikasi() {
   const { query } = useRouter();
   const [verify, { isLoading, isUninitialized }] = useVerifyMutation();
   const [status, setStatus] = useState<Status>('error');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const token = query.token as string;
     if (token) {
       verify({ token })
         .unwrap()
-        .then(() => setStatus('success'))
+        .then(() => {
+          setStatus('success');
+          dispatch(setAuth(token));
+        })
         .catch(() => setStatus('failed'));
     }
-  }, [query.token, verify]);
+  }, [dispatch, query.token, verify]);
 
   if (isUninitialized || isLoading)
     return (

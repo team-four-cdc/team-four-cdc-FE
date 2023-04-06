@@ -1,5 +1,5 @@
 import { authApi } from '@/services';
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 
 interface DecodedToken extends JwtPayload {
@@ -23,19 +23,16 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: initialState,
   reducers: {
+    setAuth: (state, action: PayloadAction<string>) => {
+      const token = action.payload;
+      const { role = null } = token ? jwt_decode<DecodedToken>(token) : {};
+      state.role = role;
+      state.token = token;
+      state.isLogin = true;
+    },
     resetAuth: () => initialState,
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      authApi.endpoints.verify.matchFulfilled,
-      (state, { payload }) => {
-        const token = payload.data?.token;
-        const { role = null } = token ? jwt_decode<DecodedToken>(token) : {};
-        state.role = role;
-        state.token = token;
-        state.isLogin = true;
-      }
-    );
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
@@ -49,5 +46,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetAuth } = authSlice.actions;
+export const { setAuth, resetAuth } = authSlice.actions;
 export default authSlice.reducer;

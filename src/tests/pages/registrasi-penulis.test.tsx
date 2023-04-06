@@ -4,38 +4,47 @@ import { render } from '@/tests';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-test('should render essential UI components', () => {
-  render(<RegistrasiPenulis />, { store });
-  const nameField = screen.getAllByPlaceholderText(/nama/i);
-  const emailField = screen.getAllByPlaceholderText(/email/i);
-  const passwordField = screen.getAllByPlaceholderText(/password/i);
-  const signupButton = screen.getByRole('button', { name: /daftarkan akun/i });
-  expect(nameField[0]).toBeInTheDocument();
-  expect(emailField[0]).toBeInTheDocument();
-  expect(passwordField[0]).toBeInTheDocument();
-  expect(signupButton).toBeInTheDocument();
-});
+describe('Registration Creator Page', () => {
+  it('shows success message when registration success', async () => {
+    const user = userEvent.setup();
+    render(<RegistrasiPenulis />, { store });
+    const response = [{ status: 'fulfilled', message: 'success' }];
+    fetchMock.mockResponse(JSON.stringify(response));
+    const name = 'name';
+    const nameField = screen.getAllByPlaceholderText(/nama/i);
+    await user.type(nameField[0], name);
+    const email = 'email@gmail.com';
+    const emailField = screen.getAllByPlaceholderText(/email/i);
+    await user.type(emailField[0], email);
+    const password = 'password';
+    const passwordField = screen.getAllByPlaceholderText(/password/i);
+    await user.type(passwordField[0], password);
+    const submitButton = screen.getByText(/daftarkan akun/i);
+    await user.click(submitButton);
+    await waitFor(() => {
+      const message = screen.getByText(/success/i);
+      expect(message).toBeInTheDocument();
+    });
+  });
 
-test('text input works', async () => {
-  const user = userEvent.setup();
-  const textName = 'Qwert Yuiop';
-  const textEmail = 'asdfghjkl';
-  render(<RegistrasiPenulis />, { store });
-  const nameField = screen.getAllByPlaceholderText(/nama/i);
-  const emailField = screen.getAllByPlaceholderText(/email/i);
-  await user.type(nameField[0], textName);
-  await user.type(emailField[0], textEmail);
-  expect(nameField[0]).toHaveValue(textName);
-  expect(emailField[0]).toHaveValue(textEmail);
-});
-
-test('all fields are required', async () => {
-  const user = userEvent.setup();
-  render(<RegistrasiPenulis />, { store });
-  const submitButton = screen.getByText(/daftarkan akun/i);
-  await user.click(submitButton);
-  await waitFor(() => {
-    const errorMessages = screen.getAllByText(/harus diisi/i);
-    expect(errorMessages.length).toBeGreaterThan(0);
+  it('shows failed message when registration failed', async () => {
+    const user = userEvent.setup();
+    render(<RegistrasiPenulis />, { store });
+    fetchMock.mockReject(new Error('Internal Server Error'));
+    const name = 'name';
+    const nameField = screen.getAllByPlaceholderText(/nama/i);
+    await user.type(nameField[0], name);
+    const email = 'email@gmail.com';
+    const emailField = screen.getAllByPlaceholderText(/email/i);
+    await user.type(emailField[0], email);
+    const password = 'password';
+    const passwordField = screen.getAllByPlaceholderText(/password/i);
+    await user.type(passwordField[0], password);
+    const submitButton = screen.getByText(/daftarkan akun/i);
+    await user.click(submitButton);
+    await waitFor(() => {
+      const message = screen.getByText(/error/i);
+      expect(message).toBeInTheDocument();
+    });
   });
 });

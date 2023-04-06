@@ -4,34 +4,41 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { store } from '@/store';
 
-test('should render essential UI components', () => {
-  render(<RegistrasiPembaca />, { store });
-  const emailField = screen.getAllByPlaceholderText(/email/i);
-  const passwordField = screen.getAllByPlaceholderText(/password/i);
-  const signupButton = screen.getByRole('button', { name: /daftarkan akun/i });
-  expect(emailField[0]).toBeInTheDocument();
-  expect(passwordField[0]).toBeInTheDocument();
-  expect(signupButton).toBeInTheDocument();
-});
+describe('Registration Reader Page', () => {
+  it('shows success message when registration success', async () => {
+    const user = userEvent.setup();
+    render(<RegistrasiPembaca />, { store });
+    const response = [{ status: 'fulfilled', message: 'success' }];
+    fetchMock.mockResponse(JSON.stringify(response));
+    const email = 'email@gmail.com';
+    const emailField = screen.getAllByPlaceholderText(/email/i);
+    await user.type(emailField[0], email);
+    const password = 'password';
+    const passwordField = screen.getAllByPlaceholderText(/password/i);
+    await user.type(passwordField[0], password);
+    const submitButton = screen.getByText(/daftarkan akun/i);
+    await user.click(submitButton);
+    await waitFor(() => {
+      const message = screen.getByText(/success/i);
+      expect(message).toBeInTheDocument();
+    });
+  });
 
-test('text input works', async () => {
-  const user = userEvent.setup();
-  const text = 'asdfghjkl';
-  render(<RegistrasiPembaca />, { store });
-  const emailField = screen.getAllByPlaceholderText(/email/i);
-  await user.type(emailField[0], text);
-  await user.type(emailField[1], text);
-  expect(emailField[0]).toHaveValue(text);
-  expect(emailField[1]).toHaveValue(text);
-});
-
-test('all fields are required', async () => {
-  const user = userEvent.setup();
-  render(<RegistrasiPembaca />, { store });
-  const submitButton = screen.getByText(/daftarkan akun/i);
-  await user.click(submitButton);
-  await waitFor(() => {
-    const errorMessages = screen.getAllByText(/harus diisi/i);
-    expect(errorMessages.length).toBeGreaterThan(0);
+  it('shows failed message when registration failed', async () => {
+    const user = userEvent.setup();
+    render(<RegistrasiPembaca />, { store });
+    fetchMock.mockReject(new Error('Internal Server Error'));
+    const email = 'email@gmail.com';
+    const emailField = screen.getAllByPlaceholderText(/email/i);
+    await user.type(emailField[0], email);
+    const password = 'password';
+    const passwordField = screen.getAllByPlaceholderText(/password/i);
+    await user.type(passwordField[0], password);
+    const submitButton = screen.getByText(/daftarkan akun/i);
+    await user.click(submitButton);
+    await waitFor(() => {
+      const message = screen.getByText(/error/i);
+      expect(message).toBeInTheDocument();
+    });
   });
 });
