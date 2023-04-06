@@ -12,11 +12,12 @@ export default function RegistrasiPenulis() {
   const [register, { isLoading }] = useRegisterMutation();
 
   function onFinish(values: any) {
+    const { fullName, ...payload } = values;
     register({
-      ...values,
+      ...payload,
       role: 'creator',
-      full_name: values.fullName,
-      author: values.fullName,
+      full_name: fullName,
+      author: fullName,
     })
       .unwrap()
       .then((res) => {
