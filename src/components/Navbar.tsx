@@ -216,7 +216,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
 
   return (
     <>
-      <div className="sticky top-0 flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow">
+      <div className="sticky top-0 flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow z-50">
         <div className="flex items-center justify-center">
           <Link href={'/'} className="text-30px !text-secondary-color">
             BacaAku
