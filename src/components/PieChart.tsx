@@ -1,5 +1,9 @@
 import { formatCurrency } from '@/utils';
-import { Pie } from '@ant-design/plots';
+import dynamic from 'next/dynamic';
+
+const Pie = dynamic(() => import('@ant-design/charts').then(({ Pie }) => Pie), {
+  ssr: false,
+});
 
 const PieChart = () => {
   const data = [

@@ -51,10 +51,5 @@
     "sass": "^1.58.0",
     "tailwindcss": "^3.2.4",
     "typescript": "4.9.5"
-  },
-  "overrides": {
-    "@antv/g2": "4.2.8",
-    "@antv/g-base": "0.5.11",
-    "@antv/path-util": "2.0.15"
   }
 }
