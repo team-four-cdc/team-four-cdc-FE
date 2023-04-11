@@ -1,35 +1,8 @@
-import DrawerNavigation from '@/components/DrawerNavigation';
 import ArticleList from '@/components/ArticleList';
+import Heads from '@/layout/Head/Head';
+import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 
 export default function CheckComponent() {
-  const data = [
-    {
-      id: 1,
-      label: 'Dashboard Overview',
-      url: '/',
-    },
-    {
-      id: 2,
-      label: 'Daftar Artikel',
-      url: '/',
-    },
-    {
-      id: 3,
-      label: 'Buat Artikel',
-      url: '/',
-    },
-    {
-      id: 4,
-      label: 'Profil Penulis',
-      url: '/',
-    },
-    {
-      id: 5,
-      label: 'Log Out',
-      url: '/',
-    },
-  ];
-
   const dataArticle = [
     {
       id: 1,
@@ -65,8 +38,10 @@ export default function CheckComponent() {
 
   return (
     <>
-      <ArticleList items={dataArticle} />
-      <DrawerNavigation items={data} />
+      <Heads title="Daftar artikel" showNavbar={true} showWrappOption={true} />
+      <WriterLayout>
+        <ArticleList items={dataArticle} />
+      </WriterLayout>
     </>
   );
 }

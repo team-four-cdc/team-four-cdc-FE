@@ -2,6 +2,7 @@ import { Typography } from 'antd';
 import router from 'next/router';
 import React from 'react';
 import StyledButton from './Button';
+import classNames from 'classnames';
 
 interface Item {
   id: number;
@@ -16,7 +17,7 @@ interface Props {
 const ItemList: React.FC<Props> = ({ items }) => {
   return (
     <div>
-      <div className="text-center">
+      <div className="h-full text-center bg-monocrom-color">
         <div className="mb-30px">
           <Typography.Text className="text-20px !text-secondary-color">
             Menu
@@ -31,6 +32,9 @@ const ItemList: React.FC<Props> = ({ items }) => {
               block
               round="rounded"
               active="active:bg-green-700 active:text-white"
+              className={classNames('border-none text-14px', {
+                'bg-success-color text-white': router.asPath == item.url,
+              })}
               onClick={() => router.push(item.url)}
             />
           </div>

@@ -20,7 +20,7 @@ export default function StyledButton(props: StandardButtonProps): JSX.Element {
   return (
     <Button
       {...props}
-      className={(props.className ?? '') + roundClass + ' ' + activeClass}
+      className={(props.className ?? '') + ' ' + roundClass + ' ' + activeClass}
     >
       {label}
     </Button>

@@ -3,6 +3,7 @@ import Heads from '@/layout/Head/Head';
 import { Col, Layout, Row, Typography } from 'antd';
 import { ColumnConfig } from '@ant-design/plots';
 import dynamic from 'next/dynamic';
+import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 
 const Column = dynamic(
   () => import('@ant-design/charts').then(({ Column }) => Column),
@@ -122,44 +123,52 @@ export default function DashboardPenulis() {
           showNavbar={true}
           showWrappOption={true}
         />
-        <Layout style={{ margin: '2em 4em' }}>
-          {/* Sidebar */}
-          <Row gutter={[16, 16]}>
-            <BorderedCol>
-              <>
-                <Title level={1}>Total Penjualan</Title>
-                <Title style={{ color: '#6ec759' }} level={3}>
-                  Rp. 10.000.000
-                </Title>
-                <Title level={4}>50 Pembeli</Title>
-              </>
-            </BorderedCol>
-            <BorderedCol>
-              <>
-                <Title level={1}>Top Artikel Pembaca</Title>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1em' }}>
-                  <BorderedTagParent>Gimana caranya menanam?</BorderedTagParent>
-                  <BorderedTagParent>Gimana caranya menanam?</BorderedTagParent>
-                  <BorderedTagParent>Masak daging asap</BorderedTagParent>
-                  <BorderedTagParent>Ngoding gampang</BorderedTagParent>
-                </div>
-              </>
-            </BorderedCol>
-          </Row>
-          <Row gutter={[16, 16]}>
-            <Col
-              xs={24}
-              style={{
-                border: '2px solid black',
-                padding: '8px',
-                borderRadius: '8px',
-              }}
-            >
-              <Title level={1}>Grafik Penjualan</Title>
-              <Column {...config} />
-            </Col>
-          </Row>
-        </Layout>
+        <WriterLayout>
+          <Layout style={{ margin: '2em 4em' }}>
+            {/* Sidebar */}
+            <Row gutter={[16, 16]}>
+              <BorderedCol>
+                <>
+                  <Title level={1}>Total Penjualan</Title>
+                  <Title style={{ color: '#6ec759' }} level={3}>
+                    Rp. 10.000.000
+                  </Title>
+                  <Title level={4}>50 Pembeli</Title>
+                </>
+              </BorderedCol>
+              <BorderedCol>
+                <>
+                  <Title level={1}>Top Artikel Pembaca</Title>
+                  <div
+                    style={{ display: 'flex', flexWrap: 'wrap', gap: '1em' }}
+                  >
+                    <BorderedTagParent>
+                      Gimana caranya menanam?
+                    </BorderedTagParent>
+                    <BorderedTagParent>
+                      Gimana caranya menanam?
+                    </BorderedTagParent>
+                    <BorderedTagParent>Masak daging asap</BorderedTagParent>
+                    <BorderedTagParent>Ngoding gampang</BorderedTagParent>
+                  </div>
+                </>
+              </BorderedCol>
+            </Row>
+            <Row gutter={[16, 16]}>
+              <Col
+                xs={24}
+                style={{
+                  border: '2px solid black',
+                  padding: '8px',
+                  borderRadius: '8px',
+                }}
+              >
+                <Title level={1}>Grafik Penjualan</Title>
+                <Column {...config} />
+              </Col>
+            </Row>
+          </Layout>
+        </WriterLayout>
       </Layout>
     </>
   );
