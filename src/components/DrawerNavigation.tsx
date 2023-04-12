@@ -3,6 +3,8 @@ import router from 'next/router';
 import React from 'react';
 import StyledButton from './Button';
 import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
+import { resetAuth } from '@/store/auth/authSlice';
 
 interface Item {
   id: number;
@@ -15,6 +17,7 @@ interface Props {
 }
 
 const ItemList: React.FC<Props> = ({ items }) => {
+  const dispatch = useDispatch();
   return (
     <div>
       <div className="h-full text-center bg-monocrom-color">
@@ -35,7 +38,11 @@ const ItemList: React.FC<Props> = ({ items }) => {
               className={classNames('border-none text-14px', {
                 'bg-success-color text-white': router.asPath == item.url,
               })}
-              onClick={() => router.push(item.url)}
+              onClick={
+                item.id == 5
+                  ? () => dispatch(resetAuth())
+                  : () => router.push(item.url)
+              }
             />
           </div>
         ))}
