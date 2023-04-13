@@ -21,12 +21,12 @@ export default function DrawerList() {
     {
       id: 4,
       label: 'Profil Penulis',
-      url: '/',
+      url: '',
     },
     {
       id: 5,
       label: 'Log Out',
-      url: '/',
+      url: '',
     },
   ];
 
