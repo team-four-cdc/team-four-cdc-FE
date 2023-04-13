@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import Heads from '@/layout/Head/Head';
-import { Col, Layout, Row, Typography } from 'antd';
+import { Layout, Typography } from 'antd';
 import { ColumnConfig } from '@ant-design/plots';
 import dynamic from 'next/dynamic';
 import WriterLayout from '@/layout/Head/Writer/WriterLayout';
@@ -79,19 +79,21 @@ const config = {
 } satisfies ColumnConfig;
 
 export default function DashboardPenulis() {
-  function BorderedCol({ children }: { children: ReactElement }) {
+  function BorderedCol({
+    children,
+    className,
+  }: {
+    children: ReactElement;
+    className?: string;
+  }) {
     return (
-      <Col
-        style={{
-          border: '2px solid black',
-          padding: '8px',
-          borderRadius: '8px',
-        }}
-        xs={24}
-        md={12}
+      <div
+        className={`w-full border-2 border-black border-solid p-4 rounded-md ${
+          className ? className : ''
+        }`}
       >
         {children}
-      </Col>
+      </div>
     );
   }
 
@@ -101,15 +103,7 @@ export default function DashboardPenulis() {
     children: ReactElement | string;
   }) {
     return (
-      <button
-        style={{
-          flex: '0 1',
-          border: '1px solid black',
-          borderRadius: '9999px',
-          padding: '4px 8px',
-          whiteSpace: 'nowrap',
-        }}
-      >
+      <button className="flex-initial border-2 border-black border-solid rounded-full py-2 px-4 whitespace-nowrap">
         {children}
       </button>
     );
@@ -124,50 +118,34 @@ export default function DashboardPenulis() {
           showWrappOption={true}
         />
         <WriterLayout>
-          <Layout style={{ margin: '2em 4em' }}>
-            {/* Sidebar */}
-            <Row gutter={[16, 16]}>
-              <BorderedCol>
-                <>
-                  <Title level={1}>Total Penjualan</Title>
-                  <Title style={{ color: '#6ec759' }} level={3}>
-                    Rp. 10.000.000
-                  </Title>
-                  <Title level={4}>50 Pembeli</Title>
-                </>
-              </BorderedCol>
-              <BorderedCol>
-                <>
-                  <Title level={1}>Top Artikel Pembaca</Title>
-                  <div
-                    style={{ display: 'flex', flexWrap: 'wrap', gap: '1em' }}
-                  >
-                    <BorderedTagParent>
-                      Gimana caranya menanam?
-                    </BorderedTagParent>
-                    <BorderedTagParent>
-                      Gimana caranya menanam?
-                    </BorderedTagParent>
-                    <BorderedTagParent>Masak daging asap</BorderedTagParent>
-                    <BorderedTagParent>Ngoding gampang</BorderedTagParent>
-                  </div>
-                </>
-              </BorderedCol>
-            </Row>
-            <Row gutter={[16, 16]}>
-              <Col
-                xs={24}
-                style={{
-                  border: '2px solid black',
-                  padding: '8px',
-                  borderRadius: '8px',
-                }}
-              >
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 py-2 px-4">
+            <BorderedCol>
+              <>
+                <Title level={1}>Total Penjualan</Title>
+                <Title style={{ color: '#6ec759' }} level={3}>
+                  Rp. 10.000.000
+                </Title>
+                <Title level={4}>50 Pembeli</Title>
+              </>
+            </BorderedCol>
+            <BorderedCol>
+              <>
+                <Title level={1}>Top Artikel Pembaca</Title>
+                <div className="flex flex-wrap gap-4">
+                  <BorderedTagParent>Gimana caranya menanam?</BorderedTagParent>
+                  <BorderedTagParent>Gimana caranya menanam?</BorderedTagParent>
+                  <BorderedTagParent>Masak daging asap</BorderedTagParent>
+                  <BorderedTagParent>Ngoding gampang</BorderedTagParent>
+                </div>
+              </>
+            </BorderedCol>
+            <BorderedCol className="lg:col-span-2">
+              <>
                 <Title level={1}>Grafik Penjualan</Title>
                 <Column {...config} />
-              </Col>
-            </Row>
-          </Layout>
+              </>
+            </BorderedCol>
+          </div>
         </WriterLayout>
       </Layout>
     </>
