@@ -4,6 +4,7 @@ import { Layout, Typography } from 'antd';
 import { ColumnConfig } from '@ant-design/plots';
 import dynamic from 'next/dynamic';
 import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+import PieChart from '@/components/PieChart';
 
 const Column = dynamic(
   () => import('@ant-design/charts').then(({ Column }) => Column),
@@ -103,7 +104,7 @@ export default function DashboardPenulis() {
     children: ReactElement | string;
   }) {
     return (
-      <button className="flex-initial border-2 border-black border-solid rounded-full py-2 px-4 whitespace-nowrap">
+      <button className="flex-initial px-4 py-2 border-2 border-black border-solid rounded-full whitespace-nowrap">
         {children}
       </button>
     );
@@ -118,7 +119,7 @@ export default function DashboardPenulis() {
           showWrappOption={true}
         />
         <WriterLayout>
-          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 py-2 px-4">
+          <div className="grid grid-cols-1 gap-4 px-4 py-2 lg:grid-cols-2">
             <BorderedCol>
               <>
                 <Title level={1}>Total Penjualan</Title>
@@ -143,6 +144,12 @@ export default function DashboardPenulis() {
               <>
                 <Title level={1}>Grafik Penjualan</Title>
                 <Column {...config} />
+              </>
+            </BorderedCol>
+            <BorderedCol className="lg:col-span-2">
+              <>
+                <Title level={1}>Grafik Pembelian</Title>
+                <PieChart />
               </>
             </BorderedCol>
           </div>
