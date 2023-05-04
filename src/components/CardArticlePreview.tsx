@@ -14,23 +14,21 @@ export default function CardArticlePreview(
   props: StandardCardProps
 ): JSX.Element {
   return (
-    <div className="p-20">
-      <Card
-        {...props}
-        className="flex flex-row bg-monocrom-color shadow-primary-box-shadow rounded-radius-10px"
-      >
-        <Meta avatar={<Avatar src={props.avatar} />} title={props.creator} />
-        <div className="display-block pt-20px">
-          <Typography.Text className="text-18px !text-primary-color font-medium">
-            {props.preview}
-          </Typography.Text>
-        </div>
-        <div>
-          <Typography.Text className="text-12px !text-secondary-color">
-            {props.date}
-          </Typography.Text>
-        </div>
-      </Card>
-    </div>
+    <Card
+      {...props}
+      className="flex flex-row bg-monocrom-color shadow-primary-box-shadow rounded-radius-10px"
+    >
+      <Meta avatar={<Avatar src={props.avatar} />} title={props.creator} />
+      <div className="display-block pt-20px">
+        <Typography.Text className="text-18px !text-primary-color font-medium">
+          {props.preview}
+        </Typography.Text>
+      </div>
+      <div>
+        <Typography.Text className="text-12px !text-secondary-color">
+          {props.date}
+        </Typography.Text>
+      </div>
+    </Card>
   );
 }
