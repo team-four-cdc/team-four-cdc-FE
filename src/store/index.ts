@@ -1,51 +1,43 @@
-import { authApi, newsApi } from '@/services';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import authReducer from '@/store/auth/authSlice';
-import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';
-import { createWrapper, HYDRATE } from 'next-redux-wrapper';
+import { create, StateCreator } from 'zustand'
 
-const persistConfig = {
-  storage,
-  key: 'root',
-  whitelist: ['auth'],
-};
+interface BearSlice {
+  bears: number
+  addBear: () => void
+  eatFish: () => void
+}
+const createBearSlice: StateCreator<any> = (set) => ({
+  bears: 0,
+  addBear: () => set((state) => ({ bears: state.bears + 1 })),
+  eatFish: () => set((state) => ({ fishes: state.fishes - 1 })),
+  setAuth: (state, action: PayloadAction<string>) => {
+    const token = action.payload;
+    const { role = null } = token ? jwt_decode<DecodedToken>(token) : {};
+    state.role = role;
+    state.token = token;
+    state.isLogin = true;
+  },
+  resetAuth: () => initialState,
 
-const combinedReducer = combineReducers({
-  auth: authReducer,
-  [authApi.reducerPath]: authApi.reducer,
-  [newsApi.reducerPath]: newsApi.reducer,
-});
 
-const rootReducer: typeof combinedReducer = (state, action) => {
-  if (action.type === HYDRATE) {
-    const nextState = {
-      ...state,
-      ...action.payload,
-    };
-    return nextState;
-  } else {
-    return combinedReducer(state, action);
-  }
-};
+})
 
-export const persistedReducer = persistReducer(persistConfig, rootReducer);
+interface FishSlice {
+  fishes: number
+  addFish: () => void
+}
+const createFishSlice: StateCreator<
+  BearSlice & FishSlice,
+  [],
+  [],
+  FishSlice
+> = (set) => ({
+  fishes: 0,
+  addFish: () => set((state) => ({ fishes: state.fishes + 1 })),
+})
 
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }).concat([
-      authApi.middleware,
-      newsApi.middleware,
-    ]),
-});
+const useBoundStore = create<BearSlice & FishSlice>()((...a) => ({
+  ...createBearSlice(...a),
+  ...createFishSlice(...a),
+}))
 
-export const persistor = persistStore(store);
 
-export const wrapper = createWrapper(() => store);
-
-export type Store = typeof store;
-export type Reducer = typeof rootReducer;
-export type State = ReturnType<Reducer>;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
