@@ -41,7 +41,7 @@ export default function BuatArtikel() {
     <>
       <Heads title="Buat Artikel" showNavbar={true} showWrappOption={true} />
       <WriterLayout>
-        <Layout className="py-2 px-4">
+        <Layout className="px-4 py-2">
           <div className="flex items-center">
             <Button
               className="mt-[-20px] mr-4 border-none bg-inherit"
@@ -56,7 +56,7 @@ export default function BuatArtikel() {
               className="border-2 border-black border-solid min-h-[200px] rounded-md"
               {...props}
             >
-              <div className="flex justify-center items-center">
+              <div className="flex items-center justify-center">
                 <PlusOutlined className="text-[28px] mt-[-4px] mr-4" />
                 <p className="ant-upload-text">Upload Foto</p>
               </div>
@@ -75,7 +75,7 @@ export default function BuatArtikel() {
           <div className="grid grid-cols-1 mt-4">
             <Title level={3}>Kategori</Title>
             <Select
-              className="border-2 border-black border-solid w-full rounded-full overflow-hidden"
+              className="w-full overflow-hidden border-2 border-black border-solid rounded-full"
               defaultValue="lucy"
               options={[
                 {
@@ -101,17 +101,17 @@ export default function BuatArtikel() {
           <div className="grid grid-cols-1 mt-4">
             <Title level={3}>Deskripsi Singkat Artikel</Title>
             <TextArea
-              className="border-2 border-solid border-black rounded-md"
+              className="border-2 border-black border-solid rounded-md"
               rows={10}
               placeholder="Tuliskan deskripsi singkat, minimal 2 paragraph"
             />
           </div>
           <div className="grid grid-cols-1 mt-4">
             <Title level={3}>Tulis Artikel</Title>
-            <TextEditor className="border-2 border-black border-solid rounded-md overflow-hidden" />
+            <TextEditor className="overflow-hidden border-2 border-black border-solid rounded-md" />
             <Divider />
           </div>
-          <div className="grid grid-cols-2 mt-4 justify-center gap-4">
+          <div className="grid justify-center grid-cols-2 gap-4 mt-4">
             <Button href="/dashboard-penulis" type="link">
               Kembali ke dashboard
             </Button>
