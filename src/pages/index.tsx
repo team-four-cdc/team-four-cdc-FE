@@ -1,6 +1,7 @@
 import Heads from '@/layout/Head/Head';
 import CategoryList from '@/layout/Homepage/CategoryList';
 import NewArticleList from '@/layout/Homepage/NewArticleList';
+import WriterList from '@/layout/Homepage/WriterList';
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <div className="px-6 py-4">
         <CategoryList />
         <NewArticleList />
+        <WriterList />
       </div>
     </>
   );
