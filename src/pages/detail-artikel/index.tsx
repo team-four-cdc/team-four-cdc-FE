@@ -36,8 +36,8 @@ export default function DetailArtikel() {
             src="https://i.pravatar.cc/"
             alt=""
             title=""
-            width="100%"
-            height="100%"
+            width={100}
+            height={100}
             layout="responsive"
             objectFit="contain"
             className="mb-10"
