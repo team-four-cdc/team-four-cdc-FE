@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import StyledButton from './Button';
-import { Typography, Col, Row } from 'antd';
+import { Typography, Col, Row, notification } from 'antd';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { useDeleteArticleMutation } from '@/services';
 
 interface Item {
   id: number;
@@ -16,6 +19,31 @@ interface Props {
 }
 
 const ArticleList: React.FC<Props> = ({ items }) => {
+  const [deleteArticle, { isLoading }] = useDeleteArticleMutation();
+  const { token } = useSelector((state: RootState) => state.auth)
+
+  useEffect(() => {
+
+    return () => {
+
+    }
+  }, []);
+
+  async function onDelete() {
+    deleteArticle({
+      id: 1,
+      token
+    })
+      .unwrap()
+      .then((res) => {
+        notification.success({ message: res?.message || 'Success' });
+        // TODO: refetch the article list
+      })
+      .catch((err) => {
+        notification.error({ message: err?.data?.message || 'Error' });
+      });
+  }
+
   return (
     <div className="px-4 py-4 text-center">
       <div className="mb-20px">
@@ -66,6 +94,8 @@ const ArticleList: React.FC<Props> = ({ items }) => {
               <div className="mb-20px">
                 <StyledButton
                   type="default"
+                  onClick={() => onDelete()}
+                  loading={isLoading}
                   danger
                   size="large"
                   label="Hapus"
