@@ -5,7 +5,7 @@ export default function NewArticleList() {
   const Array = ['1', '2', '3', '4', '5'];
   return (
     <>
-      <div className="mt-16">
+      <div className="mt-16" data-testid="newsArticleTest">
         <Typography.Title className="text-30px text-secondary-color">
           Artikel Terbaru
         </Typography.Title>

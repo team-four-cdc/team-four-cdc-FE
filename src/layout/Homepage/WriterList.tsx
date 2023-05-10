@@ -13,7 +13,7 @@ export default function WriterList() {
   ];
   return (
     <>
-      <div className="mt-16">
+      <div className="mt-16" data-testid="writerListTest">
         <Typography.Title className="text-30px text-secondary-color">
           Daftar Penulis
         </Typography.Title>
