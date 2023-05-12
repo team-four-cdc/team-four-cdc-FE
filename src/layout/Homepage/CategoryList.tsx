@@ -5,7 +5,7 @@ export default function CategoryList() {
   const Array = ['1', '2', '3', '4', '5'];
   return (
     <>
-      <div className="mt-5">
+      <div className="mt-5" data-testid="categoryListTest">
         <Typography.Title className="text-30px text-secondary-color">
           Kategori Artikel
         </Typography.Title>

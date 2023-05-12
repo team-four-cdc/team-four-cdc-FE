@@ -1,19 +1,17 @@
-import { screen } from '@testing-library/react';
+import React from 'react';
 import Home from '@/pages/index';
 import { render } from '@/tests';
-import { store } from '@/store';
 
-describe('Home', () => {
-  it('renders without crashing', () => {
-    const home = render(<Home />, { store });
-    expect(home).toBeTruthy();
+describe('Home Component', () => {
+  test('ParentComponent renders', () => {
+    const { getByTestId } = render(<Home />);
+    expect(getByTestId('homepage')).toBeInTheDocument();
   });
 
-  it('renders a heading', () => {
-    render(<Home />, { store });
-    const heading = screen.getByRole('heading', {
-      name: 'Team Four - CDC',
-    });
-    expect(heading).toBeInTheDocument();
+  test('ChildComponent was called', () => {
+    const { getByTestId } = render(<Home />);
+    expect(getByTestId('categoryListTest')).toBeInTheDocument();
+    expect(getByTestId('newsArticleTest')).toBeInTheDocument();
+    expect(getByTestId('writerListTest')).toBeInTheDocument();
   });
 });
