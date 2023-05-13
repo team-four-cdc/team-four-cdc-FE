@@ -3,8 +3,6 @@ import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import StyledButton from './Button';
 import { Typography, Col, Row, notification } from 'antd';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { useDeleteArticleMutation } from '@/services';
 
 interface Item {
@@ -20,7 +18,6 @@ interface Props {
 
 const ArticleList: React.FC<Props> = ({ items }) => {
   const [deleteArticle, { isLoading }] = useDeleteArticleMutation();
-  const { token } = useSelector((state: RootState) => state.auth)
 
   useEffect(() => {
 
@@ -32,7 +29,6 @@ const ArticleList: React.FC<Props> = ({ items }) => {
   async function onDelete() {
     deleteArticle({
       id: 1,
-      token
     })
       .unwrap()
       .then((res) => {

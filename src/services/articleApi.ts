@@ -1,13 +1,5 @@
+import { RootState } from '@/store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { store } from "@/store"
-
-function generateHeaders(token: string | null = store.getState().auth.token) {
-  return {
-    'Authorization': `Bearer ${token}`
-  }
-}
-
-const headers = generateHeaders()
 
 interface ArticleRequest {
   id: number;
@@ -15,21 +7,28 @@ interface ArticleRequest {
 
 export const articleApi = createApi({
   reducerPath: 'articleApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL, prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).auth.token
+      if (!!token) {
+        headers.set('Authorization', `Bearer ${token}`)
+      }
+
+      return headers
+    }
+  }),
   endpoints: (builder) => ({
     createArticle: builder.mutation<any, any>({
       query: (payload) => ({
         url: '/article/create',
         method: 'POST',
         body: payload,
-        headers
       }),
     }),
     allArticle: builder.mutation<any, any>({
       query: (payload) => ({
         url: `/article/listing?userId=${payload.userId}`,
         method: 'GET',
-        headers
       }),
     }),
     // get: builder.mutation<AuthResponse, AuthRequest>({
@@ -47,7 +46,6 @@ export const articleApi = createApi({
         url: `/article/${payload.id}`,
         method: 'PUT',
         body: payload,
-        headers
       }),
     }),
     deleteArticle: builder.mutation<any, ArticleRequest>({
@@ -55,7 +53,6 @@ export const articleApi = createApi({
         url: `/article/${payload.id}`,
         method: 'DELETE',
         body: payload,
-        headers
       }),
     }),
   }),
