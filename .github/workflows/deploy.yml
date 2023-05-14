@@ -1,11 +1,8 @@
 name: Deploy Frontend
 
 on:
-  workflow_run:
-    workflows: ["Build Frontend"]
+  pull_request:
     branches: [ "develop" ]
-    types:
-      - completed
 
 jobs:
   deploy:
@@ -31,7 +28,7 @@ jobs:
     - name: Run export
       run: npm run export
     - name: Set AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
