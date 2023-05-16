@@ -69,7 +69,7 @@ export default function EditArticle() {
       router.back();
     }
 
-    return () => { };
+    return () => {};
     // eslint-disable-next-line
   }, []);
 

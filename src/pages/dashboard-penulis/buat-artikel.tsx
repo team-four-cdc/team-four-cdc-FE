@@ -49,7 +49,7 @@ export default function BuatArtikel() {
   useEffect(() => {
     getCategories();
 
-    return () => { };
+    return () => {};
     // eslint-disable-next-line
   }, []);
 
