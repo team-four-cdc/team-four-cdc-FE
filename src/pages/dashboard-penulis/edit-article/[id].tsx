@@ -69,7 +69,7 @@ export default function EditArticle() {
       router.back();
     }
 
-    return () => {};
+    return () => { };
     // eslint-disable-next-line
   }, []);
 
@@ -152,7 +152,7 @@ export default function EditArticle() {
       src={previewImage}
       width={350}
       height={200}
-      alt="Ayam"
+      alt="Image Preview"
       className="object-contain"
     />
   );

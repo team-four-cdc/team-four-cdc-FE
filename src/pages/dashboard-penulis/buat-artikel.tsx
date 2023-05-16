@@ -49,7 +49,7 @@ export default function BuatArtikel() {
   useEffect(() => {
     getCategories();
 
-    return () => {};
+    return () => { };
     // eslint-disable-next-line
   }, []);
 
@@ -131,7 +131,7 @@ export default function BuatArtikel() {
       src={previewImage}
       width={350}
       height={200}
-      alt="Ayam"
+      alt="Image Preview"
       className="object-contain"
     />
   );
