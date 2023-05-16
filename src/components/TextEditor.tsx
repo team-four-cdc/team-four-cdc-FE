@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -28,21 +27,25 @@ const modules = {
 
 interface ITextEditor {
   className?: string;
+  defaultValue?: any;
+  currentValue: any;
+  // eslint-disable-next-line
+  handleBodyChange: (arg: string) => void;
 }
 
-export const TextEditor: React.FC<ITextEditor> = ({ className }) => {
-  const [content, setContent] = useState('');
-
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
-
+export const TextEditor: React.FC<ITextEditor> = ({
+  className,
+  handleBodyChange,
+  defaultValue,
+  currentValue,
+}) => {
   return (
     <div>
       <QuillNoSSRWrapper
         className={`${className ? className : ''}`}
         modules={modules}
-        onChange={setContent}
+        value={!!defaultValue ? defaultValue : currentValue}
+        onChange={(value) => handleBodyChange(value)}
         theme="snow"
       />
     </div>

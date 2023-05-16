@@ -9,6 +9,7 @@ export default function MainLayout({ children }: any) {
     auth.role == 'creator' && auth.isLogin
       ? Router.push('/dashboard-penulis')
       : Router.push('/');
+    // eslint-disable-next-line
   }, [auth]);
   return <>{children}</>;
 }

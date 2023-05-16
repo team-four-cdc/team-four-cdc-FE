@@ -4,6 +4,7 @@ import StyledButton from './Button';
 import { Typography, Col, Row, notification } from 'antd';
 import Image from 'next/image';
 import { useDeleteArticleMutation } from '@/services';
+import { useRouter } from 'next/router';
 
 interface Item {
   id: number;
@@ -14,26 +15,25 @@ interface Item {
 
 interface Props {
   items: Item[];
+  fetchArticle: () => void;
 }
 
-const ArticleList: React.FC<Props> = ({ items }) => {
+const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
   const [deleteArticle, { isLoading }] = useDeleteArticleMutation();
+  const route = useRouter();
 
   useEffect(() => {
-
-    return () => {
-
-    }
+    return () => {};
   }, []);
 
-  async function onDelete() {
+  async function onDelete(id: number) {
     deleteArticle({
-      id: 1,
+      id,
     })
       .unwrap()
       .then((res) => {
         notification.success({ message: res?.message || 'Success' });
-        // TODO: refetch the article list
+        fetchArticle();
       })
       .catch((err) => {
         notification.error({ message: err?.data?.message || 'Error' });
@@ -44,6 +44,7 @@ const ArticleList: React.FC<Props> = ({ items }) => {
     <div className="px-4 py-4 text-center">
       <div className="mb-20px">
         <StyledButton
+          onClick={() => route.push('/dashboard-penulis/buat-artikel')}
           type="default"
           size="large"
           block
@@ -60,7 +61,7 @@ const ArticleList: React.FC<Props> = ({ items }) => {
               <Image
                 width={161}
                 height={112}
-                src={item.preview}
+                src={`http://localhost:5000/api/media/${item.preview}`}
                 alt={'Preview Articel Pics'}
               />
             </Col>
@@ -79,6 +80,13 @@ const ArticleList: React.FC<Props> = ({ items }) => {
             <Col span={6} className="text-left">
               <div className="py-20px">
                 <StyledButton
+                  onClick={() => {
+                    localStorage.setItem(
+                      `article_${item.id}`,
+                      JSON.stringify(item)
+                    );
+                    route.push(`/dashboard-penulis/edit-article/${item.id}`);
+                  }}
                   type="primary"
                   ghost
                   size="large"
@@ -90,7 +98,7 @@ const ArticleList: React.FC<Props> = ({ items }) => {
               <div className="mb-20px">
                 <StyledButton
                   type="default"
-                  onClick={() => onDelete()}
+                  onClick={() => onDelete(item.id)}
                   loading={isLoading}
                   danger
                   size="large"

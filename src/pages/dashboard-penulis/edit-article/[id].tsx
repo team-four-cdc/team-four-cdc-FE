@@ -1,8 +1,4 @@
-import { TextEditor } from '@/components/TextEditor';
-import Heads from '@/layout/Head/Head';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
-import DOMPurify from 'dompurify';
-import { MenuOutlined, PlusOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Layout,
@@ -13,14 +9,16 @@ import {
   Divider,
   notification,
 } from 'antd';
-import type { RcFile, UploadProps } from 'antd/es/upload';
-import { useEffect, useState } from 'react';
-import type { UploadFile } from 'antd/es/upload/interface';
+import Heads from '@/layout/Head/Head';
+import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+import { MenuOutlined, PlusOutlined } from '@ant-design/icons';
+import { TextEditor } from '@/components/TextEditor';
+import { useGetCategoriesMutation, useUpdateArticleMutation } from '@/services';
+import DOMPurify from 'dompurify';
+import { UploadProps } from 'antd/es/upload';
+import { RcFile, UploadFile } from 'antd/lib/upload/interface';
 import Image from 'next/image';
-import { useCreateArticleMutation, useGetCategoriesMutation } from '@/services';
-
-const { Title } = Typography;
-const { TextArea } = Input;
+import { useRouter } from 'next/router';
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -30,12 +28,17 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-export default function BuatArtikel() {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [previewImage, setPreviewImage] = useState('');
-  const [createArticle] = useCreateArticleMutation();
+const { Title } = Typography;
+const { TextArea } = Input;
+
+export default function EditArticle() {
   const [getAllCategories] = useGetCategoriesMutation();
+  const [updateArticle] = useUpdateArticleMutation();
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [categories, setCategories] = useState<any>([]);
+  const [previewImage, setPreviewImage] = useState('');
+  const router = useRouter();
+  const { id: articleId } = router.query;
   const [articleData, setArticleData] = useState({
     body: '',
     price: 1,
@@ -47,7 +50,24 @@ export default function BuatArtikel() {
   });
 
   useEffect(() => {
-    getCategories();
+    const article = JSON.parse(
+      localStorage.getItem(`article_${articleId}`) as string
+    );
+    if (!!article) {
+      const temp = { ...articleData };
+      temp.body = article.body;
+      temp.price = article.price;
+      temp.title = article.title;
+      temp.picture = article.preview;
+      temp.authorId = article.author_id;
+      temp.categoryId = article.category_id;
+      temp.description = article.desc;
+
+      setArticleData(temp);
+      getCategories();
+    } else {
+      router.back();
+    }
 
     return () => {};
     // eslint-disable-next-line
@@ -109,8 +129,9 @@ export default function BuatArtikel() {
     formData.append('authorId', articleData.authorId.toString());
     formData.append('categoryId', articleData.categoryId.toString());
     formData.append('description', articleData.description);
+    formData.append('id', articleId as string);
 
-    createArticle(formData)
+    updateArticle(formData)
       .then((res: any) => {
         notification.success({ message: res?.message || 'Success' });
       })
@@ -138,7 +159,7 @@ export default function BuatArtikel() {
 
   return (
     <>
-      <Heads title="Buat Artikel" showNavbar={true} showWrappOption={true} />
+      <Heads title="Edit Artikel" showNavbar={true} showWrappOption={true} />
       <WriterLayout>
         <Layout className="py-2 px-4">
           <form
@@ -217,7 +238,6 @@ export default function BuatArtikel() {
             <div className="grid grid-cols-1 mt-4">
               <Title level={3}>Deskripsi Singkat Artikel</Title>
               <TextArea
-                value={articleData.description}
                 onChange={(e) => {
                   const temp = { ...articleData };
                   temp.description = e.target.value;
@@ -226,12 +246,13 @@ export default function BuatArtikel() {
                 className="border-2 border-solid border-black rounded-md"
                 rows={10}
                 placeholder="Tuliskan deskripsi singkat, minimal 2 paragraph"
-              />
+                value={articleData.description}
+              ></TextArea>
             </div>
             <div className="grid grid-cols-1 mt-4">
               <Title level={3}>Tulis Artikel</Title>
               <TextEditor
-                currentValue={articleData.body}
+                currentValue={DOMPurify.sanitize(articleData.body)}
                 handleBodyChange={handleBodyChange}
                 className="border-2 border-black border-solid rounded-md overflow-hidden"
               />
@@ -242,7 +263,7 @@ export default function BuatArtikel() {
                 Kembali ke dashboard
               </Button>
               <Button htmlType="submit" className="border-md" type="primary">
-                Buat Artikel
+                Edit Artikel
               </Button>
             </div>
           </form>
