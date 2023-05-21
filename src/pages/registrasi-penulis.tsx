@@ -43,7 +43,10 @@ export default function RegistrasiPenulis() {
         <div className="inline-block w-11/12 ml-4 align-top align-center sm:w-4/5 lg:w-1/2">
           <div>
             <Typography.Title className="mb-1">Daftar</Typography.Title>
-            <Typography.Text>Coba frontend deployment!</Typography.Text>
+            <Typography.Text>
+              Punya berita, cerita, atau ilmu menarik yang ingin kamu bagikan,
+              dan ingin mendapat hasil dari menulis? Gabung yuk sebagai penulis!
+            </Typography.Text>
           </div>
 
           <Form
