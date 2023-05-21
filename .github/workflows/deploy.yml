@@ -43,7 +43,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: output-files
-        path: output
+        path: out
     - name: Deploy
       uses: appleboy/scp-action@v0.1.4
       with:
@@ -51,5 +51,6 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        source: output/*
-        target: ~/
+        source: out/*
+        rm: true
+        target: /var/www/
