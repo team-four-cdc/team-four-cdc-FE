@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
     steps:
     - uses: actions/checkout@v3
     - name: Setup Node
@@ -37,8 +39,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Get artifact
+      id: download
       uses: actions/download-artifact@v3
       with:
         name: output-files
+        path: ~/output
     - name: Output contens
-      run: ls 
+      run: echo ${{steps.download.outputs.download-path}}
