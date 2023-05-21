@@ -2,14 +2,16 @@ name: Deploy Frontend
 
 on:
   workflow_run:
-    workflows: ["Build Frontend"]
+    workflows: ["Test Frontend"]
     branches: [ "develop" ]
     types:
       - completed
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
     steps:
     - uses: actions/checkout@v3
     - name: Setup Node
@@ -30,11 +32,45 @@ jobs:
       run: npm run build
     - name: Run export
       run: npm run export
-    - name: Set AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-southeast-1
-    - name: Deploy to S3
-      run: aws s3 sync ./out s3://cdcteam4-fe
+        name: output-files
+        path: ${{ secrets.OUT_DIR }}
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get artifact
+      id: download
+      uses: actions/download-artifact@v3
+      with:
+        name: output-files
+        path: ${{ secrets.OUT_DIR }}
+    - name: Remove existing output on server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sudo rm -R ${{ format('~/{0}', secrets.OUT_DIR) }}
+          sudo rm -R ${{ format('{0}/{1}', secrets.WEBROOT_DIR, secrets.OUT_DIR) }}
+    - name: Deploy
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        source: ${{ format('{0}/*', secrets.OUT_DIR) }}
+        target: ~/
+    - name: Copy output to web server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: sudo cp -r ${{ format('{0}/ {1}/', secrets.OUT_DIR, secrets.WEBROOT_DIR) }}
