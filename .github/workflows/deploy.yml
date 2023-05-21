@@ -44,6 +44,16 @@ jobs:
       with:
         name: output-files
         path: out
+    - name: Remove existing output on server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sudo rm -R ~/out
+          sudo rm -R /var/www/out
     - name: Deploy
       uses: appleboy/scp-action@v0.1.4
       with:
@@ -52,5 +62,12 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         source: out/*
-        rm: true
-        target: /var/www/out/
+        target: ~/
+    - name: Copy output to web server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: sudo cp -r out/ /var/www/
