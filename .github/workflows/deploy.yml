@@ -53,4 +53,4 @@ jobs:
         port: ${{ secrets.PORT }}
         source: out/*
         rm: true
-        target: /var/www/
+        target: /var/www/out/
