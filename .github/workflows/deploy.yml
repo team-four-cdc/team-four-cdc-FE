@@ -52,8 +52,8 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          sudo rm -R ${{ format('~/{1}', secrets.OUT_DIR) }}
-          sudo rm -R ${{ format('{1}/{2}', secrets.WEBROOT_DIR, secrets.OUT_DIR) }}
+          sudo rm -R ${{ format('~/{0}', secrets.OUT_DIR) }}
+          sudo rm -R ${{ format('{0}/{1}', secrets.WEBROOT_DIR, secrets.OUT_DIR) }}
     - name: Deploy
       uses: appleboy/scp-action@v0.1.4
       with:
@@ -61,7 +61,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        source: ${{ format('{1}/*', secrets.OUT_DIR) }}
+        source: ${{ format('{0}/*', secrets.OUT_DIR) }}
         target: ~/
     - name: Copy output to web server
       uses: appleboy/ssh-action@v0.1.10
@@ -70,4 +70,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        script: sudo cp -r ${{ format('{1}/ {2}/', secrets.OUT_DIR, secrets.WEBROOT_DIR) }}
+        script: sudo cp -r ${{ format('{0}/ {1}/', secrets.OUT_DIR, secrets.WEBROOT_DIR) }}
