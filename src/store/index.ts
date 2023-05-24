@@ -1,4 +1,4 @@
-import { authApi, newsApi } from '@/services';
+import { articleApi, authApi, categoriesApi, newsApi } from '@/services';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from '@/store/auth/authSlice';
 import storage from 'redux-persist/lib/storage';
@@ -15,6 +15,8 @@ const combinedReducer = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
   [newsApi.reducerPath]: newsApi.reducer,
+  [articleApi.reducerPath]: articleApi.reducer,
+  [categoriesApi.reducerPath]: categoriesApi.reducer,
 });
 
 const rootReducer: typeof combinedReducer = (state, action) => {
@@ -37,6 +39,8 @@ export const store = configureStore({
     getDefaultMiddleware({ serializableCheck: false }).concat([
       authApi.middleware,
       newsApi.middleware,
+      articleApi.middleware,
+      categoriesApi.middleware,
     ]),
 });
 

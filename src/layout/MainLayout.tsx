@@ -8,7 +8,8 @@ export default function MainLayout({ children }: any) {
   useEffect(() => {
     auth.role == 'creator' && auth.isLogin
       ? Router.push('/dashboard-penulis')
-      : '';
+      : Router.push('/');
+    // eslint-disable-next-line
   }, [auth]);
   return <>{children}</>;
 }
