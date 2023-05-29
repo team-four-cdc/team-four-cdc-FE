@@ -89,9 +89,8 @@ export default function DashboardPenulis() {
   }) {
     return (
       <div
-        className={`w-full border-2 border-black border-solid p-4 rounded-md ${
-          className ? className : ''
-        }`}
+        className={`w-full border-2 border-black border-solid p-4 rounded-md ${className ? className : ''
+          }`}
       >
         {children}
       </div>

@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { useDeleteArticleMutation } from '@/services';
 import { useRouter } from 'next/router';
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+
 interface Item {
   id: number;
   preview: string;
@@ -23,7 +25,7 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
   const route = useRouter();
 
   useEffect(() => {
-    return () => {};
+    return () => { };
   }, []);
 
   async function onDelete(id: number) {
@@ -41,7 +43,7 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
   }
 
   return (
-    <div className="px-4 py-4 text-center">
+    <div className="px-4 py-4 text-center w-full">
       <div className="mb-20px">
         <StyledButton
           onClick={() => route.push('/dashboard-penulis/buat-artikel')}
@@ -61,7 +63,7 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
               <Image
                 width={161}
                 height={112}
-                src={`http://localhost:5000/api/media/${item.preview}`}
+                src={`${baseUrl}/media/${item.preview}`}
                 alt={'Preview Articel Pics'}
               />
             </Col>
