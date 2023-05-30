@@ -1,85 +1,52 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import Heads from '@/layout/Head/Head';
 import { Layout, Typography } from 'antd';
-import { ColumnConfig } from '@ant-design/plots';
-import dynamic from 'next/dynamic';
 import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import PieChart from '@/components/PieChart';
-
-const Column = dynamic(
-  () => import('@ant-design/charts').then(({ Column }) => Column),
-  { ssr: false }
-);
+import ColumnChart from '@/components/ColumnChart';
+import { useGetDashboardMutation } from '@/services';
 
 const { Title } = Typography;
 
-const data = [
-  {
-    type: '家具家电',
-    sales: 38,
-  },
-  {
-    type: '粮油副食',
-    sales: 52,
-  },
-  {
-    type: '生鲜水果',
-    sales: 61,
-  },
-  {
-    type: '美容洗护',
-    sales: 145,
-  },
-  {
-    type: '母婴用品',
-    sales: 48,
-  },
-  {
-    type: '进口食品',
-    sales: 38,
-  },
-  {
-    type: '食品饮料',
-    sales: 38,
-  },
-  {
-    type: '家庭清洁',
-    sales: 38,
-  },
-];
-
-const config = {
-  data,
-  xField: 'type',
-  yField: 'sales',
-  color: '#6ec759',
-  label: {
-    // 可手动配置 label 数据标签位置
-    position: 'middle',
-    // 'top', 'bottom', 'middle',
-    // 配置样式
-    style: {
-      fill: '#FFFFFF',
-      opacity: 0.6,
-    },
-  },
-  xAxis: {
-    label: {
-      autoHide: true,
-      autoRotate: false,
-    },
-  },
-  meta: {
-    type: {
-      alias: '类别',
-    },
-    sales: {
-      alias: '销售额',
-    },
-  },
-} satisfies ColumnConfig;
-
 export default function DashboardPenulis() {
+  const userId = '7';
+  const [dashboardPieData, setDashboardPieData] = useState<
+    {
+      type: string;
+      value: number;
+    }[]
+  >([]);
+  const [dashboardColumnData, setDashboardColumnData] = useState<
+    {
+      type: string;
+      sales: number;
+    }[]
+  >([]);
+  const [getDashboard] = useGetDashboardMutation();
+
+  const fetchDashboard = async (userId: any) => {
+    try {
+      const res = await getDashboard(userId).unwrap();
+      const { transactions } = res.data;
+      const dataPie = transactions?.map((item: any) => ({
+        type: item.Article.title,
+        value: parseInt(item.value),
+      }));
+      const dataColumn = transactions?.map((item: any) => ({
+        type: item.Article.title,
+        sales: parseInt(item.sales),
+      }));
+      setDashboardPieData(dataPie);
+      setDashboardColumnData(dataColumn);
+    } catch (error) {
+      console.log('Error fetching airport locations:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDashboard(userId);
+  }, []);
+
   function BorderedCol({
     children,
     className,
@@ -143,13 +110,13 @@ export default function DashboardPenulis() {
             <BorderedCol className="lg:col-span-2">
               <>
                 <Title level={1}>Grafik Penjualan</Title>
-                <Column {...config} />
+                <ColumnChart items={dashboardColumnData} />
               </>
             </BorderedCol>
             <BorderedCol className="lg:col-span-2">
               <>
                 <Title level={1}>Grafik Pembelian</Title>
-                <PieChart />
+                <PieChart items={dashboardPieData} />
               </>
             </BorderedCol>
           </div>
