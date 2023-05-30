@@ -1,7 +1,6 @@
 const withLess = require('next-with-less');
 
 module.exports = withLess({
-  assetPrefix: './',
   lessLoaderOptions: {
     lessOptions: {
       javascriptEnabled: true,
