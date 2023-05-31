@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useDeleteArticleMutation } from '@/services';
 import { useRouter } from 'next/router';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface Item {
   id: number;
@@ -25,7 +25,7 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
   const route = useRouter();
 
   useEffect(() => {
-    return () => { };
+    return () => {};
   }, []);
 
   async function onDelete(id: number) {

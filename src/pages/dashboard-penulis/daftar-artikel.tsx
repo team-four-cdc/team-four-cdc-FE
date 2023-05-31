@@ -11,7 +11,7 @@ export default function CheckComponent() {
   useEffect(() => {
     fetchArticle();
 
-    return () => { };
+    return () => {};
     // eslint-disable-next-line
   }, []);
 
