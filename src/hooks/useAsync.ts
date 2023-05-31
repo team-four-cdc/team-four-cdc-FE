@@ -3,8 +3,8 @@ import { DependencyList, useEffect } from 'react';
 export const useAsync = <T>(
   asyncFn: () => Promise<T>,
   // @ts-ignore
-  onSuccess: (result: T) => void,
-  onError?: (reason: any) => void,
+  onSuccess: () => void,
+  onError?: () => void,
   deps?: DependencyList
 ) => {
   useEffect(() => {
