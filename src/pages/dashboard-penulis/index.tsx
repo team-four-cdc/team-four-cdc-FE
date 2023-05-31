@@ -5,11 +5,13 @@ import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import PieChart from '@/components/PieChart';
 import ColumnChart from '@/components/ColumnChart';
 import { useGetDashboardMutation } from '@/services';
+import { useSelector } from 'react-redux';
 
 const { Title } = Typography;
 
 export default function DashboardPenulis() {
-  const userId = '7';
+  const { auth } = useSelector((state: any) => state);
+  const userId = auth.userId;
   const [dashboardPieData, setDashboardPieData] = useState<
     {
       type: string;
