@@ -1,6 +1,7 @@
 const withLess = require('next-with-less');
 
 module.exports = withLess({
+  assetPrefix: process.env.ASSET_PREFIX_BASE_PATH,
   lessLoaderOptions: {
     lessOptions: {
       javascriptEnabled: true,
