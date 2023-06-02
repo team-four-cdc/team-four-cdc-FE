@@ -5,18 +5,20 @@ import jwt_decode, { JwtPayload } from 'jwt-decode';
 interface DecodedToken extends JwtPayload {
   email: string;
   role: 'reader' | 'creator' | null;
+  userId: number;
 }
 
-interface AuthState {
+interface AuthState extends DecodedToken {
   token: string | null;
   isLogin: boolean;
-  role: 'reader' | 'creator' | null;
 }
 
 const initialState: AuthState = {
   token: null,
   isLogin: false,
   role: null,
+  email: '',
+  userId: 0,
 };
 
 const authSlice = createSlice({
@@ -25,10 +27,16 @@ const authSlice = createSlice({
   reducers: {
     setAuth: (state, action: PayloadAction<string>) => {
       const token = action.payload;
-      const { role = null } = token ? jwt_decode<DecodedToken>(token) : {};
+      const {
+        role = null,
+        userId = 0,
+        email = '',
+      } = token ? jwt_decode<DecodedToken>(token) : {};
       state.role = role;
       state.token = token;
       state.isLogin = true;
+      state.userId = userId;
+      state.email = email;
     },
     resetAuth: () => initialState,
   },
@@ -37,10 +45,16 @@ const authSlice = createSlice({
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
         const token = payload.data?.token;
-        const { role = null } = token ? jwt_decode<DecodedToken>(token) : {};
+        const {
+          role = null,
+          userId = 0,
+          email = '',
+        } = token ? jwt_decode<DecodedToken>(token) : {};
         state.role = role;
         state.token = token;
         state.isLogin = true;
+        state.userId = userId;
+        state.email = email;
       }
     );
   },
