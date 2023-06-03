@@ -41,7 +41,7 @@ const ItemList: React.FC<Props> = ({ items }) => {
               onClick={
                 item.id == 5
                   ? () => dispatch(resetAuth())
-                  : () => router.push(item.url)
+                  : () => router.push(item.url, item.url)
               }
             />
           </div>

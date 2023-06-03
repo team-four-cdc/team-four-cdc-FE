@@ -5,21 +5,17 @@ const Pie = dynamic(() => import('@ant-design/charts').then(({ Pie }) => Pie), {
   ssr: false,
 });
 
-const PieChart = () => {
-  const data = [
-    {
-      type: 'Article B',
-      value: 2200000,
-    },
-    {
-      type: 'Article C',
-      value: 1800000,
-    },
-    {
-      type: 'Article A',
-      value: 6000000,
-    },
-  ];
+interface Item {
+  type?: string;
+  value?: number;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const PieChart: React.FC<Props> = ({ items }) => {
+  const data = items;
 
   return (
     <Pie
