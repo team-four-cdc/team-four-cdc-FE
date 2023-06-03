@@ -1,11 +1,8 @@
 name: Deploy Frontend
 
 on:
-  workflow_run:
-    workflows: ["Test Frontend"]
+  pull_request:
     branches: [ "develop" ]
-    types:
-      - completed
 
 jobs:
   build:
@@ -32,6 +29,35 @@ jobs:
       run: npm run build
     - name: Run export
       run: npm run export
+    - name: Remove existing nginx conf
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sudo rm ${{ format('{0}/{1}', secrets.NEXT_NGINX_CONF_REMOTE_DIR, secrets.NEXT_NGINX_CONF_FILE) }}
+          sudo rm ${{ format('~/{0}', secrets.NEXT_NGINX_CONF_FILE) }}
+    - name: Copy nginx conf to server
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        source: ${{ format('{0}', secrets.NEXT_NGINX_CONF_FILE) }}
+        target: ~/
+    - name: Apply nginx conf
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sudo cp ${{ format('{0} {1}/', secrets.NEXT_NGINX_CONF_FILE, secrets.NEXT_NGINX_CONF_REMOTE_DIR) }}
+          sudo systemctl restart nginx
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
