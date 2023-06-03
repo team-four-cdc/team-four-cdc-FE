@@ -10,12 +10,12 @@ export const useAsync = <T>(
   useEffect(() => {
     const cancelablePromise = makeCancelable(asyncFn());
     cancelablePromise.promise
-      .then((data) => {
-        onSuccess(data);
+      .then(() => {
+        onSuccess();
       })
       .catch((err) => {
         if (!err.isCanceled && onError) {
-          onError(err);
+          onError();
         }
       });
     return () => cancelablePromise.cancel();
