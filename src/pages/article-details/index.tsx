@@ -5,7 +5,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 import { EyeOutlined } from '@ant-design/icons';
 import CardArticlePreview from '@/components/CardArticlePreview';
 
-export default function DetailArtikel() {
+export default function ArticleDetails() {
   return (
     <div className="p-4">
       <div className="grid grid-cols-13">

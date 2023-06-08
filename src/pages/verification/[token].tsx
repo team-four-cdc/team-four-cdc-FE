@@ -9,7 +9,7 @@ import { setAuth } from '@/store/auth/authSlice';
 
 type Status = 'success' | 'failed' | 'error';
 
-export default function Verifikasi() {
+export default function Verification() {
   const { query } = useRouter();
   const [verify, { isLoading, isUninitialized }] = useVerifyMutation();
   const [status, setStatus] = useState<Status>('error');

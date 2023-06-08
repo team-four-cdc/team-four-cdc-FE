@@ -7,7 +7,7 @@ import { Form, Typography, notification } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, ChangeEvent } from 'react';
 
-export default function LupaPassword() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState<string>('');
   const [form] = Form.useForm();
   const router = useRouter();
@@ -60,7 +60,7 @@ export default function LupaPassword() {
             rules={[
               {
                 required: true,
-                message: 'Please input your email!',
+                message: 'Masukkan Email anda!',
               },
             ]}
           >

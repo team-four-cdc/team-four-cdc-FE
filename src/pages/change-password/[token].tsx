@@ -5,7 +5,7 @@ import { useUbahPassMutation } from '@/services';
 import { Form, Typography, notification } from 'antd';
 import { useRouter } from 'next/router';
 
-export default function UbahPassword() {
+export default function ChangePassword() {
   const { query } = useRouter();
   const [form] = Form.useForm();
   const [UbahPassword, { isLoading }] = useUbahPassMutation();

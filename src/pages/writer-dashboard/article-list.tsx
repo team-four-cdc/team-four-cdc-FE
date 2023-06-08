@@ -2,23 +2,25 @@ import ArticleList from '@/components/ArticleList';
 import Heads from '@/layout/Head/Head';
 import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import { useAllArticleMutation } from '@/services';
+import { RootState } from '@/store';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-export default function CheckComponent() {
+export default function ListArticles() {
   const [getAllArticle] = useAllArticleMutation();
   const [dataArticle, setDataArticle] = useState([]);
+  const { auth } = useSelector((state: RootState) => state)
 
   useEffect(() => {
     fetchArticle();
 
-    return () => {};
+    return () => { };
     // eslint-disable-next-line
   }, []);
 
   function fetchArticle() {
-    // TODO: set dynamic user
     getAllArticle({
-      userId: 2,
+      userId: auth.userId,
     })
       .unwrap()
       .then((res) => {

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import defaultImg from '@/assets/images/image-preview.png';
 import { MenuOutlined } from '@ant-design/icons';
 
-export default function BeliArtikel() {
+export default function BuyArticle() {
   return (
     <Layout>
       <Heads title="Beli Artikel" showNavbar showWrappOption />

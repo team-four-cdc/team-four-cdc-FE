@@ -30,7 +30,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-export default function BuatArtikel() {
+export default function CreateArticle() {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previewImage, setPreviewImage] = useState('');
   const [createArticle] = useCreateArticleMutation();
@@ -49,7 +49,7 @@ export default function BuatArtikel() {
   useEffect(() => {
     getCategories();
 
-    return () => {};
+    return () => { };
     // eslint-disable-next-line
   }, []);
 

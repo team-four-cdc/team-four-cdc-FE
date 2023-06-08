@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 const { Title } = Typography;
 
-export default function DashboardPenulis() {
+export default function WriterDashboard() {
   const { auth } = useSelector((state: any) => state);
   const userId = auth.userId;
   const [dashboardPieData, setDashboardPieData] = useState<
@@ -58,9 +58,8 @@ export default function DashboardPenulis() {
   }) {
     return (
       <div
-        className={`w-full border-2 border-black border-solid p-4 rounded-md ${
-          className ? className : ''
-        }`}
+        className={`w-full border-2 border-black border-solid p-4 rounded-md ${className ? className : ''
+          }`}
       >
         {children}
       </div>

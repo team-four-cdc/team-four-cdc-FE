@@ -79,7 +79,7 @@ const LoginModal = (props: Props) => {
           rules={[
             {
               required: true,
-              message: 'Please input your email!',
+              message: 'Masukkan Email anda!',
             },
           ]}
         >
@@ -92,7 +92,7 @@ const LoginModal = (props: Props) => {
         <Form.Item
           className="mb-10px"
           name="login-password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[{ required: true, message: 'Masukkan Password anda!' }]}
         >
           <TextInput
             type="password"
