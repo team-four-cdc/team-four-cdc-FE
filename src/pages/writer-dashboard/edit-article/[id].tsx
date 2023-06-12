@@ -9,24 +9,25 @@ import {
   Divider,
   notification,
 } from 'antd';
-import Heads from '@/layout/Head/Head';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import { MenuOutlined, PlusOutlined } from '@ant-design/icons';
-import { TextEditor } from '@/components/TextEditor';
-import { useGetCategoriesMutation, useUpdateArticleMutation } from '@/services';
 import DOMPurify from 'dompurify';
 import { UploadProps } from 'antd/es/upload';
 import { RcFile, UploadFile } from 'antd/lib/upload/interface';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useGetCategoriesMutation, useUpdateArticleMutation } from '@/services';
+import { TextEditor } from '@/components/TextEditor';
+import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+import Heads from '@/layout/Head/Head';
+import { getTypedFormData } from '@/utils/formDataTyper';
+import { ArticleData } from '../create-article';
 
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
+const getBase64 = (file: RcFile): Promise<string> => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => resolve(reader.result as string);
+  reader.onerror = (error) => reject(error);
+});
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -50,10 +51,8 @@ export default function EditArticle() {
   });
 
   useEffect(() => {
-    const article = JSON.parse(
-      localStorage.getItem(`article_${articleId}`) as string
-    );
-    if (!!article) {
+    const article: any = null;
+    if (article) {
       const temp = { ...articleData };
       temp.body = article.body;
       temp.price = article.price;
@@ -69,7 +68,7 @@ export default function EditArticle() {
       router.back();
     }
 
-    return () => {};
+    return () => { };
     // eslint-disable-next-line
   }, []);
 
@@ -94,7 +93,7 @@ export default function EditArticle() {
     if (!!newFileList && newFileList.length > 0) {
       if (!newFileList[0].url && !newFileList[0].preview) {
         newFileList[0].preview = await getBase64(
-          newFileList[0].originFileObj as RcFile
+          newFileList[0].originFileObj as RcFile,
         );
       }
       setPreviewImage(newFileList[0].url || (newFileList[0].preview as string));
@@ -103,26 +102,24 @@ export default function EditArticle() {
 
   function DataURIToBlob(dataURI: string) {
     const splitDataURI = dataURI.split(',');
-    const byteString =
-      splitDataURI[0].indexOf('base64') >= 0
-        ? atob(splitDataURI[1])
-        : decodeURI(splitDataURI[1]);
+    const byteString = splitDataURI[0].indexOf('base64') >= 0
+      ? atob(splitDataURI[1])
+      : decodeURI(splitDataURI[1]);
     const mimeString = splitDataURI[0].split(':')[1].split(';')[0];
 
     const ia = new Uint8Array(byteString.length);
-    for (let i = 0; i < byteString.length; i++)
-      ia[i] = byteString.charCodeAt(i);
+    for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
 
     return new Blob([ia], { type: mimeString });
   }
 
   async function handleSubmitArticle() {
-    const formData = new FormData();
-    const file = !!previewImage ? DataURIToBlob(previewImage) : null;
+    const formData = getTypedFormData<ArticleData>();
+    const file = previewImage ? DataURIToBlob(previewImage) : null;
     formData.append('body', DOMPurify.sanitize(articleData.body));
     formData.append('price', articleData.price.toString());
     formData.append('title', articleData.title);
-    if (!!previewImage) {
+    if (previewImage) {
       // @ts-ignore
       formData.append('picture', file, `${fileList[0].name}`);
     }
@@ -184,10 +181,9 @@ export default function EditArticle() {
                 onChange={handleChange}
                 maxCount={1}
                 beforeUpload={(file) => {
-                  const isNotImage =
-                    file.type !== 'image/png' &&
-                    file.type !== 'image/jpg' &&
-                    file.type !== 'image/jpeg';
+                  const isNotImage = file.type !== 'image/png'
+                    && file.type !== 'image/jpg'
+                    && file.type !== 'image/jpeg';
                   if (isNotImage) {
                     notification.error({
                       message: 'The file must be an image!',
@@ -227,12 +223,10 @@ export default function EditArticle() {
                 }}
                 className="border-2 border-black border-solid w-full rounded-full overflow-hidden"
                 defaultValue={categories.length > 0 ? categories[0].name : null}
-                options={categories.map((val: any) => {
-                  return {
-                    value: val.id,
-                    label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
-                  };
-                })}
+                options={categories.map((val: any) => ({
+                  value: val.id,
+                  label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
+                }))}
               />
             </div>
             <div className="grid grid-cols-1 mt-4">

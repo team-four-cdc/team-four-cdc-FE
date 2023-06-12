@@ -1,3 +1,4 @@
+import React from 'react';
 import DrawerList from './DrawerList';
 
 export default function WriterLayout({ children }: any) {

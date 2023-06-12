@@ -1,0 +1,372 @@
+
+> cdc-team-4-fe@0.1.0 lint
+> next lint --fix
+
+info  - Loaded env from /home/ihsankl/Documents/Github/team-four-cdc-FE/.env
+
+./src/components/ArticleList.tsx
+71:25  Error: Invalid type "string | undefined" of template literal expression.  @typescript-eslint/restrict-template-expressions
+
+./src/components/ColumnChart.tsx
+5:46  Error: 'Column' is already declared in the upper scope on line 4 column 7.  @typescript-eslint/no-shadow
+5:59  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
+18:41  Error: 'items' is missing in props validation  react/prop-types
+21:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+49:10  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+./src/components/LoginModal.tsx
+39:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+42:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+42:14  Error: Unsafe member access ['login-email'] on an `any` value.  @typescript-eslint/no-unsafe-member-access
+43:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+43:17  Error: Unsafe member access ['login-password'] on an `any` value.  @typescript-eslint/no-unsafe-member-access
+51:30  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+51:39  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
+
+./src/components/NavCategory.tsx
+9:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/Navbar.tsx
+22:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+22:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+22:48  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
+95:26  Error: 'menu' is already declared in the upper scope on line 81 column 12.  @typescript-eslint/no-shadow
+95:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+95:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+96:31  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+100:53  Error: Unsafe argument of type `any` assigned to a parameter of type `UserRole`.  @typescript-eslint/no-unsafe-argument
+100:53  Error: Unsafe member access .login on an `any` value.  @typescript-eslint/no-unsafe-member-access
+102:20  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+106:31  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+108:25  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+108:25  Error: Unsafe member access .register on an `any` value.  @typescript-eslint/no-unsafe-member-access
+110:60  Error: Unsafe member access .register on an `any` value.  @typescript-eslint/no-unsafe-member-access
+113:20  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+122:23  Error: Unsafe member access .isLogin on an `any` value.  @typescript-eslint/no-unsafe-member-access
+124:8  Error: Unsafe member access .role on an `any` value.  @typescript-eslint/no-unsafe-member-access
+125:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+126:19  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
+133:60  Error: Unsafe member access .url on an `any` value.  @typescript-eslint/no-unsafe-member-access
+136:20  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+143:33  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+143:33  Error: Unsafe member access .menu on an `any` value.  @typescript-eslint/no-unsafe-member-access
+149:42  Error: Unsafe member access .url on an `any` value.  @typescript-eslint/no-unsafe-member-access
+150:45  Error: Unsafe member access .url2 on an `any` value.  @typescript-eslint/no-unsafe-member-access
+155:22  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+174:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+175:17  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
+182:58  Error: Unsafe member access .url on an `any` value.  @typescript-eslint/no-unsafe-member-access
+185:18  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+192:31  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+192:31  Error: Unsafe member access .menu on an `any` value.  @typescript-eslint/no-unsafe-member-access
+198:40  Error: Unsafe member access .url on an `any` value.  @typescript-eslint/no-unsafe-member-access
+199:43  Error: Unsafe member access .url2 on an `any` value.  @typescript-eslint/no-unsafe-member-access
+204:20  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+
+./src/components/PieChart.tsx
+5:64  Error: 'Pie' is already declared in the upper scope on line 5 column 7.  @typescript-eslint/no-shadow
+5:74  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
+30:21  Error: 'data' is already declared in the upper scope on line 19 column 9.  @typescript-eslint/no-shadow
+30:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+31:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+31:17  Error: Unsafe member access .type on an `any` value.  @typescript-eslint/no-unsafe-member-access
+32:35  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+32:42  Error: Unsafe member access .value on an `any` value.  @typescript-eslint/no-unsafe-member-access
+
+./src/components/TextEditor.tsx
+1:8  Error: 'Reacct' is defined but never used.  @typescript-eslint/no-unused-vars
+6:18  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+31:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+32:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+38:3  Error: 'className' is missing in props validation  react/prop-types
+39:3  Error: 'handleBodyChange' is missing in props validation  react/prop-types
+40:3  Error: 'defaultValue' is missing in props validation  react/prop-types
+41:3  Error: 'currentValue' is missing in props validation  react/prop-types
+43:5  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+44:7  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+47:16  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+
+./src/hooks/useAsync.ts
+5:3  Error: Do not use "@ts-ignore" because it alters compilation errors.  @typescript-eslint/ban-ts-comment
+11:31  Error: 'makeCancelable' was used before it was defined.  @typescript-eslint/no-use-before-define
+17:14  Error: Unsafe member access .isCanceled on an `any` value.  @typescript-eslint/no-unsafe-member-access
+26:7  Error: Variable name `hasCanceled_` must match one of the following formats: camelCase, PascalCase, UPPER_CASE  @typescript-eslint/naming-convention
+
+./src/layout/Head/Writer/WriterLayout.tsx
+4:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/layout/Homepage/CategoryList.tsx
+14:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+15:31  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+
+./src/layout/Homepage/NewArticleList.tsx
+14:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+15:23  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+
+./src/layout/Homepage/WriterList.tsx
+22:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+24:20  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+
+./src/layout/MainLayout.tsx
+7:50  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+16:9  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
+24:9  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
+
+./src/pages/_app.tsx
+11:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+19:18  Error: Unsafe array destructuring of a tuple element with an `any` value.  @typescript-eslint/no-unsafe-assignment
+23:5  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+24:7  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+25:9  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+26:11  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+./src/pages/_document.tsx
+7:5  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+8:7  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+9:9  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+14:7  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+15:9  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+16:9  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+./src/pages/change-password/[token].tsx
+13:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+15:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+15:20  Error: Unsafe member access .newPassword on an `any` value.  @typescript-eslint/no-unsafe-member-access
+24:30  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+24:39  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
+
+./src/pages/forgot-password.tsx
+22:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+23:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+23:13  Error: 'email' is already declared in the upper scope on line 11 column 10.  @typescript-eslint/no-shadow
+25:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+34:30  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+34:39  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
+
+./src/pages/reader-register.tsx
+15:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+16:14  Error: Unsafe argument of type `any` assigned to a parameter of type `AuthRequest`.  @typescript-eslint/no-unsafe-argument
+16:43  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+16:54  Error: Unsafe member access .email on an `any` value.  @typescript-eslint/no-unsafe-member-access
+23:30  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+23:39  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
+32:16  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+
+./src/pages/writer-dashboard/article-list.tsx
+15:5  Error: 'fetchArticle' was used before it was defined.  @typescript-eslint/no-use-before-define
+22:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
+27:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+27:22  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
+27:22  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
+27:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+28:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+28:15  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
+29:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+29:20  Error: Unsafe member access .photo_article on an `any` value.  @typescript-eslint/no-unsafe-member-access
+30:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+30:18  Error: Unsafe member access .title on an `any` value.  @typescript-eslint/no-unsafe-member-access
+31:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+31:17  Error: Unsafe member access .description on an `any` value.  @typescript-eslint/no-unsafe-member-access
+32:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+32:17  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
+33:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+33:25  Error: Unsafe member access .publish_date on an `any` value.  @typescript-eslint/no-unsafe-member-access
+34:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+34:22  Error: Unsafe member access .author_id on an `any` value.  @typescript-eslint/no-unsafe-member-access
+35:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+35:18  Error: Unsafe member access .price on an `any` value.  @typescript-eslint/no-unsafe-member-access
+36:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+36:20  Error: Unsafe member access .pdf_url on an `any` value.  @typescript-eslint/no-unsafe-member-access
+37:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+37:24  Error: Unsafe member access .category_id on an `any` value.  @typescript-eslint/no-unsafe-member-access
+38:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+38:22  Error: Unsafe member access .createdAt on an `any` value.  @typescript-eslint/no-unsafe-member-access
+39:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+39:22  Error: Unsafe member access .updatedAt on an `any` value.  @typescript-eslint/no-unsafe-member-access
+41:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+41:17  Error: Unsafe member access .author on an `any` value.  @typescript-eslint/no-unsafe-member-access
+42:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+42:20  Error: Unsafe member access .author on an `any` value.  @typescript-eslint/no-unsafe-member-access
+43:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+43:24  Error: Unsafe member access .author on an `any` value.  @typescript-eslint/no-unsafe-member-access
+44:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+44:21  Error: Unsafe member access .author on an `any` value.  @typescript-eslint/no-unsafe-member-access
+45:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+45:24  Error: Unsafe member access .author on an `any` value.  @typescript-eslint/no-unsafe-member-access
+46:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+46:24  Error: Unsafe member access .author on an `any` value.  @typescript-eslint/no-unsafe-member-access
+47:13  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+47:24  Error: Unsafe member access .author on an `any` value.  @typescript-eslint/no-unsafe-member-access
+50:24  Error: Unsafe argument of type `any` assigned to a parameter of type `SetStateAction<never[]>`.  @typescript-eslint/no-unsafe-argument
+
+./src/pages/writer-dashboard/create-article.tsx
+51:10  Error: Unsafe array destructuring of a tuple element with an `any` value.  @typescript-eslint/no-unsafe-assignment
+51:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+64:5  Error: 'getCategories' was used before it was defined.  @typescript-eslint/no-use-before-define
+71:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
+84:49  Error: Promise-returning function provided to variable where a void return was expected.  @typescript-eslint/no-misused-promises
+118:7  Error: Do not use "@ts-ignore" because it alters compilation errors.  @typescript-eslint/ban-ts-comment
+126:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+127:32  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+127:41  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
+130:30  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+130:39  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
+159:15  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
+215:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+219:31  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+219:31  Error: Unsafe member access .length on an `any` value.  @typescript-eslint/no-unsafe-member-access
+219:55  Error: Unsafe member access [0] on an `any` value.  @typescript-eslint/no-unsafe-member-access
+220:26  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+220:26  Error: Unsafe member access .map on an `any` value.  @typescript-eslint/no-unsafe-member-access
+220:26  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
+220:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+221:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+221:26  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
+222:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+222:26  Error: Operands of '+' operation with any is possible only with string, number, bigint or any  @typescript-eslint/restrict-plus-operands
+222:26  Error: Unsafe member access .toUpperCase on an `any` value.  @typescript-eslint/no-unsafe-member-access
+222:26  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
+222:26  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+222:26  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
+222:61  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+222:61  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
+
+./src/pages/writer-dashboard/edit-article/[id].tsx
+39:10  Error: Unsafe array destructuring of a tuple element with an `any` value.  @typescript-eslint/no-unsafe-assignment
+39:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+54:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+57:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+57:19  Error: Unsafe member access .body on an `any` value.  @typescript-eslint/no-unsafe-member-access
+58:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+58:20  Error: Unsafe member access .price on an `any` value.  @typescript-eslint/no-unsafe-member-access
+59:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+59:20  Error: Unsafe member access .title on an `any` value.  @typescript-eslint/no-unsafe-member-access
+60:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+60:22  Error: Unsafe member access .preview on an `any` value.  @typescript-eslint/no-unsafe-member-access
+61:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+61:23  Error: Unsafe member access .author_id on an `any` value.  @typescript-eslint/no-unsafe-member-access
+62:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+62:25  Error: Unsafe member access .category_id on an `any` value.  @typescript-eslint/no-unsafe-member-access
+63:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+63:26  Error: Unsafe member access .desc on an `any` value.  @typescript-eslint/no-unsafe-member-access
+66:7  Error: 'getCategories' was used before it was defined.  @typescript-eslint/no-use-before-define
+76:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
+89:49  Error: Promise-returning function provided to variable where a void return was expected.  @typescript-eslint/no-misused-promises
+123:7  Error: Do not use "@ts-ignore" because it alters compilation errors.  @typescript-eslint/ban-ts-comment
+132:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+133:32  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+133:41  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
+136:30  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+136:39  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
+165:15  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
+221:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+225:31  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+225:31  Error: Unsafe member access .length on an `any` value.  @typescript-eslint/no-unsafe-member-access
+225:55  Error: Unsafe member access [0] on an `any` value.  @typescript-eslint/no-unsafe-member-access
+226:26  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+226:26  Error: Unsafe member access .map on an `any` value.  @typescript-eslint/no-unsafe-member-access
+226:26  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
+226:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+227:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+227:26  Error: Unsafe member access .id on an `any` value.  @typescript-eslint/no-unsafe-member-access
+228:19  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+228:26  Error: Operands of '+' operation with any is possible only with string, number, bigint or any  @typescript-eslint/restrict-plus-operands
+228:26  Error: Unsafe member access .toUpperCase on an `any` value.  @typescript-eslint/no-unsafe-member-access
+228:26  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
+228:26  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+228:26  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
+228:61  Error: Unsafe member access .name on an `any` value.  @typescript-eslint/no-unsafe-member-access
+228:61  Error: Unsafe call of an `any` typed value.  @typescript-eslint/no-unsafe-call
+
+./src/pages/writer-dashboard/index.tsx
+13:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+13:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+13:48  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
+14:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+15:10  Error: 'dashboardPieData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+21:10  Error: 'dashboardColumnData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+29:33  Error: 'userId' is already declared in the upper scope on line 14 column 11.  @typescript-eslint/no-shadow
+29:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+31:38  Error: Unsafe argument of type `any` assigned to a parameter of type `DashboardRequest`.  @typescript-eslint/no-unsafe-argument
+33:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+34:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+34:15  Error: Unsafe member access .Article on an `any` value.  @typescript-eslint/no-unsafe-member-access
+35:25  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+35:25  Error: Unsafe member access .value on an `any` value.  @typescript-eslint/no-unsafe-member-access
+37:51  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+38:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+38:15  Error: Unsafe member access .Article on an `any` value.  @typescript-eslint/no-unsafe-member-access
+39:25  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+39:25  Error: Unsafe member access .sales on an `any` value.  @typescript-eslint/no-unsafe-member-access
+49:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
+
+./src/pages/writer-register.tsx
+15:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+16:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+17:14  Error: Unsafe argument of type `any` assigned to a parameter of type `AuthRequest`.  @typescript-eslint/no-unsafe-argument
+20:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+21:7  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+29:30  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+29:39  Error: Unsafe member access .data on an `any` value.  @typescript-eslint/no-unsafe-member-access
+38:16  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+
+./src/services/articleApi.ts
+115:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+115:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+117:41  Error: Invalid type "any" of template literal expression.  @typescript-eslint/restrict-template-expressions
+117:41  Error: Unsafe member access .userId on an `any` value.  @typescript-eslint/no-unsafe-member-access
+144:28  Error: Invalid type "TypedFormDataValue" of template literal expression.  @typescript-eslint/restrict-template-expressions
+
+./src/services/authApi.test.ts
+30:29  Error: Invalid type "string | undefined" of template literal expression.  @typescript-eslint/restrict-template-expressions
+39:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+40:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+41:16  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
+42:16  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
+51:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+52:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+53:16  Error: Unsafe member access .error on an `any` value.  @typescript-eslint/no-unsafe-member-access
+75:29  Error: Invalid type "string | undefined" of template literal expression.  @typescript-eslint/restrict-template-expressions
+84:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+85:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+86:16  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
+87:16  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
+96:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+97:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+98:16  Error: Unsafe member access .error on an `any` value.  @typescript-eslint/no-unsafe-member-access
+125:14  Error: Invalid type "string | undefined" of template literal expression.  @typescript-eslint/restrict-template-expressions
+135:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+136:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+137:16  Error: Unsafe member access .status on an `any` value.  @typescript-eslint/no-unsafe-member-access
+138:16  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
+147:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+148:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+149:16  Error: Unsafe member access .error on an `any` value.  @typescript-eslint/no-unsafe-member-access
+
+./src/services/authApi.ts
+16:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+21:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+26:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+32:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/services/newsApi.ts
+4:9  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+76:43  Error: Invalid type "DashboardRequest" of template literal expression.  @typescript-eslint/restrict-template-expressions
+
+./src/store/auth/authSlice.ts
+47:15  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+47:23  Error: Unsafe member access .token on an `any` value.  @typescript-eslint/no-unsafe-member-access
+52:46  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+54:9  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+
+./src/store/index.ts
+26:11  Error: Unsafe assignment of an `any` value.  @typescript-eslint/no-unsafe-assignment
+30:5  Error: Unsafe return of an `any` typed value.  @typescript-eslint/no-unsafe-return
+
+./src/tests/index.tsx
+2:1  Error: '@testing-library/react' should be listed in the project's dependencies, not devDependencies.  import/no-extraneous-dependencies
+30:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:61  Error: 'React' must be in scope when using JSX  react/react-in-jsx-scope
+38:1  Error: '@testing-library/react' should be listed in the project's dependencies, not devDependencies.  import/no-extraneous-dependencies
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules

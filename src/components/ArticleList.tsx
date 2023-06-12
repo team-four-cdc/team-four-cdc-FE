@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import StyledButton from './Button';
-import { Typography, Col, Row, notification } from 'antd';
+import {
+  Typography, Col, Row, notification,
+} from 'antd';
 import Image from 'next/image';
-import { useDeleteArticleMutation } from '@/services';
 import { useRouter } from 'next/router';
+import { useDeleteArticleMutation } from '@/services';
+import StyledButton from './Button';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
 
 interface Item {
   id: number;
@@ -24,9 +27,7 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
   const [deleteArticle, { isLoading }] = useDeleteArticleMutation();
   const route = useRouter();
 
-  useEffect(() => {
-    return () => {};
-  }, []);
+  useEffect(() => () => { }, []);
 
   async function onDelete(id: number) {
     deleteArticle({
@@ -34,11 +35,15 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
     })
       .unwrap()
       .then((res) => {
-        notification.success({ message: res?.message || 'Success' });
+        notification.success({ message: res.message || 'Success' });
         fetchArticle();
       })
       .catch((err) => {
-        notification.error({ message: err?.data?.message || 'Error' });
+        if (err instanceof ErrorResponse || err instanceof DbConcurrencyError || err instanceof InternalServerError) {
+          notification.error({ message: err.message });
+        } else {
+          notification.error({ message: 'Error pada sistem!' });
+        }
       });
   }
 
@@ -82,12 +87,8 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
             <Col span={6} className="text-left">
               <div className="py-20px">
                 <StyledButton
-                  onClick={() => {
-                    localStorage.setItem(
-                      `article_${item.id}`,
-                      JSON.stringify(item)
-                    );
-                    route.push(`/dashboard-penulis/edit-article/${item.id}`);
+                  onClick={async () => {
+                    await route.push(`/dashboard-penulis/edit-article/${item.id}`);
                   }}
                   type="primary"
                   ghost

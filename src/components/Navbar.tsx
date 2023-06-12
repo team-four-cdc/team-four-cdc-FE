@@ -1,11 +1,13 @@
 import { CaretDownFilled } from '@ant-design/icons';
-import { Button, Dropdown, Menu, Space, Typography } from 'antd';
+import {
+  Button, Dropdown, Menu, Space, Typography,
+} from 'antd';
 import classNames from 'classnames';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import LoginModal, { UserRole } from './LoginModal';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import LoginModal, { UserRole } from './LoginModal';
 import { resetAuth } from '@/store/auth/authSlice';
 
 interface NavbarProps {
@@ -90,8 +92,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
             </Button>
           </Menu.Item>
         ) : (
-          itemMenus.map((menu: any, index: any) => {
-            return type == 'login' ? (
+          itemMenus.map((menu: any, index: any) => (type == 'login' ? (
               <Menu.Item key={index}>
                 <Button
                   className="bg-transparent"
@@ -101,7 +102,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                   {menu.name}
                 </Button>
               </Menu.Item>
-            ) : (
+          ) : (
               <Menu.Item key={index}>
                 <Link
                   href={menu.register}
@@ -112,8 +113,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                   {menu.name}
                 </Link>
               </Menu.Item>
-            );
-          })
+          )))
         )}
       </Menu>
     );
@@ -146,9 +146,9 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                     'cursor-pointer hover:text-success-color',
                     {
                       'text-success-color':
-                        Router.asPath == navbar.url ||
-                        Router.asPath == navbar.url2,
-                    }
+                        Router.asPath == navbar.url
+                        || Router.asPath == navbar.url2,
+                    },
                   )}
                 >
                   <Space>
@@ -195,9 +195,9 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                   'cursor-pointer hover:text-success-color',
                   {
                     'text-success-color':
-                      Router.asPath == navbar.url ||
-                      Router.asPath == navbar.url2,
-                  }
+                      Router.asPath == navbar.url
+                      || Router.asPath == navbar.url2,
+                  },
                 )}
               >
                 <Space>

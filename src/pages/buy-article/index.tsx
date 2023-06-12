@@ -1,8 +1,11 @@
-import Heads from '@/layout/Head/Head';
-import { Button, Divider, Input, Layout, Typography } from 'antd';
+import React from 'react';
+import {
+  Button, Divider, Input, Layout, Typography,
+} from 'antd';
 import Image from 'next/image';
-import defaultImg from '@/assets/images/image-preview.png';
 import { MenuOutlined } from '@ant-design/icons';
+import defaultImg from '@/assets/images/image-preview.png';
+import Heads from '@/layout/Head/Head';
 
 export default function BuyArticle() {
   return (

@@ -1,7 +1,8 @@
+import React from 'react';
 import DrawerNavigation from '@/components/DrawerNavigation';
 
 export default function DrawerList() {
-  const url = `/dashboard-penulis`;
+  const url = '/dashboard-penulis';
   const data = [
     {
       id: 1,

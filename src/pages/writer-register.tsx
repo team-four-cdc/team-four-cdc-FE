@@ -1,8 +1,9 @@
-import StyledButton from '@/components/Button';
-import TextInput from '@/components/TextInput';
+import React from 'react';
 import { EditFilled } from '@ant-design/icons';
 import { Form, notification, Typography } from 'antd';
 import Image from 'next/image';
+import TextInput from '@/components/TextInput';
+import StyledButton from '@/components/Button';
 import Illustration from '../../public/register-illustration-creator.svg';
 import Heads from '@/layout/Head/Head';
 import { useRegisterMutation } from '@/services';

@@ -1,9 +1,10 @@
+import React from 'react';
+import { Form, Typography, notification } from 'antd';
+import { useRouter } from 'next/router';
 import StyledButton from '@/components/Button';
 import TextInput from '@/components/TextInput';
 import Heads from '@/layout/Head/Head';
 import { useUbahPassMutation } from '@/services';
-import { Form, Typography, notification } from 'antd';
-import { useRouter } from 'next/router';
 
 export default function ChangePassword() {
   const { query } = useRouter();
@@ -74,8 +75,8 @@ export default function ChangePassword() {
                   }
                   return Promise.reject(
                     new Error(
-                      'The two passwords that you entered do not match!'
-                    )
+                      'The two passwords that you entered do not match!',
+                    ),
                   );
                 },
               }),

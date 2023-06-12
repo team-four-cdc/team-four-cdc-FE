@@ -1,9 +1,9 @@
 import { Typography } from 'antd';
 import router from 'next/router';
 import React from 'react';
-import StyledButton from './Button';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
+import StyledButton from './Button';
 import { resetAuth } from '@/store/auth/authSlice';
 
 interface Item {
@@ -41,7 +41,7 @@ const ItemList: React.FC<Props> = ({ items }) => {
               onClick={
                 item.id == 5
                   ? () => dispatch(resetAuth())
-                  : () => router.push(item.url, item.url)
+                  : async () => router.push(item.url, item.url)
               }
             />
           </div>

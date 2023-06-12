@@ -1,9 +1,17 @@
-import { Form, Modal, ModalProps, notification, Typography } from 'antd';
+import {
+  Form, Modal, ModalProps, notification, Typography,
+} from 'antd';
+import Link from 'next/link';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import TextInput from '@/components/TextInput';
 import StyledButton from '@/components/Button';
-import Link from 'next/link';
 import { useLoginMutation } from '@/services';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
+
+interface ILogin {
+  'login-email': string
+  'login-password': string
+}
 
 export type UserRole = 'pembaca' | 'penulis';
 
@@ -14,7 +22,9 @@ interface Props extends ModalProps {
 }
 
 const LoginModal = (props: Props) => {
-  const { visible, setVisibility, role, ...modalProps } = props;
+  const {
+    visible, setVisibility, role, ...modalProps
+  } = props;
   const [form] = Form.useForm();
   const [login, { isLoading }] = useLoginMutation();
 
@@ -32,7 +42,7 @@ const LoginModal = (props: Props) => {
     if (!visible) form.resetFields();
   }, [form, visible]);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: ILogin) => {
     login({
       role: roles[role],
       email: values['login-email'],
@@ -44,7 +54,11 @@ const LoginModal = (props: Props) => {
         setVisibility(false);
       })
       .catch((err) => {
-        notification.error({ message: err?.data?.message || 'Error' });
+        if (err instanceof DbConcurrencyError || err instanceof ErrorResponse || err instanceof InternalServerError) {
+          notification.error({ message: err.message });
+        } else {
+          notification.error({ message: "Error pada sistem!" });
+        }
       });
   };
 

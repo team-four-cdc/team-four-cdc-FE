@@ -1,5 +1,6 @@
-import NavCategory from '@/components/NavCategory';
+import React from 'react';
 import { Typography } from 'antd';
+import NavCategory from '@/components/NavCategory';
 
 export default function CategoryList() {
   const Array = ['1', '2', '3', '4', '5'];

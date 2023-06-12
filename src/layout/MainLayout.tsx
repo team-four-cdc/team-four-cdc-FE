@@ -1,7 +1,8 @@
-import { useAsync } from '@/hooks/useAsync';
-import { RootState } from '@/store';
+import React from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import { useAsync } from '@/hooks/useAsync';
+import { RootState } from '@/store';
 
 export default function MainLayout({ children }: any) {
   const { auth } = useSelector((state: RootState) => state);
@@ -17,7 +18,7 @@ export default function MainLayout({ children }: any) {
             pathname: '/dashboard-penulis',
           },
           undefined,
-          { shallow: true }
+          { shallow: true },
         );
       } else if (auth.isLogin && isReader && router.isReady) {
         router.replace(
@@ -25,13 +26,13 @@ export default function MainLayout({ children }: any) {
             pathname: '/',
           },
           undefined,
-          { shallow: false }
+          { shallow: false },
         );
       }
     },
     () => null,
     () => null,
-    []
+    [],
   );
 
   return <>{children}</>;

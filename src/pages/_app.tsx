@@ -1,11 +1,11 @@
 import '@/styles/index.less';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
-import { persistor, wrapper } from '@/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import MainLayout from '@/layout/MainLayout';
 import { ComponentType } from 'react';
 import { NextPage } from 'next';
+import MainLayout from '@/layout/MainLayout';
+import { persistor, wrapper } from '@/store';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: ComponentType<any>;

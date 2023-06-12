@@ -1,8 +1,9 @@
-import StyledButton from '@/components/Button';
+import React from 'react';
 import Image from 'next/legacy/image';
 import { Typography } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import { EyeOutlined } from '@ant-design/icons';
+import StyledButton from '@/components/Button';
 import CardArticlePreview from '@/components/CardArticlePreview';
 
 export default function ArticleDetails() {
@@ -105,7 +106,7 @@ export default function ArticleDetails() {
               <CardArticlePreview
                 creator="Breda tafta"
                 date="Jakarta, 12 Jan 2023"
-                preview="The 1619 Project, MLK, 
+                preview="The 1619 Project, MLK,
                 and the Subtle Indignity of a Lazy History Teacher’s Assignment"
                 avatar=""
               />
@@ -114,7 +115,7 @@ export default function ArticleDetails() {
               <CardArticlePreview
                 creator="Breda tafta"
                 date="Jakarta, 12 Jan 2023"
-                preview="The 1619 Project, MLK, 
+                preview="The 1619 Project, MLK,
                 and the Subtle Indignity of a Lazy History Teacher’s Assignment"
                 avatar=""
               />
@@ -123,7 +124,7 @@ export default function ArticleDetails() {
               <CardArticlePreview
                 creator="Breda tafta"
                 date="Jakarta, 12 Jan 2023"
-                preview="The 1619 Project, MLK, 
+                preview="The 1619 Project, MLK,
                 and the Subtle Indignity of a Lazy History Teacher’s Assignment"
                 avatar=""
               />

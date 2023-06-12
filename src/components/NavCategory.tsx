@@ -1,3 +1,4 @@
+import React from 'react'
 import { Typography } from 'antd';
 import classNames from 'classnames';
 import Link from 'next/link';
@@ -5,7 +6,7 @@ import Link from 'next/link';
 interface Props {
   href: string;
   text: string;
-  icon?: React.FC<any>;
+  icon?: React.FC;
 }
 
 const NavCategory = (props: Props) => {

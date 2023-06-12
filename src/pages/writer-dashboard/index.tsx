@@ -1,17 +1,17 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import Heads from '@/layout/Head/Head';
 import { Layout, Typography } from 'antd';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
-import PieChart from '@/components/PieChart';
-import ColumnChart from '@/components/ColumnChart';
-import { useGetDashboardMutation } from '@/services';
 import { useSelector } from 'react-redux';
+import Heads from '@/layout/Head/Head';
+import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+// import PieChart from '@/components/PieChart';
+// import ColumnChart from '@/components/ColumnChart';
+import { useGetDashboardMutation } from '@/services';
 
 const { Title } = Typography;
 
 export default function WriterDashboard() {
   const { auth } = useSelector((state: any) => state);
-  const userId = auth.userId;
+  const { userId } = auth;
   const [dashboardPieData, setDashboardPieData] = useState<
     {
       type: string;
@@ -58,8 +58,8 @@ export default function WriterDashboard() {
   }) {
     return (
       <div
-        className={`w-full border-2 border-black border-solid p-4 rounded-md ${className ? className : ''
-          }`}
+        className={`w-full border-2 border-black border-solid p-4 rounded-md ${className || ''
+        }`}
       >
         {children}
       </div>
@@ -111,13 +111,11 @@ export default function WriterDashboard() {
             <BorderedCol className="lg:col-span-2">
               <>
                 <Title level={1}>Grafik Penjualan</Title>
-                <ColumnChart items={dashboardColumnData} />
               </>
             </BorderedCol>
             <BorderedCol className="lg:col-span-2">
               <>
                 <Title level={1}>Grafik Pembelian</Title>
-                <PieChart items={dashboardPieData} />
               </>
             </BorderedCol>
           </div>

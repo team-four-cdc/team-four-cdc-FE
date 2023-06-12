@@ -1,6 +1,7 @@
-import { render } from '@/tests';
+import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { render } from '@/tests';
 import { store } from '@/store';
 import LoginModal from '@/components/LoginModal';
 
@@ -9,7 +10,7 @@ describe('Login Modal Component', () => {
     const user = userEvent.setup();
     render(
       <LoginModal visible={true} setVisibility={() => null} role="pembaca" />,
-      { store }
+      { store },
     );
     const response = [{ status: 'fulfilled', message: 'success' }];
     fetchMock.mockResponse(JSON.stringify(response));
@@ -31,7 +32,7 @@ describe('Login Modal Component', () => {
     const user = userEvent.setup();
     render(
       <LoginModal visible={true} setVisibility={() => null} role="pembaca" />,
-      { store }
+      { store },
     );
     fetchMock.mockReject(new Error('Internal Server Error'));
     const email = 'email@gmail.com';
@@ -57,7 +58,7 @@ describe('Login Modal Component', () => {
         setVisibility={setVisibility}
         role="pembaca"
       />,
-      { store }
+      { store },
     );
     const loginButton = screen.getByText(/lupa password/i);
     await user.click(loginButton);

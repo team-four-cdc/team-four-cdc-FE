@@ -5,7 +5,7 @@ export const useAsync = <T>(
   // @ts-ignore
   onSuccess: () => void,
   onError?: () => void,
-  deps?: DependencyList
+  deps?: DependencyList,
 ) => {
   useEffect(() => {
     const cancelablePromise = makeCancelable(asyncFn());
@@ -28,7 +28,7 @@ const makeCancelable = <T>(promise: Promise<T>) => {
   const wrappedPromise: Promise<T> = new Promise((resolve, reject) => {
     promise.then(
       (val) => (hasCanceled_ ? reject({ isCanceled: true }) : resolve(val)),
-      (error) => (hasCanceled_ ? reject({ isCanceled: true }) : reject(error))
+      (error) => (hasCanceled_ ? reject({ isCanceled: true }) : reject(error)),
     );
   });
 

@@ -1,5 +1,6 @@
-import Navbar from '@/components/Navbar';
+import React from 'react';
 import Head from 'next/head';
+import Navbar from '@/components/Navbar';
 
 interface HeadsProps {
   title: string;

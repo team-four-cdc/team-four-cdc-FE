@@ -1,6 +1,3 @@
-import { TextEditor } from '@/components/TextEditor';
-import Heads from '@/layout/Head/Head';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import DOMPurify from 'dompurify';
 import { MenuOutlined, PlusOutlined } from '@ant-design/icons';
 import {
@@ -14,21 +11,37 @@ import {
   notification,
 } from 'antd';
 import type { RcFile, UploadProps } from 'antd/es/upload';
-import { useEffect, useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import type { UploadFile } from 'antd/es/upload/interface';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 import { useCreateArticleMutation, useGetCategoriesMutation } from '@/services';
+import { TypedFormDataValue, TypedFormData, getTypedFormData } from '@/utils/formDataTyper';
+import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+import Heads from '@/layout/Head/Head';
+import { TextEditor } from '@/components/TextEditor';
+import { RootState } from '@/store';
+
+export interface ArticleData {
+  body: string;
+  price: string;
+  title: string;
+  picture: File;
+  authorId: string;
+  categoryId: string;
+  description: string;
+  [key: string]: TypedFormDataValue;
+}
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
+const getBase64 = (file: RcFile): Promise<string> => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => resolve(reader.result as string);
+  reader.onerror = (error) => reject(error);
+});
 
 export default function CreateArticle() {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -36,12 +49,13 @@ export default function CreateArticle() {
   const [createArticle] = useCreateArticleMutation();
   const [getAllCategories] = useGetCategoriesMutation();
   const [categories, setCategories] = useState<any>([]);
+  const { auth } = useSelector((state: RootState) => state);
   const [articleData, setArticleData] = useState({
     body: '',
     price: 1,
     title: '',
     picture: null,
-    authorId: 2,
+    authorId: 1,
     categoryId: 1,
     description: '',
   });
@@ -74,7 +88,7 @@ export default function CreateArticle() {
     if (!!newFileList && newFileList.length > 0) {
       if (!newFileList[0].url && !newFileList[0].preview) {
         newFileList[0].preview = await getBase64(
-          newFileList[0].originFileObj as RcFile
+          newFileList[0].originFileObj as RcFile,
         );
       }
       setPreviewImage(newFileList[0].url || (newFileList[0].preview as string));
@@ -83,30 +97,28 @@ export default function CreateArticle() {
 
   function DataURIToBlob(dataURI: string) {
     const splitDataURI = dataURI.split(',');
-    const byteString =
-      splitDataURI[0].indexOf('base64') >= 0
-        ? atob(splitDataURI[1])
-        : decodeURI(splitDataURI[1]);
+    const byteString = splitDataURI[0].indexOf('base64') >= 0
+      ? atob(splitDataURI[1])
+      : decodeURI(splitDataURI[1]);
     const mimeString = splitDataURI[0].split(':')[1].split(';')[0];
 
     const ia = new Uint8Array(byteString.length);
-    for (let i = 0; i < byteString.length; i++)
-      ia[i] = byteString.charCodeAt(i);
+    for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
 
     return new Blob([ia], { type: mimeString });
   }
 
   async function handleSubmitArticle() {
-    const formData = new FormData();
-    const file = !!previewImage ? DataURIToBlob(previewImage) : null;
+    const formData: TypedFormData<ArticleData> = getTypedFormData<ArticleData>();
+    const file = previewImage ? DataURIToBlob(previewImage) : null;
     formData.append('body', DOMPurify.sanitize(articleData.body));
     formData.append('price', articleData.price.toString());
     formData.append('title', articleData.title);
-    if (!!previewImage) {
+    if (previewImage) {
       // @ts-ignore
       formData.append('picture', file, `${fileList[0].name}`);
     }
-    formData.append('authorId', articleData.authorId.toString());
+    formData.append('authorId', auth.userId.toString());
     formData.append('categoryId', articleData.categoryId.toString());
     formData.append('description', articleData.description);
 
@@ -163,10 +175,9 @@ export default function CreateArticle() {
                 onChange={handleChange}
                 maxCount={1}
                 beforeUpload={(file) => {
-                  const isNotImage =
-                    file.type !== 'image/png' &&
-                    file.type !== 'image/jpg' &&
-                    file.type !== 'image/jpeg';
+                  const isNotImage = file.type !== 'image/png'
+                    && file.type !== 'image/jpg'
+                    && file.type !== 'image/jpeg';
                   if (isNotImage) {
                     notification.error({
                       message: 'The file must be an image!',
@@ -206,12 +217,10 @@ export default function CreateArticle() {
                 }}
                 className="border-2 border-black border-solid w-full rounded-full overflow-hidden"
                 defaultValue={categories.length > 0 ? categories[0].name : null}
-                options={categories.map((val: any) => {
-                  return {
-                    value: val.id,
-                    label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
-                  };
-                })}
+                options={categories.map((val: any) => ({
+                  value: val.id,
+                  label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
+                }))}
               />
             </div>
             <div className="grid grid-cols-1 mt-4">

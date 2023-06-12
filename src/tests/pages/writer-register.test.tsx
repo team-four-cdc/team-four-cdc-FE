@@ -1,8 +1,9 @@
+import React from 'react';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import RegistrasiPenulis from '@/pages/registrasi-penulis';
 import { store } from '@/store';
 import { render } from '@/tests';
-import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 describe('Registration Creator Page', () => {
   it('shows success message when registration success', async () => {

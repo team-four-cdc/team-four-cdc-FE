@@ -1,10 +1,10 @@
-import Heads from '@/layout/Head/Head';
-import VerifiedPage from '@/components/VerifiedPage';
-import { useEffect, useState } from 'react';
-import { useVerifyMutation } from '@/services';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Spin } from 'antd';
 import { useDispatch } from 'react-redux';
+import { useVerifyMutation } from '@/services';
+import VerifiedPage from '@/components/VerifiedPage';
+import Heads from '@/layout/Head/Head';
 import { setAuth } from '@/store/auth/authSlice';
 
 type Status = 'success' | 'failed' | 'error';
@@ -28,7 +28,7 @@ export default function Verification() {
     }
   }, [dispatch, query.token, verify]);
 
-  if (isUninitialized || isLoading)
+  if (isUninitialized || isLoading) {
     return (
       <div className="flex h-screen w">
         <div className="m-auto">
@@ -36,6 +36,7 @@ export default function Verification() {
         </div>
       </div>
     );
+  }
 
   return (
     <>

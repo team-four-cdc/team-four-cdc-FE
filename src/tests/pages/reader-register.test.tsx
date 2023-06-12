@@ -1,7 +1,8 @@
-import RegistrasiPembaca from '@/pages/registrasi-pembaca';
-import { render } from '@/tests';
+import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import RegistrasiPembaca from '@/pages/registrasi-pembaca';
+import { render } from '@/tests';
 import { store } from '@/store';
 
 describe('Registration Reader Page', () => {

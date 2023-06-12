@@ -1,11 +1,11 @@
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Form, Typography, notification } from 'antd';
+import { useRouter } from 'next/router';
+import React, { useState, ChangeEvent } from 'react';
 import StyledButton from '@/components/Button';
 import TextInput from '@/components/TextInput';
 import Heads from '@/layout/Head/Head';
 import { useForgotPasswordMutation } from '@/services';
-import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Form, Typography, notification } from 'antd';
-import { useRouter } from 'next/router';
-import { useState, ChangeEvent } from 'react';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState<string>('');
@@ -89,8 +89,8 @@ export default function ForgotPassword() {
               className="self-center"
               icon={<ArrowLeftOutlined />}
               loading={isLoading}
-              onClick={() => {
-                router.push('/');
+              onClick={async () => {
+                await router.push('/');
               }}
             />
           </div>

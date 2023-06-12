@@ -1,5 +1,31 @@
-import { RootState } from '@/store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { RootState } from '@/store';
+
+interface GetCategoriesResponse {
+  status: number,
+  message: string,
+  data: Array<{
+    id: number,
+    name: string,
+    createdAt: string,
+    updatedAt: string
+  }>
+}
+
+interface CreateCategoryRequest {
+  name: string
+}
+
+interface CreateCategoryResponse {
+  status: number,
+  message: string,
+  data: {
+    id: number,
+    name: string,
+    updatedAt: string,
+    createdAt: string
+  },
+}
 
 export const categoriesApi = createApi({
   reducerPath: 'categoriesApi',
@@ -7,7 +33,7 @@ export const categoriesApi = createApi({
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const { token } = (getState() as RootState).auth;
-      if (!!token) {
+      if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
 
@@ -15,13 +41,13 @@ export const categoriesApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getCategories: builder.mutation<any, void>({
+    getCategories: builder.mutation<GetCategoriesResponse, void>({
       query: () => ({
         url: '/category/listing',
         method: 'GET',
       }),
     }),
-    createCategory: builder.mutation<any, any>({
+    createCategory: builder.mutation<CreateCategoryResponse, CreateCategoryRequest>({
       query: (payload) => ({
         url: '/user/register',
         method: 'POST',
@@ -31,5 +57,4 @@ export const categoriesApi = createApi({
   }),
 });
 
-export const { useGetCategoriesMutation, useCreateCategoryMutation } =
-  categoriesApi;
+export const { useGetCategoriesMutation, useCreateCategoryMutation } = categoriesApi;

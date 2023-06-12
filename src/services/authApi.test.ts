@@ -122,7 +122,7 @@ describe('Login API', () => {
         const { method, url } = fetchMock.mock.calls[0][0] as Request;
         expect(method).toBe('POST');
         expect(url).toBe(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login/${successPayload.role}`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login/${successPayload.role}`,
         );
       });
   });

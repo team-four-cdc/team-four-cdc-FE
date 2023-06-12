@@ -1,3 +1,4 @@
+import Reacct from 'react'
 import dynamic from 'next/dynamic';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
@@ -38,16 +39,14 @@ export const TextEditor: React.FC<ITextEditor> = ({
   handleBodyChange,
   defaultValue,
   currentValue,
-}) => {
-  return (
+}) => (
     <div>
       <QuillNoSSRWrapper
-        className={`${className ? className : ''}`}
+        className={`${className || ''}`}
         modules={modules}
-        value={!!defaultValue ? defaultValue : currentValue}
+        value={defaultValue || currentValue}
         onChange={(value) => handleBodyChange(value)}
         theme="snow"
       />
     </div>
-  );
-};
+);

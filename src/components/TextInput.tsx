@@ -1,3 +1,4 @@
+import React from 'react'
 import { Input, InputProps, Typography } from 'antd';
 
 interface TextInputProps extends InputProps {
@@ -23,7 +24,7 @@ export default function TextInput(props: TextInputProps): JSX.Element {
     'aria-label': props.label,
     'aria-description': props.helperText,
     className:
-      'px-2.5 py-1.5 text-14px rounded-full ' + (props.className ?? ''),
+      `px-2.5 py-1.5 text-14px rounded-full ${props.className ?? ''}`,
     style: {
       ...props.style,
     },
@@ -34,7 +35,7 @@ export default function TextInput(props: TextInputProps): JSX.Element {
       {props.label !== undefined ? (
         <Typography
           className={
-            'mb-10px text-12px font-semibold ' + (props.labelClassName ?? '')
+            `mb-10px text-12px font-semibold ${props.labelClassName ?? ''}`
           }
           style={props.labelStyle}
         >
@@ -51,7 +52,7 @@ export default function TextInput(props: TextInputProps): JSX.Element {
       {props.helperText !== undefined ? (
         <Typography
           className={
-            'text-12px opacity-90 ' + (props.helperTextClassName ?? '')
+            `text-12px opacity-90 ${props.helperTextClassName ?? ''}`
           }
           style={props.helperTextStyle}
         >
