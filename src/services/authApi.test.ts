@@ -27,7 +27,7 @@ describe('Registration API', () => {
         expect(fetchMock).toBeCalledTimes(1);
         const { method, url } = fetchMock.mock.calls[0][0] as Request;
         expect(method).toBe('POST');
-        expect(url).toBe(`${process.env.NEXT_PUBLIC_BASE_URL}/user/register`);
+        expect(url).toBe(`${process.env.NEXT_PUBLIC_BASE_URL as string}/user/register`);
       });
   });
 
@@ -36,10 +36,11 @@ describe('Registration API', () => {
     fetchMock.mockResponse(JSON.stringify(response));
     return store
       .dispatch(authApi.endpoints.register.initiate(successPayload))
-      .then((action: any) => {
-        const { data } = action;
-        expect(data.status).toBe('fulfilled');
-        expect(data.message).toBe('success');
+      .unwrap()
+      .then((action) => {
+        const { data, message, status } = action;
+        expect(status).toBe('fulfilled');
+        expect(message).toBe('success');
         expect(data).toStrictEqual(response);
       });
   });
@@ -48,9 +49,10 @@ describe('Registration API', () => {
     fetchMock.mockReject(new Error('Internal Server Error'));
     return store
       .dispatch(authApi.endpoints.register.initiate(errorPayload))
-      .then((action: any) => {
-        const { error } = action;
-        expect(error.error).toBe('Error: Internal Server Error');
+      .unwrap()
+      .then((action) => {
+        const error = action.message;
+        expect(error).toBe('Error: Internal Server Error');
       });
   });
 });
@@ -68,11 +70,12 @@ describe('Verify API', () => {
     fetchMock.mockResponse(JSON.stringify({}));
     return store
       .dispatch(authApi.endpoints.verify.initiate(successPayload))
+      .unwrap()
       .then(() => {
         expect(fetchMock).toBeCalledTimes(1);
         const { method, url } = fetchMock.mock.calls[0][0] as Request;
         expect(method).toBe('POST');
-        expect(url).toBe(`${process.env.NEXT_PUBLIC_BASE_URL}/user/verify`);
+        expect(url).toBe(`${process.env.NEXT_PUBLIC_BASE_URL as string}/user/verify`);
       });
   });
 
@@ -81,7 +84,8 @@ describe('Verify API', () => {
     fetchMock.mockResponse(JSON.stringify(response));
     return store
       .dispatch(authApi.endpoints.verify.initiate(successPayload))
-      .then((action: any) => {
+      .unwrap()
+      .then((action) => {
         const { data } = action;
         expect(data.status).toBe('fulfilled');
         expect(data.message).toBe('success');
@@ -93,9 +97,10 @@ describe('Verify API', () => {
     fetchMock.mockReject(new Error('Internal Server Error'));
     return store
       .dispatch(authApi.endpoints.verify.initiate(errorPayload))
-      .then((action: any) => {
-        const { error } = action;
-        expect(error.error).toBe('Error: Internal Server Error');
+      .unwrap()
+      .then((action) => {
+        const { message } = action;
+        expect(message).toBe('Error: Internal Server Error');
       });
   });
 });
@@ -117,12 +122,13 @@ describe('Login API', () => {
     fetchMock.mockResponse(JSON.stringify({}));
     return store
       .dispatch(authApi.endpoints.login.initiate(successPayload))
+      .unwrap()
       .then(() => {
         expect(fetchMock).toBeCalledTimes(1);
         const { method, url } = fetchMock.mock.calls[0][0] as Request;
         expect(method).toBe('POST');
         expect(url).toBe(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login/${successPayload.role}`,
+          `${process.env.NEXT_PUBLIC_BASE_URL as string}/auth/login/${successPayload.role}`,
         );
       });
   });
@@ -132,7 +138,8 @@ describe('Login API', () => {
     fetchMock.mockResponse(JSON.stringify(response));
     return store
       .dispatch(authApi.endpoints.login.initiate(successPayload))
-      .then((action: any) => {
+      .unwrap()
+      .then((action) => {
         const { data } = action;
         expect(data.status).toBe('fulfilled');
         expect(data.message).toBe('success');
@@ -144,9 +151,10 @@ describe('Login API', () => {
     fetchMock.mockReject(new Error('Internal Server Error'));
     return store
       .dispatch(authApi.endpoints.login.initiate(errorPayload))
-      .then((action: any) => {
-        const { error } = action;
-        expect(error.error).toBe('Error: Internal Server Error');
+      .unwrap()
+      .then((action) => {
+        const { message } = action;
+        expect(message).toBe('Error: Internal Server Error');
       });
   });
 });

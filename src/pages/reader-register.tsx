@@ -4,15 +4,15 @@ import { Form, notification, Typography } from 'antd';
 import Image from 'next/image';
 import TextInput from '@/components/TextInput';
 import StyledButton from '@/components/Button';
-import Illustration from '../../public/register-illustration-reader.svg';
 import Heads from '@/layout/Head/Head';
 import { useRegisterMutation } from '@/services';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
 
 export default function ReaderRegister() {
   const [creatorRegForm] = Form.useForm();
   const [register, { isLoading }] = useRegisterMutation();
 
-  function onFinish(values: any) {
+  function onFinish(values: { role: string; email: string; password: string; author?: string; full_name?: string }) {
     register({ ...values, role: 'reader', full_name: values.email })
       .unwrap()
       .then((res) => {
@@ -20,7 +20,11 @@ export default function ReaderRegister() {
         creatorRegForm.resetFields();
       })
       .catch((err) => {
-        notification.error({ message: err?.data?.message || 'Error' });
+        if (err instanceof ErrorResponse || err instanceof DbConcurrencyError || err instanceof InternalServerError) {
+          notification.error({ message: err.message });
+        } else {
+          notification.error({ message: 'Error pada sistem!' });
+        }
       });
   }
 
@@ -29,10 +33,11 @@ export default function ReaderRegister() {
       <Heads title="Registrasi Pembaca" showNavbar={true} />
       <div className="flex flex-wrap justify-center px-2 py-8 gap-14">
         <Image
-          src={Illustration}
+          src={'/register-illustration-reader.svg'}
           alt="Registrasi sebagai pembaca"
           className="hidden align-top sm:inline-block"
           width={400}
+          height={400}
         />
 
         <div className="inline-block w-11/12 ml-4 align-top align-center sm:w-4/5 lg:w-1/2">

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@/store';
 
-interface GetCategoriesResponse {
+export interface GetCategoriesResponse {
   status: number,
   message: string,
   data: Array<{

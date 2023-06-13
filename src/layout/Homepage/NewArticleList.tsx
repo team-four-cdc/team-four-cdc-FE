@@ -11,7 +11,7 @@ export default function NewArticleList() {
           Artikel Terbaru
         </Typography.Title>
         <div className="flex flex-wrap">
-          {Array.map((list: any) => (
+          {Array.map((list) => (
             <div key={list} className="grid justify-center w-1/2 p-3">
               <CardArticlePreview
                 creator="Breda tafta"

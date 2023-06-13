@@ -11,22 +11,23 @@ import {
   notification,
 } from 'antd';
 import type { RcFile, UploadProps } from 'antd/es/upload';
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { UploadFile } from 'antd/es/upload/interface';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import { useCreateArticleMutation, useGetCategoriesMutation } from '@/services';
+import { GetCategoriesResponse, useCreateArticleMutation, useGetCategoriesMutation } from '@/services';
 import { TypedFormDataValue, TypedFormData, getTypedFormData } from '@/utils/formDataTyper';
 import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import Heads from '@/layout/Head/Head';
 import { TextEditor } from '@/components/TextEditor';
 import { RootState } from '@/store';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
 
 export interface ArticleData {
   body: string;
   price: string;
   title: string;
-  picture: File;
+  picture: File | Blob;
   authorId: string;
   categoryId: string;
   description: string;
@@ -48,7 +49,7 @@ export default function CreateArticle() {
   const [previewImage, setPreviewImage] = useState('');
   const [createArticle] = useCreateArticleMutation();
   const [getAllCategories] = useGetCategoriesMutation();
-  const [categories, setCategories] = useState<any>([]);
+  const [categories, setCategories] = useState<GetCategoriesResponse['data']>([]);
   const { auth } = useSelector((state: RootState) => state);
   const [articleData, setArticleData] = useState({
     body: '',
@@ -61,14 +62,15 @@ export default function CreateArticle() {
   });
 
   useEffect(() => {
+    // eslint-disable-next-line
     getCategories();
 
     return () => { };
     // eslint-disable-next-line
   }, []);
 
-  function getCategories() {
-    getAllCategories()
+  async function getCategories() {
+    await getAllCategories()
       .unwrap()
       .then((res) => {
         setCategories(res.data);
@@ -81,6 +83,7 @@ export default function CreateArticle() {
     setArticleData(temp);
   }
 
+  // eslint-disable-next-line
   const handleChange: UploadProps['onChange'] = async ({
     fileList: newFileList,
   }) => {
@@ -115,19 +118,23 @@ export default function CreateArticle() {
     formData.append('price', articleData.price.toString());
     formData.append('title', articleData.title);
     if (previewImage) {
-      // @ts-ignore
-      formData.append('picture', file, `${fileList[0].name}`);
+      formData.append('picture', (file as File), `${fileList[0].name}`);
     }
     formData.append('authorId', auth.userId.toString());
     formData.append('categoryId', articleData.categoryId.toString());
     formData.append('description', articleData.description);
 
     createArticle(formData)
-      .then((res: any) => {
-        notification.success({ message: res?.message || 'Success' });
+      .unwrap()
+      .then((res) => {
+        notification.success({ message: res.message || 'Success' });
       })
       .catch((err) => {
-        notification.error({ message: err?.data?.message || 'Error' });
+        if (err instanceof ErrorResponse || err instanceof DbConcurrencyError || err instanceof InternalServerError) {
+          notification.error({ message: err.message || 'Error' });
+        } else {
+          notification.error({ message: 'Error pada sistem!' });
+        }
       });
   }
 
@@ -154,9 +161,9 @@ export default function CreateArticle() {
       <WriterLayout>
         <Layout className="py-2 px-4">
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              handleSubmitArticle();
+              await handleSubmitArticle();
             }}
           >
             <div className="flex items-center">
@@ -209,15 +216,13 @@ export default function CreateArticle() {
             <div className="grid grid-cols-1 mt-4">
               <Title level={3}>Kategori</Title>
               <Select
-                value={articleData.categoryId}
-                onChange={(e) => {
+                onChange={(e: string) => {
                   const temp = { ...articleData };
-                  temp.categoryId = e;
+                  temp.categoryId = e as unknown as number;
                   setArticleData(temp);
                 }}
                 className="border-2 border-black border-solid w-full rounded-full overflow-hidden"
-                defaultValue={categories.length > 0 ? categories[0].name : null}
-                options={categories.map((val: any) => ({
+                options={categories.map((val) => ({
                   value: val.id,
                   label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
                 }))}

@@ -3,28 +3,44 @@ import { useSelector } from 'react-redux';
 import ArticleList from '@/components/ArticleList';
 import Heads from '@/layout/Head/Head';
 import WriterLayout from '@/layout/Head/Writer/WriterLayout';
-import { useAllArticleMutation } from '@/services';
+import { GetAllArticleResponse, useAllArticleMutation } from '@/services';
 import { RootState } from '@/store';
+
+interface ComputedAllArticle {
+  id: number,
+  preview: string,
+  title: string,
+  desc: string,
+  body: string,
+  publish_date: string,
+  author_id: number,
+  price: string,
+  pdf_url: string,
+  category_id: number,
+  createdAt: string,
+  updatedAt: string,
+  author: {
+    email: string,
+    full_name: string,
+    author: string,
+    photo_url: string,
+    createdAt: string,
+    updatedAt: string,
+  }
+}
 
 export default function ListArticles() {
   const [getAllArticle] = useAllArticleMutation();
-  const [dataArticle, setDataArticle] = useState([]);
+  const [dataArticle, setDataArticle] = useState<ComputedAllArticle[]>([]);
   const { auth } = useSelector((state: RootState) => state);
-
-  useEffect(() => {
-    fetchArticle();
-
-    return () => {};
-    // eslint-disable-next-line
-  }, []);
 
   function fetchArticle() {
     getAllArticle({
       userId: auth.userId,
     })
       .unwrap()
-      .then((res) => {
-        const temp = res.data.map((val: any) => ({
+      .then((res: GetAllArticleResponse) => {
+        const temp = res.data.map((val) => ({
           id: val.id,
           preview: val.photo_article,
           title: val.title,
@@ -50,6 +66,14 @@ export default function ListArticles() {
         setDataArticle(temp);
       });
   }
+
+  useEffect(() => {
+    //eslint-disable-next-line
+    fetchArticle();
+
+    return () => { };
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>

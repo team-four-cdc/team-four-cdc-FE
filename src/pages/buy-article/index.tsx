@@ -4,7 +4,6 @@ import {
 } from 'antd';
 import Image from 'next/image';
 import { MenuOutlined } from '@ant-design/icons';
-import defaultImg from '@/assets/images/image-preview.png';
 import Heads from '@/layout/Head/Head';
 
 export default function BuyArticle() {
@@ -15,7 +14,7 @@ export default function BuyArticle() {
       <section className="flex flex-col items-center">
         <div className="flex gap-2 mt-10">
           <Image
-            src={defaultImg}
+            src={'/image-preview.png'}
             alt="Article Preview"
             width={200}
             height={200}

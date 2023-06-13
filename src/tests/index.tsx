@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent, ReactElement } from 'react';
 import {
   queries,
   Queries,
@@ -19,15 +19,15 @@ const render = <
   Q extends Queries = typeof queries,
   C extends Element | DocumentFragment = HTMLElement
 >(
-    ui: ReactElement,
-    options: ExtraOptions & RenderOptions<Q, C> = {},
-  ): RenderResult<Q, C> & { store: Store } => {
+  ui: ReactElement,
+  options: ExtraOptions & RenderOptions<Q, C> = {},
+): RenderResult<Q, C> & { store: Store } => {
   const {
     store = configureStore({ reducer: persistedReducer }),
     ...renderOptions
   } = options;
 
-  const Wrapper: FunctionComponent = ({ children }: any) => <Provider store={store}>{children}</Provider>;
+  const Wrapper: FunctionComponent = ({ children }) => <Provider store={store}>{children}</Provider>;
 
   return {
     ...rtlRender(ui, { wrapper: Wrapper, ...renderOptions }),

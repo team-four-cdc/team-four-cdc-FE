@@ -6,6 +6,7 @@ import StyledButton from '@/components/Button';
 import TextInput from '@/components/TextInput';
 import Heads from '@/layout/Head/Head';
 import { useForgotPasswordMutation } from '@/services';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState<string>('');
@@ -19,10 +20,10 @@ export default function ForgotPassword() {
     }
   }
 
-  const onFinish = (values: any) => {
-    const { email } = values;
+  const onFinish = (values: { emailField: string }) => {
+    const { emailField } = values;
     forgotPassword({
-      email,
+      email: emailField,
       // TODO: placeholder
       role: router.query.role !== 'pembaca' ? 'creator' : 'reader',
     })
@@ -31,7 +32,11 @@ export default function ForgotPassword() {
         notification.success({ message: 'Success' });
       })
       .catch((err) => {
-        notification.error({ message: err?.message });
+        if (err instanceof ErrorResponse || err instanceof DbConcurrencyError || err instanceof InternalServerError) {
+          notification.error({ message: err.message });
+        } else {
+          notification.error({ message: 'Error pada sistem!' });
+        }
       });
   };
 

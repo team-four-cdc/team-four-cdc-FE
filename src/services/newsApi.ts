@@ -1,11 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL as string
+
 export interface NewsResponse {
+  // eslint-disable-next-line
   news: any;
 }
 
 export interface DashboardRequest {
-  userId: string;
+  userId: number;
 }
 
 export interface DashboardResponseTransactions {
@@ -66,14 +69,14 @@ export interface DashboardResponse {
 
 export const newsApi = createApi({
   reducerPath: 'newsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getNews: builder.query<NewsResponse, void>({
       query: () => '/news',
     }),
     getDashboard: builder.mutation<DashboardResponse, DashboardRequest>({
       query: (payload) => ({
-        url: `/article/dashboard?userId=${payload}`,
+        url: `/article/dashboard?userId=${payload.userId}`,
         method: 'GET',
       }),
     }),

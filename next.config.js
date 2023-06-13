@@ -51,16 +51,16 @@ const nextConfig = {
         destination: '/forgot-password',
       },
       {
-        source: '/verifikasi/',
-        destination: '/verification/',
+        source: '/verifikasi/:token',
+        destination: '/verification/:token',
       },
       {
         source: '/dashboard-penulis',
         destination: '/writer-dashboard',
       },
       {
-        source: '/dashboard-penulis/edit-artikel',
-        destination: '/writer-dashboard/edit-article',
+        source: '/dashboard-penulis/edit-artikel/:id',
+        destination: '/writer-dashboard/edit-article/:id',
       },
       {
         source: '/dashboard-penulis/daftar-artikel',

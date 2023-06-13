@@ -9,9 +9,24 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginModal, { UserRole } from './LoginModal';
 import { resetAuth } from '@/store/auth/authSlice';
+import { RootState } from '@/store';
 
 interface NavbarProps {
   showWrapperOption: boolean;
+}
+
+interface ItemMenuIF {
+  name: string
+  login: UserRole
+  register: string
+}
+
+interface ItemNavbarIF {
+  name: string
+  menu?: string
+  type: string
+  url: string
+  url2?: string
 }
 
 export default function Navbar({ showWrapperOption = true }: NavbarProps) {
@@ -19,13 +34,13 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const Router = useRouter();
   const dispatch = useDispatch();
-  const { auth } = useSelector((state: any) => state);
+  const { auth } = useSelector((state: RootState) => state);
   const onClickLoginButton = (role: UserRole) => {
     setUserRole(role);
     setShowLoginModal(true);
   };
 
-  const itemMenus = [
+  const itemMenus: ItemMenuIF[] = [
     {
       name: 'Pembaca',
       login: 'pembaca',
@@ -38,7 +53,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
     },
   ];
 
-  const itemNavbar = [
+  const itemNavbar: ItemNavbarIF[] = [
     {
       name: 'Lihat Artikel',
       type: 'link',
@@ -59,7 +74,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
     },
   ];
 
-  const itemNavbarLogin = [
+  const itemNavbarLogin: ItemNavbarIF[] = [
     {
       name: 'Lihat Artikel',
       type: 'link',
@@ -78,7 +93,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
     },
   ];
 
-  function menu(type: string) {
+  function menuComponent(type: string) {
     return (
       <Menu>
         {type == 'logout' ? (
@@ -92,27 +107,27 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
             </Button>
           </Menu.Item>
         ) : (
-          itemMenus.map((menu: any, index: any) => (type == 'login' ? (
-              <Menu.Item key={index}>
-                <Button
-                  className="bg-transparent"
-                  type="text"
-                  onClick={() => onClickLoginButton(menu.login)}
-                >
-                  {menu.name}
-                </Button>
-              </Menu.Item>
+          itemMenus.map((menu, index: number) => (type == 'login' ? (
+            <Menu.Item key={index}>
+              <Button
+                className="bg-transparent"
+                type="text"
+                onClick={() => onClickLoginButton(menu.login)}
+              >
+                {menu.name}
+              </Button>
+            </Menu.Item>
           ) : (
-              <Menu.Item key={index}>
-                <Link
-                  href={menu.register}
-                  className={classNames({
-                    'text-success-color': Router.asPath == menu.register,
-                  })}
-                >
-                  {menu.name}
-                </Link>
-              </Menu.Item>
+            <Menu.Item key={index}>
+              <Link
+                href={menu.register}
+                className={classNames({
+                  'text-success-color': Router.asPath == menu.register,
+                })}
+              >
+                {menu.name}
+              </Link>
+            </Menu.Item>
           )))
         )}
       </Menu>
@@ -122,7 +137,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   const NavbarWrapp = auth.isLogin ? (
     <>
       {auth.role == 'reader' ? (
-        itemNavbarLogin.map((navbar: any, index: number) => {
+        itemNavbarLogin.map((navbar, index: number) => {
           switch (navbar.type) {
             case 'link':
               return (
@@ -140,7 +155,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
               return (
                 <Dropdown
                   key={index}
-                  overlay={menu(navbar.menu)}
+                  overlay={menuComponent(navbar?.menu || '')}
                   trigger={['click']}
                   className={classNames(
                     'cursor-pointer hover:text-success-color',
@@ -171,7 +186,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
     </>
   ) : (
     <>
-      {itemNavbar.map((navbar: any, index: number) => {
+      {itemNavbar.map((navbar, index: number) => {
         switch (navbar.type) {
           case 'link':
             return (
@@ -189,7 +204,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
             return (
               <Dropdown
                 key={index}
-                overlay={menu(navbar.menu)}
+                overlay={menuComponent(navbar?.menu || '')}
                 trigger={['click']}
                 className={classNames(
                   'cursor-pointer hover:text-success-color',

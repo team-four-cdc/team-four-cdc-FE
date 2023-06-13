@@ -29,12 +29,12 @@
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
-    "whatwg-fetch": "^3.6.2"
+    "whatwg-fetch": "^3.6.2",
+    "@testing-library/react": "^13.4.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.4",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/node": "18.11.18",
     "@types/react": "17.0.39",

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import {
   Typography, Col, Row, notification,
@@ -26,8 +26,6 @@ interface Props {
 const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
   const [deleteArticle, { isLoading }] = useDeleteArticleMutation();
   const route = useRouter();
-
-  useEffect(() => () => { }, []);
 
   async function onDelete(id: number) {
     deleteArticle({
@@ -88,7 +86,7 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
               <div className="py-20px">
                 <StyledButton
                   onClick={async () => {
-                    await route.push(`/dashboard-penulis/edit-article/${item.id}`);
+                    await route.push(`/dashboard-penulis/edit-artikel/${item.id}`);
                   }}
                   type="primary"
                   ghost

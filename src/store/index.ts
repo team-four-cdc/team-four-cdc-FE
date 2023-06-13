@@ -23,10 +23,12 @@ const combinedReducer = combineReducers({
 
 const rootReducer: typeof combinedReducer = (state, action) => {
   if (action.type === HYDRATE) {
+    // eslint-disable-next-line
     const nextState = {
       ...state,
       ...action.payload,
     };
+    // eslint-disable-next-line
     return nextState;
   }
   return combinedReducer(state, action);

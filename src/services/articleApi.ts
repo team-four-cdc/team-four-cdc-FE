@@ -8,19 +8,60 @@ interface DeleteArticleRequest {
   id: number;
 }
 
+interface GetAllArticleRequest {
+  userId: number
+}
+
+export interface GetAllArticleResponse {
+  data: {
+    id: number,
+    photo_article: string,
+    title: string,
+    description: string,
+    body: string,
+    publish_date: string,
+    author_id: number,
+    price: string,
+    pdf_url: string,
+    category_id: number,
+    createdAt: string,
+    updatedAt: string,
+    author: {
+      id: number,
+      email: string,
+      full_name: string,
+      author: string,
+      photo_url: string,
+      createdAt: string,
+      updatedAt: string,
+    }
+  }[]
+}
+
 interface UpdateArticleResponse {
   status: number,
   message: string,
   data: Array<number>,
 }
 
-export interface UpdateArticleRequest extends TypedFormData<ArticleData> {
+type PartialAny<T> = {
+  // eslint-disable-next-line
+  [P in keyof T]?: any
+}
+
+type Modify<T, R extends PartialAny<T>> = Omit<T, keyof R> & R
+
+export type UpdateArticleRequest = Modify<ArticleData, UpdateArticle>
+
+export interface UpdateArticle {
   id: number;
   title: string
   body?: string;
   description?: string;
   price?: string;
 }
+
+type TypedFormDataUpdateArticle = TypedFormData<UpdateArticleRequest>
 
 interface CreateArticleResponse {
   status: number;
@@ -112,7 +153,7 @@ export const articleApi = createApi({
         body: payload,
       }),
     }),
-    allArticle: builder.mutation<any, any>({
+    allArticle: builder.mutation<GetAllArticleResponse, GetAllArticleRequest>({
       query: (payload) => ({
         url: `/article/listing?userId=${payload.userId}`,
         method: 'GET',
@@ -127,9 +168,10 @@ export const articleApi = createApi({
         method: 'POST',
       }),
     }),
-    updateArticle: builder.mutation<UpdateArticleResponse, UpdateArticleRequest>({
+    updateArticle: builder.mutation<UpdateArticleResponse, TypedFormDataUpdateArticle>({
       query: (payload) => {
-        const formDataObj: ArticleData = {
+        const formDataObj: ArticleData & { id: string } = {
+          id: '',
           body: '',
           price: '',
           title: '',

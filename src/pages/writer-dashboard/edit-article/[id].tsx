@@ -15,12 +15,22 @@ import { UploadProps } from 'antd/es/upload';
 import { RcFile, UploadFile } from 'antd/lib/upload/interface';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useGetCategoriesMutation, useUpdateArticleMutation } from '@/services';
+import { GetCategoriesResponse, UpdateArticleRequest, useGetCategoriesMutation, useUpdateArticleMutation } from '@/services';
 import { TextEditor } from '@/components/TextEditor';
 import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import Heads from '@/layout/Head/Head';
 import { getTypedFormData } from '@/utils/formDataTyper';
-import { ArticleData } from '../create-article';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
+
+interface TempArticleIF {
+  body: string;
+  price: string;
+  title: string;
+  preview: string;
+  author_id: number;
+  category_id: number;
+  desc: string;
+}
 
 const getBase64 = (file: RcFile): Promise<string> => new Promise((resolve, reject) => {
   const reader = new FileReader();
@@ -36,22 +46,30 @@ export default function EditArticle() {
   const [getAllCategories] = useGetCategoriesMutation();
   const [updateArticle] = useUpdateArticleMutation();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [categories, setCategories] = useState<any>([]);
+  const [categories, setCategories] = useState<GetCategoriesResponse["data"]>([]);
   const [previewImage, setPreviewImage] = useState('');
   const router = useRouter();
   const { id: articleId } = router.query;
   const [articleData, setArticleData] = useState({
     body: '',
-    price: 1,
+    price: '',
     title: '',
-    picture: null,
+    picture: '',
     authorId: 2,
     categoryId: 1,
     description: '',
   });
 
   useEffect(() => {
-    const article: any = null;
+    const article: TempArticleIF = {
+      category_id: 0,
+      price: '',
+      title: '',
+      preview: '',
+      body: '',
+      desc: '',
+      author_id: 0
+    };
     if (article) {
       const temp = { ...articleData };
       temp.body = article.body;
@@ -86,6 +104,7 @@ export default function EditArticle() {
     setArticleData(temp);
   }
 
+  // eslint-disable-next-line
   const handleChange: UploadProps['onChange'] = async ({
     fileList: newFileList,
   }) => {
@@ -114,26 +133,30 @@ export default function EditArticle() {
   }
 
   async function handleSubmitArticle() {
-    const formData = getTypedFormData<ArticleData>();
+    const formData = getTypedFormData<UpdateArticleRequest>();
     const file = previewImage ? DataURIToBlob(previewImage) : null;
     formData.append('body', DOMPurify.sanitize(articleData.body));
     formData.append('price', articleData.price.toString());
     formData.append('title', articleData.title);
     if (previewImage) {
-      // @ts-ignore
-      formData.append('picture', file, `${fileList[0].name}`);
+      formData.append('picture', (file as File), `${fileList[0].name}`);
     }
     formData.append('authorId', articleData.authorId.toString());
     formData.append('categoryId', articleData.categoryId.toString());
     formData.append('description', articleData.description);
-    formData.append('id', articleId as string);
+    formData.append('id', articleId as unknown as number);
 
     updateArticle(formData)
-      .then((res: any) => {
+      .unwrap()
+      .then((res) => {
         notification.success({ message: res?.message || 'Success' });
       })
       .catch((err) => {
-        notification.error({ message: err?.data?.message || 'Error' });
+        if (err instanceof ErrorResponse || err instanceof DbConcurrencyError || err instanceof InternalServerError) {
+          notification.error({ message: err.message });
+        } else {
+          notification.error({ message: 'Error pada sistem!' });
+        }
       });
   }
 
@@ -216,14 +239,14 @@ export default function EditArticle() {
               <Title level={3}>Kategori</Title>
               <Select
                 value={articleData.categoryId}
-                onChange={(e) => {
+                onChange={(e: number) => {
                   const temp = { ...articleData };
                   temp.categoryId = e;
                   setArticleData(temp);
                 }}
                 className="border-2 border-black border-solid w-full rounded-full overflow-hidden"
-                defaultValue={categories.length > 0 ? categories[0].name : null}
-                options={categories.map((val: any) => ({
+                defaultValue={categories.length > 0 ? categories[0].id : undefined}
+                options={categories.map((val) => ({
                   value: val.id,
                   label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
                 }))}
