@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import LupaPassword from '@/pages/lupa-password';
+import LupaPassword from '@/pages/forgot-password';
 import { render } from '@/tests';
 import { store } from '@/store';
 

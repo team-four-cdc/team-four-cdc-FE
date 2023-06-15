@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import RegistrasiPenulis from '@/pages/registrasi-penulis';
+import RegistrasiPenulis from '@/pages/writer-register';
 import { store } from '@/store';
 import { render } from '@/tests';
 
