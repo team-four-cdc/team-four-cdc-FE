@@ -1,9 +1,9 @@
 import React from 'react';
 import { Typography } from 'antd';
 import Image from 'next/image';
-import StyledButton from './Button';
 import { EyeOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import StyledButton from './Button';
 
 interface StandardVerifiedPageProps {
   status: 'success' | 'failed' | 'error';
@@ -69,7 +69,7 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
           type={contents[status].isSuccess ? 'primary' : 'default'}
           size="large"
           icon={contents[status].isSuccess ? <EyeOutlined /> : null}
-          onClick={() => router.push(contents[status].urlRedirect)}
+          onClick={async() => router.push(contents[status].urlRedirect)}
         />
       </div>
     </div>

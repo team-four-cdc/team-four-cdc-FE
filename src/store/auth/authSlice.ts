@@ -1,6 +1,6 @@
-import { authApi } from '@/services';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
+import { authApi } from '@/services';
 
 interface DecodedToken extends JwtPayload {
   email: string;
@@ -23,7 +23,7 @@ const initialState: AuthState = {
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: initialState,
+  initialState,
   reducers: {
     setAuth: (state, action: PayloadAction<string>) => {
       const token = action.payload;
@@ -55,7 +55,7 @@ const authSlice = createSlice({
         state.isLogin = true;
         state.userId = userId;
         state.email = email;
-      }
+      },
     );
   },
 });

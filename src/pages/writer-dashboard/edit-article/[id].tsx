@@ -9,24 +9,35 @@ import {
   Divider,
   notification,
 } from 'antd';
-import Heads from '@/layout/Head/Head';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import { MenuOutlined, PlusOutlined } from '@ant-design/icons';
-import { TextEditor } from '@/components/TextEditor';
-import { useGetCategoriesMutation, useUpdateArticleMutation } from '@/services';
 import DOMPurify from 'dompurify';
 import { UploadProps } from 'antd/es/upload';
 import { RcFile, UploadFile } from 'antd/lib/upload/interface';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { GetCategoriesResponse, UpdateArticleRequest, useGetCategoriesMutation, useUpdateArticleMutation } from '@/services';
+import { TextEditor } from '@/components/TextEditor';
+import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+import Heads from '@/layout/Head/Head';
+import { getTypedFormData } from '@/utils/formDataTyper';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
 
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
+interface TempArticleIF {
+  body: string;
+  price: string;
+  title: string;
+  preview: string;
+  author_id: number;
+  category_id: number;
+  desc: string;
+}
+
+const getBase64 = (file: RcFile): Promise<string> => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => resolve(reader.result as string);
+  reader.onerror = (error) => reject(error);
+});
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -35,25 +46,31 @@ export default function EditArticle() {
   const [getAllCategories] = useGetCategoriesMutation();
   const [updateArticle] = useUpdateArticleMutation();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [categories, setCategories] = useState<any>([]);
+  const [categories, setCategories] = useState<GetCategoriesResponse["data"]>([]);
   const [previewImage, setPreviewImage] = useState('');
   const router = useRouter();
   const { id: articleId } = router.query;
   const [articleData, setArticleData] = useState({
     body: '',
-    price: 1,
+    price: '',
     title: '',
-    picture: null,
+    picture: '',
     authorId: 2,
     categoryId: 1,
     description: '',
   });
 
   useEffect(() => {
-    const article = JSON.parse(
-      localStorage.getItem(`article_${articleId}`) as string
-    );
-    if (!!article) {
+    const article: TempArticleIF = {
+      category_id: 0,
+      price: '',
+      title: '',
+      preview: '',
+      body: '',
+      desc: '',
+      author_id: 0
+    };
+    if (article) {
       const temp = { ...articleData };
       temp.body = article.body;
       temp.price = article.price;
@@ -69,7 +86,7 @@ export default function EditArticle() {
       router.back();
     }
 
-    return () => {};
+    return () => { };
     // eslint-disable-next-line
   }, []);
 
@@ -87,6 +104,7 @@ export default function EditArticle() {
     setArticleData(temp);
   }
 
+  // eslint-disable-next-line
   const handleChange: UploadProps['onChange'] = async ({
     fileList: newFileList,
   }) => {
@@ -94,7 +112,7 @@ export default function EditArticle() {
     if (!!newFileList && newFileList.length > 0) {
       if (!newFileList[0].url && !newFileList[0].preview) {
         newFileList[0].preview = await getBase64(
-          newFileList[0].originFileObj as RcFile
+          newFileList[0].originFileObj as RcFile,
         );
       }
       setPreviewImage(newFileList[0].url || (newFileList[0].preview as string));
@@ -103,40 +121,42 @@ export default function EditArticle() {
 
   function DataURIToBlob(dataURI: string) {
     const splitDataURI = dataURI.split(',');
-    const byteString =
-      splitDataURI[0].indexOf('base64') >= 0
-        ? atob(splitDataURI[1])
-        : decodeURI(splitDataURI[1]);
+    const byteString = splitDataURI[0].indexOf('base64') >= 0
+      ? atob(splitDataURI[1])
+      : decodeURI(splitDataURI[1]);
     const mimeString = splitDataURI[0].split(':')[1].split(';')[0];
 
     const ia = new Uint8Array(byteString.length);
-    for (let i = 0; i < byteString.length; i++)
-      ia[i] = byteString.charCodeAt(i);
+    for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
 
     return new Blob([ia], { type: mimeString });
   }
 
   async function handleSubmitArticle() {
-    const formData = new FormData();
-    const file = !!previewImage ? DataURIToBlob(previewImage) : null;
+    const formData = getTypedFormData<UpdateArticleRequest>();
+    const file = previewImage ? DataURIToBlob(previewImage) : null;
     formData.append('body', DOMPurify.sanitize(articleData.body));
     formData.append('price', articleData.price.toString());
     formData.append('title', articleData.title);
-    if (!!previewImage) {
-      // @ts-ignore
-      formData.append('picture', file, `${fileList[0].name}`);
+    if (previewImage) {
+      formData.append('picture', (file as File), `${fileList[0].name}`);
     }
     formData.append('authorId', articleData.authorId.toString());
     formData.append('categoryId', articleData.categoryId.toString());
     formData.append('description', articleData.description);
-    formData.append('id', articleId as string);
+    formData.append('id', articleId as unknown as number);
 
     updateArticle(formData)
-      .then((res: any) => {
+      .unwrap()
+      .then((res) => {
         notification.success({ message: res?.message || 'Success' });
       })
       .catch((err) => {
-        notification.error({ message: err?.data?.message || 'Error' });
+        if (err instanceof ErrorResponse || err instanceof DbConcurrencyError || err instanceof InternalServerError) {
+          notification.error({ message: err.message });
+        } else {
+          notification.error({ message: 'Error pada sistem!' });
+        }
       });
   }
 
@@ -184,10 +204,9 @@ export default function EditArticle() {
                 onChange={handleChange}
                 maxCount={1}
                 beforeUpload={(file) => {
-                  const isNotImage =
-                    file.type !== 'image/png' &&
-                    file.type !== 'image/jpg' &&
-                    file.type !== 'image/jpeg';
+                  const isNotImage = file.type !== 'image/png'
+                    && file.type !== 'image/jpg'
+                    && file.type !== 'image/jpeg';
                   if (isNotImage) {
                     notification.error({
                       message: 'The file must be an image!',
@@ -220,19 +239,17 @@ export default function EditArticle() {
               <Title level={3}>Kategori</Title>
               <Select
                 value={articleData.categoryId}
-                onChange={(e) => {
+                onChange={(e: number) => {
                   const temp = { ...articleData };
                   temp.categoryId = e;
                   setArticleData(temp);
                 }}
                 className="border-2 border-black border-solid w-full rounded-full overflow-hidden"
-                defaultValue={categories.length > 0 ? categories[0].name : null}
-                options={categories.map((val: any) => {
-                  return {
-                    value: val.id,
-                    label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
-                  };
-                })}
+                defaultValue={categories.length > 0 ? categories[0].id : undefined}
+                options={categories.map((val) => ({
+                  value: val.id,
+                  label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
+                }))}
               />
             </div>
             <div className="grid grid-cols-1 mt-4">

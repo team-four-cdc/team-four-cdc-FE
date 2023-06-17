@@ -1,15 +1,15 @@
-import Heads from '@/layout/Head/Head';
-import VerifiedPage from '@/components/VerifiedPage';
-import { useEffect, useState } from 'react';
-import { useVerifyMutation } from '@/services';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Spin } from 'antd';
 import { useDispatch } from 'react-redux';
+import { useVerifyMutation } from '@/services';
+import VerifiedPage from '@/components/VerifiedPage';
+import Heads from '@/layout/Head/Head';
 import { setAuth } from '@/store/auth/authSlice';
 
 type Status = 'success' | 'failed' | 'error';
 
-export default function Verifikasi() {
+export default function Verification() {
   const { query } = useRouter();
   const [verify, { isLoading, isUninitialized }] = useVerifyMutation();
   const [status, setStatus] = useState<Status>('error');
@@ -28,7 +28,7 @@ export default function Verifikasi() {
     }
   }, [dispatch, query.token, verify]);
 
-  if (isUninitialized || isLoading)
+  if (isUninitialized || isLoading) {
     return (
       <div className="flex h-screen w">
         <div className="m-auto">
@@ -36,6 +36,7 @@ export default function Verifikasi() {
         </div>
       </div>
     );
+  }
 
   return (
     <>

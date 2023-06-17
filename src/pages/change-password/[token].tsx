@@ -1,15 +1,17 @@
+import React from 'react';
+import { Form, Typography, notification } from 'antd';
+import { useRouter } from 'next/router';
 import StyledButton from '@/components/Button';
 import TextInput from '@/components/TextInput';
 import Heads from '@/layout/Head/Head';
 import { useUbahPassMutation } from '@/services';
-import { Form, Typography, notification } from 'antd';
-import { useRouter } from 'next/router';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
 
-export default function UbahPassword() {
+export default function ChangePassword() {
   const { query } = useRouter();
   const [form] = Form.useForm();
   const [UbahPassword, { isLoading }] = useUbahPassMutation();
-  const onFinish = (values: any) => {
+  const onFinish = (values: { newPassword: string }) => {
     UbahPassword({
       newPassword: values.newPassword,
       resetPasswordToken: query.token,
@@ -20,7 +22,11 @@ export default function UbahPassword() {
         form.resetFields();
       })
       .catch((err) => {
-        notification.error({ message: err?.data?.message || 'Error' });
+        if (err instanceof ErrorResponse || err instanceof DbConcurrencyError || err instanceof InternalServerError) {
+          notification.error({ message: err.message });
+        } else {
+          notification.error({ message: 'Error pada sistem!' });
+        }
       });
   };
 
@@ -74,8 +80,8 @@ export default function UbahPassword() {
                   }
                   return Promise.reject(
                     new Error(
-                      'The two passwords that you entered do not match!'
-                    )
+                      'The two passwords that you entered do not match!',
+                    ),
                   );
                 },
               }),

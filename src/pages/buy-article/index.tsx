@@ -1,10 +1,12 @@
-import Heads from '@/layout/Head/Head';
-import { Button, Divider, Input, Layout, Typography } from 'antd';
+import React from 'react';
+import {
+  Button, Divider, Input, Layout, Typography,
+} from 'antd';
 import Image from 'next/image';
-import defaultImg from '@/assets/images/image-preview.png';
 import { MenuOutlined } from '@ant-design/icons';
+import Heads from '@/layout/Head/Head';
 
-export default function BeliArtikel() {
+export default function BuyArticle() {
   return (
     <Layout>
       <Heads title="Beli Artikel" showNavbar showWrappOption />
@@ -12,7 +14,7 @@ export default function BeliArtikel() {
       <section className="flex flex-col items-center">
         <div className="flex gap-2 mt-10">
           <Image
-            src={defaultImg}
+            src={'/image-preview.png'}
             alt="Article Preview"
             width={200}
             height={200}

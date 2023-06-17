@@ -1,5 +1,6 @@
-import StyledButton from '@/components/Button';
+import React from 'react';
 import { Avatar, Card, Typography } from 'antd';
+import StyledButton from '@/components/Button';
 
 export default function WriterList() {
   const { Meta } = Card;
@@ -18,7 +19,7 @@ export default function WriterList() {
           Daftar Penulis
         </Typography.Title>
         <div className="flex flex-wrap gap-6">
-          {Array.map((list: any) => (
+          {Array.map((list) => (
             <div
               key={list}
               className="grid p-3 border border-solid w-80 border-primary-color rounded-radius-10px"

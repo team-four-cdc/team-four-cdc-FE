@@ -1,14 +1,15 @@
+import React, { ReactNode } from 'react';
 import '@/styles/index.less';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
-import { persistor, wrapper } from '@/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import MainLayout from '@/layout/MainLayout';
 import { ComponentType } from 'react';
 import { NextPage } from 'next';
+import MainLayout from '@/layout/MainLayout';
+import { persistor, wrapper } from '@/store';
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: ComponentType<any>;
+  getLayout?: ComponentType<ReactNode>;
 };
 
 type AppPropsWithLayout = AppProps & {
@@ -16,6 +17,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  // eslint-disable-next-line
   const { store, props } = wrapper.useWrappedStore(pageProps);
   const Layout = Component.getLayout || MainLayout;
 

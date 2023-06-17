@@ -1,3 +1,4 @@
+import React from 'react';
 import Heads from '@/layout/Head/Head';
 import CategoryList from '@/layout/Homepage/CategoryList';
 import NewArticleList from '@/layout/Homepage/NewArticleList';

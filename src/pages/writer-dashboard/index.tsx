@@ -1,24 +1,25 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import Heads from '@/layout/Head/Head';
 import { Layout, Typography } from 'antd';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
-import PieChart from '@/components/PieChart';
-import ColumnChart from '@/components/ColumnChart';
-import { useGetDashboardMutation } from '@/services';
 import { useSelector } from 'react-redux';
+import Heads from '@/layout/Head/Head';
+import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+// import PieChart from '@/components/PieChart';
+// import ColumnChart from '@/components/ColumnChart';
+import { useGetDashboardMutation } from '@/services';
+import { RootState } from '@/store';
 
 const { Title } = Typography;
 
-export default function DashboardPenulis() {
-  const { auth } = useSelector((state: any) => state);
-  const userId = auth.userId;
-  const [dashboardPieData, setDashboardPieData] = useState<
+export default function WriterDashboard() {
+  const { auth } = useSelector((state: RootState) => state);
+  const { userId } = auth;
+  const [_dashboardPieData, setDashboardPieData] = useState<
     {
       type: string;
       value: number;
     }[]
   >([]);
-  const [dashboardColumnData, setDashboardColumnData] = useState<
+  const [_dashboardColumnData, setDashboardColumnData] = useState<
     {
       type: string;
       sales: number;
@@ -26,15 +27,15 @@ export default function DashboardPenulis() {
   >([]);
   const [getDashboard] = useGetDashboardMutation();
 
-  const fetchDashboard = async (userId: any) => {
+  const fetchDashboard = async () => {
     try {
-      const res = await getDashboard(userId).unwrap();
+      const res = await getDashboard({ userId }).unwrap();
       const { transactions } = res.data;
-      const dataPie = transactions?.map((item: any) => ({
+      const dataPie = transactions?.map((item) => ({
         type: item.Article.title,
         value: parseInt(item.value),
       }));
-      const dataColumn = transactions?.map((item: any) => ({
+      const dataColumn = transactions?.map((item) => ({
         type: item.Article.title,
         sales: parseInt(item.sales),
       }));
@@ -46,7 +47,7 @@ export default function DashboardPenulis() {
   };
 
   useEffect(() => {
-    fetchDashboard(userId);
+    fetchDashboard();
   }, []);
 
   function BorderedCol({
@@ -58,9 +59,8 @@ export default function DashboardPenulis() {
   }) {
     return (
       <div
-        className={`w-full border-2 border-black border-solid p-4 rounded-md ${
-          className ? className : ''
-        }`}
+        className={`w-full border-2 border-black border-solid p-4 rounded-md ${className || ''
+          }`}
       >
         {children}
       </div>
@@ -112,13 +112,11 @@ export default function DashboardPenulis() {
             <BorderedCol className="lg:col-span-2">
               <>
                 <Title level={1}>Grafik Penjualan</Title>
-                <ColumnChart items={dashboardColumnData} />
               </>
             </BorderedCol>
             <BorderedCol className="lg:col-span-2">
               <>
                 <Title level={1}>Grafik Pembelian</Title>
-                <PieChart items={dashboardPieData} />
               </>
             </BorderedCol>
           </div>

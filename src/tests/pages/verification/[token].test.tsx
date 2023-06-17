@@ -1,7 +1,8 @@
+import React from 'react';
+import { screen, waitFor } from '@testing-library/react';
 import { render } from '@/tests';
 import { store } from '@/store';
-import { screen, waitFor } from '@testing-library/react';
-import Verifikasi from '@/pages/verifikasi/[token]';
+import Verifikasi from '@/pages/verification/[token]';
 
 jest.mock('next/router', () => ({
   useRouter() {

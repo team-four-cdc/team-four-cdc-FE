@@ -1,13 +1,14 @@
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Form, Typography, notification } from 'antd';
+import { useRouter } from 'next/router';
+import React, { useState, ChangeEvent } from 'react';
 import StyledButton from '@/components/Button';
 import TextInput from '@/components/TextInput';
 import Heads from '@/layout/Head/Head';
 import { useForgotPasswordMutation } from '@/services';
-import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Form, Typography, notification } from 'antd';
-import { useRouter } from 'next/router';
-import { useState, ChangeEvent } from 'react';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
 
-export default function LupaPassword() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState<string>('');
   const [form] = Form.useForm();
   const router = useRouter();
@@ -19,10 +20,10 @@ export default function LupaPassword() {
     }
   }
 
-  const onFinish = (values: any) => {
-    const { email } = values;
+  const onFinish = (values: { emailField: string }) => {
+    const { emailField } = values;
     forgotPassword({
-      email,
+      email: emailField,
       // TODO: placeholder
       role: router.query.role !== 'pembaca' ? 'creator' : 'reader',
     })
@@ -31,7 +32,11 @@ export default function LupaPassword() {
         notification.success({ message: 'Success' });
       })
       .catch((err) => {
-        notification.error({ message: err?.message });
+        if (err instanceof ErrorResponse || err instanceof DbConcurrencyError || err instanceof InternalServerError) {
+          notification.error({ message: err.message });
+        } else {
+          notification.error({ message: 'Error pada sistem!' });
+        }
       });
   };
 
@@ -60,7 +65,7 @@ export default function LupaPassword() {
             rules={[
               {
                 required: true,
-                message: 'Please input your email!',
+                message: 'Masukkan Email anda!',
               },
             ]}
           >
@@ -89,8 +94,8 @@ export default function LupaPassword() {
               className="self-center"
               icon={<ArrowLeftOutlined />}
               loading={isLoading}
-              onClick={() => {
-                router.push('/');
+              onClick={async () => {
+                await router.push('/');
               }}
             />
           </div>

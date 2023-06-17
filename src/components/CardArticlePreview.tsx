@@ -1,4 +1,6 @@
-import { Avatar, Card, CardProps, Typography } from 'antd';
+import {
+  Avatar, Card, CardProps, Typography,
+} from 'antd';
 import React from 'react';
 
 interface StandardCardProps extends CardProps {
@@ -11,7 +13,7 @@ interface StandardCardProps extends CardProps {
 const { Meta } = Card;
 
 export default function CardArticlePreview(
-  props: StandardCardProps
+  props: StandardCardProps,
 ): JSX.Element {
   return (
     <Card

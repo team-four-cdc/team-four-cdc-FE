@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL as string
 
 interface AuthRequest {
   role: string;
   email: string;
   password: string;
   author?: string;
-  fullname?: string;
+  full_name?: string;
 }
 
 interface ForgotPasswordRequest {
@@ -13,23 +14,44 @@ interface ForgotPasswordRequest {
   email: string;
 }
 
-type ForgotPasswordResponse = any;
+interface ForgotPasswordResponse {
+  status: number
+  message: string
+  data: null
+  error: null
+}
 
-interface AuthResponse {
+interface RegisterResponse {
   status: string;
   message: string;
-  data?: any;
+  data?: null;
+}
+
+interface LoginResponse {
+  status: number;
+  message: string;
+  data: {
+    token: string
+  }
+  error: null
 }
 
 interface ChangePasswordRequest {
   newPassword: string;
-  resetPasswordToken: any;
+  resetPasswordToken: string;
+}
+
+interface VerifyResponse {
+  status: number
+  message: string
+  data: null
+  error: null
 }
 
 interface ChangePasswordResponse {
   status: string;
   message: string;
-  data?: any;
+  data?: null;
 }
 
 interface VerifyRequest {
@@ -38,23 +60,23 @@ interface VerifyRequest {
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    register: builder.mutation<AuthResponse, AuthRequest>({
+    register: builder.mutation<RegisterResponse, AuthRequest>({
       query: (payload) => ({
         url: '/user/register',
         method: 'POST',
         body: payload,
       }),
     }),
-    verify: builder.mutation<AuthResponse, VerifyRequest>({
+    verify: builder.mutation<VerifyResponse, VerifyRequest>({
       query: (payload) => ({
         url: '/user/verify',
         method: 'POST',
         body: payload,
       }),
     }),
-    login: builder.mutation<AuthResponse, AuthRequest>({
+    login: builder.mutation<LoginResponse, AuthRequest>({
       query: ({ role, ...body }) => ({
         url: `/auth/login/${role}`,
         method: 'POST',

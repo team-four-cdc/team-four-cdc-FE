@@ -1,7 +1,8 @@
-import LupaPassword from '@/pages/lupa-password';
+import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
-import { render } from '@/tests';
 import userEvent from '@testing-library/user-event';
+import LupaPassword from '@/pages/forgot-password';
+import { render } from '@/tests';
 import { store } from '@/store';
 
 test('Render Lupa Password', async () => {

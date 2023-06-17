@@ -1,3 +1,4 @@
+import React from "react"
 import { Button, ButtonProps } from 'antd';
 
 interface StandardButtonProps extends ButtonProps {
@@ -14,13 +15,13 @@ interface StandardButtonProps extends ButtonProps {
  */
 export default function StyledButton(props: StandardButtonProps): JSX.Element {
   const { label, round, active } = props;
-  const roundClass = round ? round : 'rounded-full';
-  const activeClass = active ? active : '';
+  const roundClass = round || 'rounded-full';
+  const activeClass = active || '';
 
   return (
     <Button
       {...props}
-      className={(props.className ?? '') + ' ' + roundClass + ' ' + activeClass}
+      className={`${props.className ?? ''} ${roundClass} ${activeClass}`}
     >
       {label}
     </Button>

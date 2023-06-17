@@ -1,5 +1,6 @@
-import NavCategory from '@/components/NavCategory';
+import React from 'react';
 import { Typography } from 'antd';
+import NavCategory from '@/components/NavCategory';
 
 export default function CategoryList() {
   const Array = ['1', '2', '3', '4', '5'];
@@ -10,7 +11,7 @@ export default function CategoryList() {
           Kategori Artikel
         </Typography.Title>
         <div className="flex flex-wrap justify-center gap-8">
-          {Array.map((list: any) => (
+          {Array.map((list) => (
             <NavCategory key={list} text="Tes artikel" href="/" />
           ))}
         </div>

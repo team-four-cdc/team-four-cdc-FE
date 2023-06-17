@@ -1,11 +1,32 @@
 import { DependencyList, useEffect } from 'react';
 
+interface CancelableIF {
+  isCanceled: boolean
+}
+
+function makeCancelable<T>(promise: Promise<T>) {
+  let hasCanceled = false;
+
+  const wrappedPromise: Promise<T> = new Promise((resolve, reject) => {
+    promise.then(
+      (val) => (hasCanceled ? reject({ isCanceled: true }) : resolve(val)),
+      (error) => (hasCanceled ? reject({ isCanceled: true }) : reject(error)),
+    );
+  });
+
+  return {
+    promise: wrappedPromise,
+    cancel() {
+      hasCanceled = true;
+    },
+  };
+};
+
 export const useAsync = <T>(
   asyncFn: () => Promise<T>,
-  // @ts-ignore
-  onSuccess: () => void,
-  onError?: () => void,
-  deps?: DependencyList
+  onSuccess: (args: T) => void,
+  onError?: (args: CancelableIF) => void,
+  deps?: DependencyList,
 ) => {
   useEffect(() => {
     const cancelablePromise = makeCancelable(asyncFn());
@@ -13,7 +34,7 @@ export const useAsync = <T>(
       .then((data) => {
         onSuccess(data);
       })
-      .catch((err) => {
+      .catch((err: CancelableIF) => {
         if (!err.isCanceled && onError) {
           onError(err);
         }
@@ -22,20 +43,3 @@ export const useAsync = <T>(
   }, deps);
 };
 
-const makeCancelable = <T>(promise: Promise<T>) => {
-  let hasCanceled_ = false;
-
-  const wrappedPromise: Promise<T> = new Promise((resolve, reject) => {
-    promise.then(
-      (val) => (hasCanceled_ ? reject({ isCanceled: true }) : resolve(val)),
-      (error) => (hasCanceled_ ? reject({ isCanceled: true }) : reject(error))
-    );
-  });
-
-  return {
-    promise: wrappedPromise,
-    cancel() {
-      hasCanceled_ = true;
-    },
-  };
-};
