@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.0",
-    "@next/font": "13.1.6",
     "@reduxjs/toolkit": "^1.9.2",
+    "@testing-library/react": "^13.4.0",
     "@types/dompurify": "^3.0.2",
     "antd": "4.15.6",
     "classnames": "^2.3.2",
@@ -29,8 +29,7 @@
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
-    "whatwg-fetch": "^3.6.2",
-    "@testing-library/react": "^13.4.0"
+    "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.4",
