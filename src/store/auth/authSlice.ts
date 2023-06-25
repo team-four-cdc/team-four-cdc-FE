@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice, current } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 
 export interface DecodedToken extends JwtPayload {
@@ -41,14 +41,9 @@ const authSlice = createSlice({
         state = initialState
       }
     },
-    getCurrentState: (state) => {
-      state = current(state)
-    },
     resetAuth: () => initialState,
-  },
-  extraReducers: (builder) => {
   },
 });
 
-export const { setAuth, resetAuth, getCurrentState } = authSlice.actions;
+export const { setAuth, resetAuth } = authSlice.actions;
 export default authSlice.reducer;

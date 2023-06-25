@@ -1,7 +1,7 @@
 import { sessionOptions } from "@/data/sessionOptions";
 import { IUser } from "@/store/auth/authSlice";
 import { unsealData } from "iron-session";
-import { ReadonlyRequestCookies } from "next/dist/server/app-render";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { RequestCookies } from "next/dist/server/web/spec-extension/cookies";
 
 /**
@@ -21,5 +21,5 @@ export async function getRequestCookie(
     password: sessionOptions.password
   });
 
-  return user  as IUser;
+  return user as IUser;
 }

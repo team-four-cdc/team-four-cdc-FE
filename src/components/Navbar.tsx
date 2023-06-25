@@ -6,10 +6,9 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import LoginModal, { UserRole } from './LoginModal';
 import { IUser, resetAuth, setAuth } from '@/store/auth/authSlice';
-import { RootState } from '@/store';
 import axios from "axios"
 
 interface NavbarProps {
@@ -55,7 +54,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
         setAuthState(undefined)
       }
     } catch (err) {
-      const error = err  as Error
+      const error = err as Error
       console.log(error.message)
     }
   }
@@ -106,7 +105,9 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
       url: '/daftar-artikel',
     },
     {
+      // eslint-disable-next-line
       name: `Hi ${auth?.email}`,
+      // eslint-disable-next-line
       type: 'dropdown',
       menu: 'logout',
       url: '/registrasi-pembaca',

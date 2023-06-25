@@ -6,7 +6,6 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import TextInput from '@/components/TextInput';
 import StyledButton from '@/components/Button';
 import { useRouter } from 'next/navigation';
-import fetchJson from '@/utils/fetchJson';
 import axios from 'axios';
 
 interface ILogin {

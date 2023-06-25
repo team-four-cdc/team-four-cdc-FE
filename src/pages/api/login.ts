@@ -9,7 +9,8 @@ import { DecodedToken, IUser } from "@/store/auth/authSlice";
 export default withIronSessionApiRoute(loginRoute, sessionOptions);
 
 async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
-  const { email, password, role = 'reader' } = await req.body;
+  // eslint-disable-next-line
+  const { email, password, role = 'reader' }: { email: string; password: string; role: 'reader' | 'creator' } = await req.body;
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL as string
   const reqData = {
     email,

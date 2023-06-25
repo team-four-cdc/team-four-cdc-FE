@@ -85,8 +85,8 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
             <Col span={6} className="text-left">
               <div className="py-20px">
                 <StyledButton
-                  onClick={async () => {
-                    await route.push(`/dashboard-penulis/edit-artikel/${item.id}`);
+                  onClick={() => {
+                    route.push(`/dashboard-penulis/edit-artikel/${item.id}`);
                   }}
                   type="primary"
                   ghost

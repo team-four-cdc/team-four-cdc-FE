@@ -1,8 +1,7 @@
-import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ArticleData } from '@/pages/writer-dashboard/create-article';
-import { RootState } from '@/store';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { TypedFormData } from '@/utils/formDataTyper';
-import { ErrorResponse, wrappedBaseQuery } from '@/utils/errorResponseHandler';
+import { wrappedBaseQuery } from '@/utils/errorResponseHandler';
+import { ArticleData } from '@/app/writer-dashboard/create-article/create-article';
 
 interface DeleteArticleRequest {
   id: number;

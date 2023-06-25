@@ -14,6 +14,8 @@ const persistConfig = {
   whitelist: ['auth'],
 };
 
+const logger = createLogger({})
+
 const combinedReducer = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
@@ -44,6 +46,8 @@ export const store = configureStore({
     newsApi.middleware,
     articleApi.middleware,
     categoriesApi.middleware,
+    // redux logger
+    logger,
   ]),
 });
 

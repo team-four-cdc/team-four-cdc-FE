@@ -96,8 +96,8 @@ export default function ForgotPassword() {
               className="self-center"
               icon={<ArrowLeftOutlined />}
               loading={isLoading}
-              onClick={async () => {
-                await router.push('/');
+              onClick={() => {
+                router.push('/');
               }}
             />
           </div>
