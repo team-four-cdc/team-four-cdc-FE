@@ -6,7 +6,7 @@ import Link from 'next/link';
 interface Props {
   href: string;
   text: string;
-  icon?: React.FC;
+  icon?: React.ReactNode;
 }
 
 const NavCategory = (props: Props) => {

@@ -5,11 +5,12 @@ import {
 import classNames from 'classnames';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginModal, { UserRole } from './LoginModal';
-import { resetAuth } from '@/store/auth/authSlice';
+import { IUser, resetAuth, setAuth } from '@/store/auth/authSlice';
 import { RootState } from '@/store';
+import axios from "axios"
 
 interface NavbarProps {
   showWrapperOption: boolean;
@@ -32,13 +33,32 @@ interface ItemNavbarIF {
 export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   const [userRole, setUserRole] = useState<UserRole>('pembaca');
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
-  const Router = useRouter();
+  const Pathname = usePathname()
   const dispatch = useDispatch();
-  const { auth } = useSelector((state: RootState) => state);
+  const [auth, setAuthState] = useState<IUser>()
+
   const onClickLoginButton = (role: UserRole) => {
     setUserRole(role);
     setShowLoginModal(true);
   };
+
+  // TODO: temporary solution. please update
+  async function getUserData() {
+    try {
+      const dataRaw = await axios<IUser>('/api/user')
+      const data = dataRaw.data
+      if (data) {
+        dispatch(setAuth(data.token as string))
+        setAuthState(data)
+      } else {
+        dispatch(setAuth(undefined))
+        setAuthState(undefined)
+      }
+    } catch (err) {
+      const error = err  as Error
+      console.log(error.message)
+    }
+  }
 
   const itemMenus: ItemMenuIF[] = [
     {
@@ -86,7 +106,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
       url: '/daftar-artikel',
     },
     {
-      name: `Hi ${'nama kamu'}`,
+      name: `Hi ${auth?.email}`,
       type: 'dropdown',
       menu: 'logout',
       url: '/registrasi-pembaca',
@@ -108,7 +128,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
           </Menu.Item>
         ) : (
           itemMenus.map((menu, index: number) => (type == 'login' ? (
-            <Menu.Item key={index}>
+            <Menu.Item key={`item-menus-no-${index}`}>
               <Button
                 className="bg-transparent"
                 type="text"
@@ -122,7 +142,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
               <Link
                 href={menu.register}
                 className={classNames({
-                  'text-success-color': Router.asPath == menu.register,
+                  'text-success-color': Pathname == menu.register,
                 })}
                 legacyBehavior>
                 {menu.name}
@@ -134,7 +154,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
     );
   }
 
-  const NavbarWrapp = auth.isLogin ? (
+  const NavbarWrapp = auth?.isLogin ? (
     <>
       {auth.role == 'reader' ? (
         itemNavbarLogin.map((navbar, index: number) => {
@@ -142,10 +162,10 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
             case 'link':
               return (
                 <Link
-                  key={index}
+                  key={`item-navbar-no-${index}`}
                   href={'/lihat-artikel'}
                   className={classNames({
-                    'text-success-color': Router.asPath == navbar.url,
+                    'text-success-color': Pathname == navbar.url,
                   })}
                   legacyBehavior>
                   {navbar.name}
@@ -161,8 +181,8 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                     'cursor-pointer hover:text-success-color',
                     {
                       'text-success-color':
-                        Router.asPath == navbar.url
-                        || Router.asPath == navbar.url2,
+                        Pathname == navbar.url
+                        || Pathname == navbar.url2,
                     },
                   )}
                 >
@@ -178,7 +198,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
           <div className="flex items-center justify-center gap-8">
             <div className="w-10 h-10 rounded-full bg-primary-color" />
             <Typography.Paragraph className="mb-0 font-normal text-14px text-secondary-color">
-              Selamat Datang, {'nama penulis'}
+              Selamat Datang, {auth.email}
             </Typography.Paragraph>
           </div>
         </>
@@ -191,10 +211,10 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
           case 'link':
             return (
               <Link
-                key={index}
+                key={`item-navbar2-no-${index}`}
                 href={'/lihat-artikel'}
                 className={classNames({
-                  'text-success-color': Router.asPath == navbar.url,
+                  'text-success-color': Pathname == navbar.url,
                 })}
                 legacyBehavior>
                 {navbar.name}
@@ -210,8 +230,8 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                   'cursor-pointer hover:text-success-color',
                   {
                     'text-success-color':
-                      Router.asPath == navbar.url
-                      || Router.asPath == navbar.url2,
+                      Pathname == navbar.url
+                      || Pathname == navbar.url2,
                   },
                 )}
               >
@@ -227,7 +247,8 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
 
   useEffect(() => {
     setShowLoginModal(false);
-  }, [Router.asPath]);
+    getUserData()
+  }, [Pathname]);
 
   return (
     <>

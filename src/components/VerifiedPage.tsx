@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from 'antd';
 import Image from "next/legacy/image";
 import { EyeOutlined } from '@ant-design/icons';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import StyledButton from './Button';
 
 interface StandardVerifiedPageProps {

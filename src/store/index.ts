@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import authReducer from '@/store/auth/authSlice';
+import { createLogger } from 'redux-logger'
 import {
   articleApi, authApi, categoriesApi, newsApi,
 } from '@/services';

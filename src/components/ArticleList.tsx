@@ -4,7 +4,7 @@ import {
   Typography, Col, Row, notification,
 } from 'antd';
 import Image from "next/legacy/image";
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useDeleteArticleMutation } from '@/services';
 import StyledButton from './Button';
 import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
@@ -32,8 +32,8 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
       id,
     })
       .unwrap()
-      .then((res) => {
-        notification.success({ message: res.message || 'Success' });
+      .then(() => {
+        notification.success({ message: 'Berhasil dihapus!' });
         fetchArticle();
       })
       .catch((err) => {

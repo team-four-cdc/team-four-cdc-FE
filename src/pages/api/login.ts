@@ -22,9 +22,17 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 
     const token = data.data.token
 
-    const auth = token ? jwt_decode<DecodedToken>(token) : {};
+    const auth = token ? jwt_decode<DecodedToken>(token) : {
+      email: "",
+      exp: 0,
+      iat: 0,
+      role: 'reader',
+      token: "",
+      userId: 0,
+      isLogin: false
+    };
 
-    req.session.auth = { ...auth, token } as IUser
+    req.session.auth = { ...auth, token, isLogin: true } as IUser
 
     await req.session.save();
     res.json(data);

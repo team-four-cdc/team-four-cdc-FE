@@ -10,13 +10,10 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse) {
     // to get more information on the user if needed
     res.json({
       ...req.session.auth,
-      isLoggedIn: true,
     });
   } else {
     res.json({
       isLoggedIn: false,
-      login: "",
-      avatarUrl: "",
     });
   }
 }

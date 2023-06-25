@@ -2,7 +2,7 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery 
 import { ArticleData } from '@/pages/writer-dashboard/create-article';
 import { RootState } from '@/store';
 import { TypedFormData } from '@/utils/formDataTyper';
-import { ErrorResponse } from '@/utils/errorResponseHandler';
+import { ErrorResponse, wrappedBaseQuery } from '@/utils/errorResponseHandler';
 
 interface DeleteArticleRequest {
   id: number;
@@ -110,36 +110,6 @@ interface DeleteArticleResponse {
 
 interface DetailArticleRequest {
   id: number;
-}
-
-const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
-  prepareHeaders: (headers, { getState }) => {
-    const { token } = (getState() as RootState).auth;
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
-    }
-
-    return headers;
-  },
-})
-
-const wrappedBaseQuery: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  const result = await baseQuery(args, api, extraOptions)
-  if (result.error && result.error.status === 403) {
-    return Promise.reject(new ErrorResponse('Anda tidak memiliki akses!', result.error.status));
-  }
-  if (result.error && result.error.status === 404) {
-    return Promise.reject(new ErrorResponse('Tidak ditemukan!', result.error.status));
-  }
-  if (result.error && result.error.status === 401) {
-    return Promise.reject(new ErrorResponse('Anda belum melakukan login!', result.error.status));
-  }
-  return result
 }
 
 export const articleApi = createApi({

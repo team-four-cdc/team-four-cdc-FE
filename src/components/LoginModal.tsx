@@ -5,8 +5,9 @@ import Link from 'next/link';
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import TextInput from '@/components/TextInput';
 import StyledButton from '@/components/Button';
-import { useLoginMutation } from '@/services';
-import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
+import { useRouter } from 'next/navigation';
+import fetchJson from '@/utils/fetchJson';
+import axios from 'axios';
 
 interface ILogin {
   'login-email': string
@@ -26,7 +27,7 @@ const LoginModal = (props: Props) => {
     visible, setVisibility, role, ...modalProps
   } = props;
   const [form] = Form.useForm();
-  const [login, { isLoading }] = useLoginMutation();
+  const router = useRouter()
 
   const text = {
     pembaca: 'Login dulu yuk, agar dapat membaca lebih menyenangkan dengan',
@@ -42,24 +43,38 @@ const LoginModal = (props: Props) => {
     if (!visible) form.resetFields();
   }, [form, visible]);
 
-  const onFinish = (values: ILogin) => {
-    login({
+  const onFinish = async (values: ILogin) => {
+    const body = {
       role: roles[role],
       email: values['login-email'],
       password: values['login-password'],
+    }
+    // login({
+    // role: roles[role],
+    // email: values['login-email'],
+    // password: values['login-password'],
+    // })
+    // .unwrap()
+    // .then(() => {
+    // notification.success({ message: 'Login Berhasil!' });
+    // router.push('/dashboard-penulis')
+    // setVisibility(false);
+    // })
+    // .catch((err) => {
+    // if (err instanceof DbConcurrencyError || err instanceof ErrorResponse || err instanceof InternalServerError) {
+    // notification.error({ message: err.message });
+    // } else {
+    // notification.error({ message: "Error pada sistem!" });
+    // }
+    // });
+
+    await axios.post("/api/login", body).then(() => {
+      notification.success({ message: 'Login Berhasil!' })
+      router.push('/dashboard-penulis')
+      setVisibility(false)
+    }).catch(() => {
+      notification.error({ message: "Error pada sistem!" });
     })
-      .unwrap()
-      .then((res) => {
-        notification.success({ message: res?.message || 'Success' });
-        setVisibility(false);
-      })
-      .catch((err) => {
-        if (err instanceof DbConcurrencyError || err instanceof ErrorResponse || err instanceof InternalServerError) {
-          notification.error({ message: err.message });
-        } else {
-          notification.error({ message: "Error pada sistem!" });
-        }
-      });
   };
 
   const onRedirect = () => {
@@ -131,12 +146,10 @@ const LoginModal = (props: Props) => {
             label="Login"
             htmlType="submit"
             className="mb-10px"
-            loading={isLoading}
           />
           <Typography.Paragraph className="mb-0 text-12px">
             Anda belum punya akun ?
             <Link href={`/registrasi-${role}`} onClick={onRedirect} legacyBehavior>
-              {' '}
               Registrasi
             </Link>
           </Typography.Paragraph>

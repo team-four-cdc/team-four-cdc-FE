@@ -1,5 +1,5 @@
 import { Typography } from 'antd';
-import router from 'next/router';
+import { useRouter, usePathname } from 'next/navigation';
 import React from 'react';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
@@ -18,6 +18,8 @@ interface Props {
 
 const ItemList: React.FC<Props> = ({ items }) => {
   const dispatch = useDispatch();
+  const router = useRouter()
+  const pathname = usePathname()
   return (
     <div>
       <div className="h-full text-center bg-monocrom-color">
@@ -36,7 +38,7 @@ const ItemList: React.FC<Props> = ({ items }) => {
               round="rounded"
               active="active:bg-green-700 active:text-white"
               className={classNames('border-none text-14px', {
-                'bg-success-color text-white': router.asPath == item.url,
+                'bg-success-color text-white': pathname == item.url,
               })}
               onClick={
                 item.id == 5
