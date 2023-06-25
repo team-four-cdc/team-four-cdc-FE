@@ -13,7 +13,7 @@ import {
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import React, { useEffect, useState } from 'react';
 import type { UploadFile } from 'antd/es/upload/interface';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { useSelector } from 'react-redux';
 import { GetCategoriesResponse, useCreateArticleMutation, useGetCategoriesMutation } from '@/services';
 import { TypedFormDataValue, TypedFormData, getTypedFormData } from '@/utils/formDataTyper';

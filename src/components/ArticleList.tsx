@@ -3,7 +3,7 @@ import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import {
   Typography, Col, Row, notification,
 } from 'antd';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 import { useDeleteArticleMutation } from '@/services';
 import StyledButton from './Button';

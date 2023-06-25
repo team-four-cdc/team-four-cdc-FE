@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Button, Divider, Input, Layout, Typography,
 } from 'antd';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { MenuOutlined } from '@ant-design/icons';
 import Heads from '@/layout/Head/Head';
 

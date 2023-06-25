@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditFilled } from '@ant-design/icons';
 import { Form, notification, Typography } from 'antd';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import TextInput from '@/components/TextInput';
 import StyledButton from '@/components/Button';
 import Heads from '@/layout/Head/Head';

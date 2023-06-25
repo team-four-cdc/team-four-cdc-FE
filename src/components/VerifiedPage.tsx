@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from 'antd';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { EyeOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import StyledButton from './Button';

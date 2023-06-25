@@ -13,7 +13,7 @@ import { MenuOutlined, PlusOutlined } from '@ant-design/icons';
 import DOMPurify from 'dompurify';
 import { UploadProps } from 'antd/es/upload';
 import { RcFile, UploadFile } from 'antd/lib/upload/interface';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 import { GetCategoriesResponse, UpdateArticleRequest, useGetCategoriesMutation, useUpdateArticleMutation } from '@/services';
 import { TextEditor } from '@/components/TextEditor';
