@@ -135,7 +135,7 @@ const LoginModal = (props: Props) => {
           />
           <Typography.Paragraph className="mb-0 text-12px">
             Anda belum punya akun ?
-            <Link href={`/registrasi-${role}`} onClick={onRedirect}>
+            <Link href={`/registrasi-${role}`} onClick={onRedirect} legacyBehavior>
               {' '}
               Registrasi
             </Link>

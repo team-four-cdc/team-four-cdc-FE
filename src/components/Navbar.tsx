@@ -124,7 +124,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                 className={classNames({
                   'text-success-color': Router.asPath == menu.register,
                 })}
-              >
+                legacyBehavior>
                 {menu.name}
               </Link>
             </Menu.Item>
@@ -147,7 +147,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                   className={classNames({
                     'text-success-color': Router.asPath == navbar.url,
                   })}
-                >
+                  legacyBehavior>
                   {navbar.name}
                 </Link>
               );
@@ -196,7 +196,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                 className={classNames({
                   'text-success-color': Router.asPath == navbar.url,
                 })}
-              >
+                legacyBehavior>
                 {navbar.name}
               </Link>
             );

@@ -15,7 +15,7 @@ const NavCategory = (props: Props) => {
   const isOther = !!icon;
 
   return (
-    <Link href={href} className="inline-block group/category">
+    <Link href={href} className="inline-block group/category" legacyBehavior>
       <div className="w-fit rounded-radius-10px p-20px shadow-secondary-box-shadow group-hover/category:bg-success-color">
         <div
           className={classNames({
