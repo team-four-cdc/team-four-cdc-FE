@@ -50,6 +50,10 @@ const nextConfig = {
         destination: '/article-details',
       },
       {
+        source: '/detail-artikel/:id',
+        destination: '/article-detail/:id',
+      },
+      {
         source: '/ganti-password',
         destination: '/forgot-password',
       },
@@ -73,6 +77,10 @@ const nextConfig = {
         source: '/dashboard-penulis/buat-artikel',
         destination: '/writer-dashboard/create-article',
       },
+      {
+        source: '/artikel-saya',
+        destination: '/my-article',
+      },
     ];
   },
   async redirects() {
@@ -83,8 +91,13 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/detail-artikel/:id',
-        destination: '/article-details:id',
+        source: '/article-detail/:id',
+        destination: '/detail-artikel/:id',
+        permanent: true
+      },
+      {
+        source: '/my-article',
+        destination: '/artikel-saya',
         permanent: true
       },
     ]

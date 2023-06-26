@@ -30,7 +30,7 @@ interface RegisterResponse {
 export interface LoginResponse {
   status: number;
   message: string;
-  data: {
+  data?: {
     token: string
   }
   error: null

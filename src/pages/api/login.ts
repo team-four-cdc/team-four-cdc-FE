@@ -16,13 +16,9 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     email,
     password
   }
-  try {
-    const dataRaw = await axios.post(`${BASE_URL}/auth/login/${role}`, reqData)
-
-    const data = dataRaw.data as LoginResponse
-
-    const token = data.data.token
-
+  await axios.post<LoginResponse>(`${BASE_URL}/auth/login/${role}`, reqData).then(async (dataRaw) => {
+    const data = dataRaw.data
+    const token = data?.data?.token
     const auth = token ? jwt_decode<DecodedToken>(token) : {
       email: "",
       exp: 0,
@@ -32,13 +28,14 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       userId: 0,
       isLogin: false
     };
-
     req.session.auth = { ...auth, token, isLogin: true } as IUser
-
     await req.session.save();
     res.json(data);
-  } catch (err) {
-    res.status(500).json({ message: (err as Error).message });
-  }
+  }).catch(error => {
+    // eslint-disable-next-line
+    const response = error.response.data as LoginResponse
+
+    res.status(response.status).json(response);
+  })
 }
 

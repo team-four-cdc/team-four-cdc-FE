@@ -24,6 +24,10 @@ export const middleware = async (req: NextRequest) => {
     return NextResponse.redirect(new URL('/', req.url))
   }
 
+  if (!!auth && auth.role === 'reader') {
+    return NextResponse.redirect(new URL('/', req.url))
+  }
+
   return res;
 };
 

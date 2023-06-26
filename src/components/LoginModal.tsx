@@ -7,6 +7,10 @@ import TextInput from '@/components/TextInput';
 import StyledButton from '@/components/Button';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { LoginResponse } from '@/services';
+import { AppDispatch } from '@/store';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '@/store/auth/authSlice';
 
 interface ILogin {
   'login-email': string
@@ -27,6 +31,7 @@ const LoginModal = (props: Props) => {
   } = props;
   const [form] = Form.useForm();
   const router = useRouter()
+  const dispatch: AppDispatch = useDispatch()
 
   const text = {
     pembaca: 'Login dulu yuk, agar dapat membaca lebih menyenangkan dengan',
@@ -48,31 +53,22 @@ const LoginModal = (props: Props) => {
       email: values['login-email'],
       password: values['login-password'],
     }
-    // login({
-    // role: roles[role],
-    // email: values['login-email'],
-    // password: values['login-password'],
-    // })
-    // .unwrap()
-    // .then(() => {
-    // notification.success({ message: 'Login Berhasil!' });
-    // router.push('/dashboard-penulis')
-    // setVisibility(false);
-    // })
-    // .catch((err) => {
-    // if (err instanceof DbConcurrencyError || err instanceof ErrorResponse || err instanceof InternalServerError) {
-    // notification.error({ message: err.message });
-    // } else {
-    // notification.error({ message: "Error pada sistem!" });
-    // }
-    // });
 
-    await axios.post("/api/login", body).then(() => {
+    await axios.post<LoginResponse>("/api/login", body).then((data) => {
+      dispatch(setAuth(data.data.data?.token))
       notification.success({ message: 'Login Berhasil!' })
       router.push('/dashboard-penulis')
       setVisibility(false)
-    }).catch(() => {
-      notification.error({ message: "Error pada sistem!" });
+    }).catch((err) => {
+      // eslint-disable-next-line
+      const errorResponse = err.response.data as LoginResponse
+      if (errorResponse.status === 400) {
+        return notification.error({ message: "Penulisan Username atau Password tidak sesuai!" });
+      }
+      if (errorResponse.status === 401) {
+        return notification.error({ message: "Username atau Password salah!" });
+      }
+      return notification.error({ message: "Error pada sistem!" });
     })
   };
 
@@ -85,7 +81,7 @@ const LoginModal = (props: Props) => {
       {...modalProps}
       forceRender
       centered
-      visible={visible}
+      open={visible}
       closable={false}
       footer={null}
     >

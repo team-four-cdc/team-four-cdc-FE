@@ -1,9 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography } from 'antd';
 import NavCategory from '@/components/NavCategory';
+import { GetCategoriesResponse, useGetCategoriesMutation } from '@/services/categories'
 
 export default function CategoryList() {
-  const Array = ['1', '2', '3', '4', '5'];
+  const [data, setData] = useState<GetCategoriesResponse['data']>();
+  const [getCategories] = useGetCategoriesMutation()
+
+  async function getData() {
+    try {
+      await getCategories().unwrap().then(dataRaw => {
+        setData(dataRaw.data)
+      })
+    } catch (err) {
+      console.log((err as Error).message)
+    }
+  }
+
+  function capitalize(str: string) {
+    const arr = str.split(" ")
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+    }
+    return arr.join(" ")
+  }
+
+  useEffect(() => {
+    getData()
+
+    return () => {
+
+    }
+  }, [])
+
   return (
     <>
       <div className="mt-5" data-testid="categoryListTest">
@@ -11,8 +40,8 @@ export default function CategoryList() {
           Kategori Artikel
         </Typography.Title>
         <div className="flex flex-wrap justify-center gap-8">
-          {Array.map((list) => (
-            <NavCategory key={list} text="Tes artikel" href="/" />
+          {data?.map((list, index) => (
+            <NavCategory key={`category-index-${index}`} text={capitalize(list.name)} href="/" />
           ))}
         </div>
       </div>

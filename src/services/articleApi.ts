@@ -81,7 +81,7 @@ interface CreateArticleResponse {
   };
 }
 
-interface DetailArticleResponse {
+export interface DetailArticleResponse {
   status: number;
   message: string;
   data: {
@@ -99,6 +99,7 @@ interface DetailArticleResponse {
     createdAt: string;
     updatedAt: string;
   };
+  error: null;
 }
 
 interface DeleteArticleResponse {
@@ -109,6 +110,26 @@ interface DeleteArticleResponse {
 
 interface DetailArticleRequest {
   id: number;
+}
+
+export interface GetPopularArticleResponse {
+  status: number;
+  message: string;
+  data: [{
+    id: number,
+    title: string
+    body: string
+    publish_date: string
+    author_id: number,
+    photo_article: string
+    price: number,
+    pdf_url?: string,
+    description?: string,
+    category_id: number,
+    total_clicks: number,
+    createdAt: string
+    updatedAt: string
+  }];
 }
 
 export const articleApi = createApi({
@@ -128,13 +149,21 @@ export const articleApi = createApi({
         method: 'GET',
       }),
     }),
+    getPopularArticle: builder.mutation<GetPopularArticleResponse, {
+      limit: number
+    }>({
+      query: (payload) => ({
+        url: `/article/popular-article?limit=${payload.limit}`,
+        method: 'GET',
+      }),
+    }),
     getDetailArticle: builder.mutation<
       DetailArticleResponse,
       DetailArticleRequest
     >({
       query: (payload) => ({
-        url: `/api/article/${payload.id}`,
-        method: 'POST',
+        url: `/article/${payload.id}`,
+        method: 'GET',
       }),
     }),
     updateArticle: builder.mutation<UpdateArticleResponse, TypedFormDataUpdateArticle>({
@@ -173,4 +202,6 @@ export const {
   useDeleteArticleMutation,
   useAllArticleMutation,
   useUpdateArticleMutation,
+  useGetDetailArticleMutation,
+  useGetPopularArticleMutation,
 } = articleApi;

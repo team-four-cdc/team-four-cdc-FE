@@ -6,6 +6,6 @@ export default withIronSessionApiRoute(logoutRoute, sessionOptions);
 
 function logoutRoute(req: NextApiRequest, res: NextApiResponse) {
   req.session.destroy();
-  res.send('ok')
+  res.send({ message: 'ok' })
 }
 

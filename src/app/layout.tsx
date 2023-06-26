@@ -7,7 +7,7 @@ import { ConfigProvider, theme } from 'antd'
 
 const inter = Poppins({
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700"],
   subsets: ['latin']
 })
 
@@ -34,7 +34,10 @@ export default function RootLayout({
               components: {
                 Button: {
                   colorPrimary: '#5abf41',
-                }
+                },
+                Typography: {
+                  fontWeightStrong: 600
+                },
               }
             }}
           >

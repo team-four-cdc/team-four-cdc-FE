@@ -6,10 +6,12 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoginModal, { UserRole } from './LoginModal';
-import { IUser, resetAuth, setAuth } from '@/store/auth/authSlice';
+import { resetAuth } from '@/store/auth/authSlice';
 import axios from "axios"
+import { useRouter } from 'next/navigation';
+import { RootState } from '@/store';
 
 interface NavbarProps {
   showWrapperOption: boolean;
@@ -33,31 +35,14 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   const [userRole, setUserRole] = useState<UserRole>('pembaca');
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const Pathname = usePathname()
+  const router = useRouter()
   const dispatch = useDispatch();
-  const [auth, setAuthState] = useState<IUser>()
+  const { auth } = useSelector((state: RootState) => state)
 
   const onClickLoginButton = (role: UserRole) => {
     setUserRole(role);
     setShowLoginModal(true);
   };
-
-  // TODO: temporary solution. please update
-  async function getUserData() {
-    try {
-      const dataRaw = await axios<IUser>('/api/user')
-      const data = dataRaw.data
-      if (data) {
-        dispatch(setAuth(data.token as string))
-        setAuthState(data)
-      } else {
-        dispatch(setAuth(undefined))
-        setAuthState(undefined)
-      }
-    } catch (err) {
-      const error = err as Error
-      console.log(error.message)
-    }
-  }
 
   const itemMenus: ItemMenuIF[] = [
     {
@@ -122,7 +107,12 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
             <Button
               className="bg-transparent"
               type="text"
-              onClick={() => dispatch(resetAuth())}
+              onClick={async () => {
+                dispatch(resetAuth());
+                await axios('/api/logout');
+                // TODO: temporary solution
+                router.refresh()
+              }}
             >
               Keluar
             </Button>
@@ -164,7 +154,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
               return (
                 <Link
                   key={`item-navbar-no-${index}`}
-                  href={'/lihat-artikel'}
+                  href={'/artikel-saya'}
                   className={classNames({
                     'text-success-color': Pathname == navbar.url,
                   })}
@@ -248,7 +238,6 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
 
   useEffect(() => {
     setShowLoginModal(false);
-    getUserData()
   }, [Pathname]);
 
   return (

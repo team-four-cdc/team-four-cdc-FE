@@ -67,7 +67,7 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
                 width={161}
                 height={112}
                 src={`${baseUrl}/media/${item.preview}`}
-                alt={'Preview Articel Pics'}
+                alt={'Preview Gambar Artikel'}
               />
             </Col>
             <Col span={12} className="text-left">

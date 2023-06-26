@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import StyledButton from './Button';
 import { resetAuth } from '@/store/auth/authSlice';
+import axios from 'axios';
 
 interface Item {
   id: number;
@@ -42,8 +43,13 @@ const ItemList: React.FC<Props> = ({ items }) => {
               })}
               onClick={
                 item.id == 5
-                  ? () => dispatch(resetAuth())
-                  : async () => router.push(item.url, item.url)
+                  ? async () => {
+                    dispatch(resetAuth());
+                    await axios('/api/logout');
+                    // TODO: temporary solution
+                    router.refresh()
+                  }
+                  : () => router.push(item.url, item.url)
               }
             />
           </div>
