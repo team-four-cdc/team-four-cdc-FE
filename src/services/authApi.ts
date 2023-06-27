@@ -1,5 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL as string
+import { wrappedBaseQuery } from '@/utils/errorResponseHandler';
+import { createApi, } from '@reduxjs/toolkit/query/react';
 
 interface AuthRequest {
   role: string;
@@ -27,10 +27,10 @@ interface RegisterResponse {
   data?: null;
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   status: number;
   message: string;
-  data: {
+  data?: {
     token: string
   }
   error: null
@@ -60,7 +60,7 @@ interface VerifyRequest {
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: wrappedBaseQuery,
   endpoints: (builder) => ({
     register: builder.mutation<RegisterResponse, AuthRequest>({
       query: (payload) => ({
@@ -74,13 +74,6 @@ export const authApi = createApi({
         url: '/user/verify',
         method: 'POST',
         body: payload,
-      }),
-    }),
-    login: builder.mutation<LoginResponse, AuthRequest>({
-      query: ({ role, ...body }) => ({
-        url: `/auth/login/${role}`,
-        method: 'POST',
-        body,
       }),
     }),
     forgotPassword: builder.mutation<
@@ -106,7 +99,6 @@ export const authApi = createApi({
 export const {
   useRegisterMutation,
   useVerifyMutation,
-  useLoginMutation,
   useForgotPasswordMutation,
   useUbahPassMutation,
 } = authApi;

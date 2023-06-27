@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import authReducer from '@/store/auth/authSlice';
+import { createLogger } from 'redux-logger'
 import {
   articleApi, authApi, categoriesApi, newsApi,
 } from '@/services';
@@ -12,6 +13,8 @@ const persistConfig = {
   key: 'root',
   whitelist: ['auth'],
 };
+
+const logger = createLogger({})
 
 const combinedReducer = combineReducers({
   auth: authReducer,
@@ -43,6 +46,8 @@ export const store = configureStore({
     newsApi.middleware,
     articleApi.middleware,
     categoriesApi.middleware,
+    // redux logger
+    logger,
   ]),
 });
 

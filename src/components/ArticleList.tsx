@@ -3,8 +3,8 @@ import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import {
   Typography, Col, Row, notification,
 } from 'antd';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Image from "next/legacy/image";
+import { useRouter } from 'next/navigation';
 import { useDeleteArticleMutation } from '@/services';
 import StyledButton from './Button';
 import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
@@ -32,8 +32,8 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
       id,
     })
       .unwrap()
-      .then((res) => {
-        notification.success({ message: res.message || 'Success' });
+      .then(() => {
+        notification.success({ message: 'Berhasil dihapus!' });
         fetchArticle();
       })
       .catch((err) => {
@@ -67,7 +67,7 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
                 width={161}
                 height={112}
                 src={`${baseUrl}/media/${item.preview}`}
-                alt={'Preview Articel Pics'}
+                alt={'Preview Gambar Artikel'}
               />
             </Col>
             <Col span={12} className="text-left">
@@ -85,8 +85,8 @@ const ArticleList: React.FC<Props> = ({ items, fetchArticle }) => {
             <Col span={6} className="text-left">
               <div className="py-20px">
                 <StyledButton
-                  onClick={async () => {
-                    await route.push(`/dashboard-penulis/edit-artikel/${item.id}`);
+                  onClick={() => {
+                    route.push(`/dashboard-penulis/edit-artikel/${item.id}`);
                   }}
                   type="primary"
                   ghost

@@ -1,4 +1,3 @@
-const withLess = require('next-with-less')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -12,6 +11,10 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost'
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.pravatar.cc'
       }
     ],
     minimumCacheTTL: 1500000,
@@ -47,6 +50,10 @@ const nextConfig = {
         destination: '/article-details',
       },
       {
+        source: '/detail-artikel/:id',
+        destination: '/article-detail/:id',
+      },
+      {
         source: '/ganti-password',
         destination: '/forgot-password',
       },
@@ -70,17 +77,31 @@ const nextConfig = {
         source: '/dashboard-penulis/buat-artikel',
         destination: '/writer-dashboard/create-article',
       },
+      {
+        source: '/artikel-saya',
+        destination: '/my-article',
+      },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/verification/:token',
+        destination: '/verifikasi/:token',
+        permanent: true,
+      },
+      {
+        source: '/article-detail/:id',
+        destination: '/detail-artikel/:id',
+        permanent: true
+      },
+      {
+        source: '/my-article',
+        destination: '/artikel-saya',
+        permanent: true
+      },
+    ]
+  }
 }
 
-const lessConfig = withLess({
-  lessLoaderOptions: {
-    lessOptions: {
-      javascriptEnabled: true,
-      localIdentName: '[path]___[local]___[hash:base64:5]',
-    },
-  },
-})
-
-module.exports = { ...nextConfig, ...lessConfig }
+module.exports = { ...nextConfig }
