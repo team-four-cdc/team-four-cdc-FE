@@ -1,7 +1,5 @@
 import { CaretDownFilled } from '@ant-design/icons';
-import {
-  Button, Dropdown, Menu, Space, Typography,
-} from 'antd';
+import { Button, Dropdown, Menu, Space, Typography } from 'antd';
 import classNames from 'classnames';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -9,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginModal, { UserRole } from './LoginModal';
 import { resetAuth } from '@/store/auth/authSlice';
-import axios from "axios"
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { RootState } from '@/store';
 
@@ -18,26 +16,26 @@ interface NavbarProps {
 }
 
 interface ItemMenuIF {
-  name: string
-  login: UserRole
-  register: string
+  name: string;
+  login: UserRole;
+  register: string;
 }
 
 interface ItemNavbarIF {
-  name: string
-  menu?: string
-  type: string
-  url: string
-  url2?: string
+  name: string;
+  menu?: string;
+  type: string;
+  url: string;
+  url2?: string;
 }
 
 export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   const [userRole, setUserRole] = useState<UserRole>('pembaca');
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
-  const Pathname = usePathname()
-  const router = useRouter()
+  const Pathname = usePathname();
+  const router = useRouter();
   const dispatch = useDispatch();
-  const { auth } = useSelector((state: RootState) => state)
+  const { auth } = useSelector((state: RootState) => state);
 
   const onClickLoginButton = (role: UserRole) => {
     setUserRole(role);
@@ -91,7 +89,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
     },
     {
       // eslint-disable-next-line
-      name: `Hi ${auth?.email}`,
+      name: `Hi ${auth?.fullName}`,
       // eslint-disable-next-line
       type: 'dropdown',
       menu: 'logout',
@@ -111,35 +109,38 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                 dispatch(resetAuth());
                 await axios('/api/logout');
                 // TODO: temporary solution
-                router.refresh()
+                router.refresh();
               }}
             >
               Keluar
             </Button>
           </Menu.Item>
         ) : (
-          itemMenus.map((menu, index: number) => (type == 'login' ? (
-            <Menu.Item key={`item-menus-no-${index}`}>
-              <Button
-                className="bg-transparent"
-                type="text"
-                onClick={() => onClickLoginButton(menu.login)}
-              >
-                {menu.name}
-              </Button>
-            </Menu.Item>
-          ) : (
-            <Menu.Item key={index}>
-              <Link
-                href={menu.register}
-                className={classNames({
-                  'text-success-color': Pathname == menu.register,
-                })}
-                legacyBehavior>
-                {menu.name}
-              </Link>
-            </Menu.Item>
-          )))
+          itemMenus.map((menu, index: number) =>
+            type == 'login' ? (
+              <Menu.Item key={`item-menus-no-${index}`}>
+                <Button
+                  className="bg-transparent"
+                  type="text"
+                  onClick={() => onClickLoginButton(menu.login)}
+                >
+                  {menu.name}
+                </Button>
+              </Menu.Item>
+            ) : (
+              <Menu.Item key={index}>
+                <Link
+                  href={menu.register}
+                  className={classNames({
+                    'text-success-color': Pathname == menu.register,
+                  })}
+                  legacyBehavior
+                >
+                  {menu.name}
+                </Link>
+              </Menu.Item>
+            )
+          )
         )}
       </Menu>
     );
@@ -158,7 +159,8 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                   className={classNames({
                     'text-success-color': Pathname == navbar.url,
                   })}
-                  legacyBehavior>
+                  legacyBehavior
+                >
                   {navbar.name}
                 </Link>
               );
@@ -172,9 +174,8 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                     'cursor-pointer hover:text-success-color',
                     {
                       'text-success-color':
-                        Pathname == navbar.url
-                        || Pathname == navbar.url2,
-                    },
+                        Pathname == navbar.url || Pathname == navbar.url2,
+                    }
                   )}
                 >
                   <Space>
@@ -189,7 +190,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
           <div className="flex items-center justify-center gap-8">
             <div className="w-10 h-10 rounded-full bg-primary-color" />
             <Typography.Paragraph className="mb-0 font-normal text-14px text-secondary-color">
-              Selamat Datang, {auth.email}
+              Selamat Datang, {auth.fullName}
             </Typography.Paragraph>
           </div>
         </>
@@ -207,7 +208,8 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                 className={classNames({
                   'text-success-color': Pathname == navbar.url,
                 })}
-                legacyBehavior>
+                legacyBehavior
+              >
                 {navbar.name}
               </Link>
             );
@@ -221,9 +223,8 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                   'cursor-pointer hover:text-success-color',
                   {
                     'text-success-color':
-                      Pathname == navbar.url
-                      || Pathname == navbar.url2,
-                  },
+                      Pathname == navbar.url || Pathname == navbar.url2,
+                  }
                 )}
               >
                 <Space>
