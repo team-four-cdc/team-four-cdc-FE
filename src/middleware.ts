@@ -32,5 +32,5 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/dashboard-penulis/(.*)", "/dashboard-penulis"],
+  matcher: ["/dashboard-penulis/(.*)", "/dashboard-penulis", "/detail-artikel", "/detail-artikel/(.*)"],
 };
