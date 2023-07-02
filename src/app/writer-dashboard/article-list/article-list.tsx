@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import ArticleList from '@/components/ArticleList';
 import Heads from '@/layout/Head/Head';
 import WriterLayout from '@/layout/Head/Writer/WriterLayout';
-import { GetAllArticleResponse, useAllArticleMutation } from '@/services';
+import { useAllArticleMutation } from '@/services';
 import { RootState } from '@/store';
 
 interface ComputedAllArticle {
@@ -40,7 +40,7 @@ export default function ListArticles() {
       userId: auth.userId,
     })
       .unwrap()
-      .then((res: GetAllArticleResponse) => {
+      .then((res) => {
         const temp = res.data.map((val) => ({
           id: val.id,
           preview: val.photo_article,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Typography } from 'antd';
 import CardArticlePreview from '@/components/CardArticlePreview';
 import { GetPopularArticleResponse, useGetPopularArticleMutation } from '@/services';
-import { dateFormat } from '@/utils/dateFormat';
+import { dateFormat } from '@/utils';
 
 export default function NewArticleList() {
   const [getArticle] = useGetPopularArticleMutation()

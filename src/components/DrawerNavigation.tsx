@@ -3,7 +3,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import React from 'react';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
-import StyledButton from './Button';
+import ButtonCategory from './Button';
 import { resetAuth } from '@/store/auth/authSlice';
 import axios from 'axios';
 
@@ -31,7 +31,7 @@ const ItemList: React.FC<Props> = ({ items }) => {
         </div>
         {items.map((item) => (
           <div key={item.id} className="px-4 mb-30px">
-            <StyledButton
+            <ButtonCategory
               label={item.label}
               type="default"
               size="large"

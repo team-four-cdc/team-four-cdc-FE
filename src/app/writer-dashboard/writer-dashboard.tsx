@@ -8,6 +8,7 @@ import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 // import ColumnChart from '@/components/ColumnChart';
 import { useGetDashboardMutation } from '@/services';
 import { RootState } from '@/store';
+import StyledButton from '@/components/Button';
 
 const { Title } = Typography;
 
@@ -93,7 +94,7 @@ export default function WriterDashboard() {
             <BorderedCol>
               <>
                 <Title level={1}>Total Penjualan</Title>
-                <Title style={{ color: '#6ec759' }} level={3}>
+                <Title style={{ color: '#6ec759' }} level={1}>
                   Rp. 10.000.000
                 </Title>
                 <Title level={4}>50 Pembeli</Title>
@@ -103,10 +104,26 @@ export default function WriterDashboard() {
               <>
                 <Title level={1}>Top Artikel Pembaca</Title>
                 <div className="flex flex-wrap gap-4">
-                  <BorderedTagParent>Gimana caranya menanam?</BorderedTagParent>
-                  <BorderedTagParent>Gimana caranya menanam?</BorderedTagParent>
-                  <BorderedTagParent>Masak daging asap</BorderedTagParent>
-                  <BorderedTagParent>Ngoding gampang</BorderedTagParent>
+                  <StyledButton
+                    type="default"
+                    label={'Gimana caranya menanam?'}
+                    className="self-center w-auto px-2"
+                  />
+                  <StyledButton
+                    type="default"
+                    label={'Gimana caranya menanam?'}
+                    className="self-center w-auto px-2"
+                  />
+                  <StyledButton
+                    type="default"
+                    label={'Masak daging asap'}
+                    className="self-center w-auto px-2"
+                  />
+                  <StyledButton
+                    type="default"
+                    label={'Ngoding gampang'}
+                    className="self-center w-auto px-2"
+                  />
                 </div>
               </>
             </BorderedCol>

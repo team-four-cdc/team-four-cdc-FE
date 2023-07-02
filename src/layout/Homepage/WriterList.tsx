@@ -19,9 +19,9 @@ export default function WriterList() {
           Daftar Penulis
         </Typography.Title>
         <div className="flex flex-wrap gap-6">
-          {Array.map((list) => (
+          {Array.map((_list, dataIndex) => (
             <div
-              key={list}
+              key={`writer-list-${dataIndex}`}
               className="grid p-3 border border-solid w-80 border-primary-color rounded-radius-10px"
             >
               <Meta avatar={<Avatar src="" />} title="Ahmad Munasir" />
