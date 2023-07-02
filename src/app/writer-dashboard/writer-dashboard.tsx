@@ -69,18 +69,6 @@ export default function WriterDashboard() {
     );
   }
 
-  function BorderedTagParent({
-    children,
-  }: {
-    children: ReactElement | string;
-  }) {
-    return (
-      <button className="flex-initial px-4 py-2 border-2 border-black border-solid rounded-full whitespace-nowrap">
-        {children}
-      </button>
-    );
-  }
-
   return (
     <>
       <Layout>

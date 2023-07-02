@@ -5,6 +5,7 @@ import {
   GetCategoriesResponse,
   useGetCategoriesMutation,
 } from '@/services/categories';
+import { capitalize } from '@/utils';
 
 export default function CategoryList() {
   const [data, setData] = useState<GetCategoriesResponse['data']>();
@@ -22,18 +23,10 @@ export default function CategoryList() {
     }
   }
 
-  function capitalize(str: string) {
-    const arr = str.split(' ');
-    for (let i = 0; i < arr.length; i++) {
-      arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-    }
-    return arr.join(' ');
-  }
-
   useEffect(() => {
     getData();
 
-    return () => {};
+    return () => { };
   }, []);
 
   return (

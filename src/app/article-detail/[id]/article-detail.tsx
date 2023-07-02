@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from "react";
 import StyledButton from "@/components/Button";
 import Heads from "@/layout/Head/Head";
-import { Divider, Typography } from "antd";
+import { Typography } from "antd";
 import Image from "next/image";
 import { DetailArticleResponse, useGetDetailArticleMutation } from "@/services";
 import { useParams } from "next/navigation";
-import { dateFormat } from "@/utils";
+import { capitalize, dateFormat } from "@/utils";
+import { AuthorSection } from "@/components/AuthorSection";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
 
@@ -38,8 +39,7 @@ export default function ArticleDetail() {
             <StyledButton
               type="default"
               size="small"
-              // TODO: set this dynamically
-              label="Teknologi"
+              label={capitalize(article?.category.name || '')}
               className="self-center px-2 rounded-full"
               round="true"
             />
@@ -69,42 +69,7 @@ export default function ArticleDetail() {
           </div>
         </section>
         <section className="col-span-2 mt-10 mx-4">
-          <span className="flex items-center gap-2 ml-4">
-            <div className="w-[40px] h-[40px] rounded-full bg-[#DDD]" />
-            {article?.author_id}
-          </span>
-          {/*<div className="flex flex-wrap mt-6 gap-2 mx-2">
-            <StyledButton
-              type="default"
-              size="small"
-              // TODO: set this dynamically
-              label="Teknologi"
-              className="self-center px-2 rounded-full"
-              round="true"
-            /><StyledButton
-              type="default"
-              size="small"
-              // TODO: set this dynamically
-              label="Teknologi"
-              className="self-center px-2 rounded-full"
-              round="true"
-            /><StyledButton
-              type="default"
-              size="small"
-              // TODO: set this dynamically
-              label="Teknologi"
-              className="self-center px-2 rounded-full"
-              round="true"
-            /><StyledButton
-              type="default"
-              size="small"
-              // TODO: set this dynamically
-              label="Teknologi"
-              className="self-center px-2 rounded-full"
-              round="true"
-            />
-          </div>*/}
-          <Divider className="border-[#DDD]" />
+          <AuthorSection authorId={article?.author.id || 0} authorName={article?.author.author || ''} />
         </section>
       </div>
     </>
