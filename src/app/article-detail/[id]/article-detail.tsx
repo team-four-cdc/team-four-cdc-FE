@@ -32,19 +32,17 @@ export default function ArticleDetail() {
   return (
     <>
       <Heads title="Detail Artikel" showNavbar={true} showWrappOption={true} />
-      <div className="grid grid-cols-3">
-        <section className="p-4 col-span-2">
-          <div className="grid grid-rows-13">
-            <div>
-              <StyledButton
-                type="default"
-                size="small"
-                // TODO: set this dynamically
-                label="Teknologi"
-                className="self-center px-2"
-                round="true"
-              />
-            </div>
+      <div className="grid grid-cols-5 gap-4">
+        <section className="p-4 col-span-3">
+          <div className="grid grid-cols-3 gap-2">
+            <StyledButton
+              type="default"
+              size="small"
+              // TODO: set this dynamically
+              label="Teknologi"
+              className="self-center px-2"
+              round="true"
+            />
           </div>
           <div className="grid gap-3 grid-cols-13">
             <div className="col-start-1 col-end-10">
@@ -70,9 +68,11 @@ export default function ArticleDetail() {
             </div>
           </div>
         </section>
-
-        <section>
-          <div className="bg-black">A</div>
+        <section className="col-span-2 mt-10">
+          <span className="flex justify-center items-center gap-2">
+            <div className="w-[40px] h-[40px] rounded-full bg-[#DDD]" />
+            Ahmad Sahroni
+          </span>
         </section>
       </div>
     </>
