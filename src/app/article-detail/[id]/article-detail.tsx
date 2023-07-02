@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import StyledButton from "@/components/Button";
 import Heads from "@/layout/Head/Head";
-import { Typography } from "antd";
+import { Divider, Typography } from "antd";
 import Image from "next/image";
 import { DetailArticleResponse, useGetDetailArticleMutation } from "@/services";
 import { useParams } from "next/navigation";
@@ -34,13 +34,13 @@ export default function ArticleDetail() {
       <Heads title="Detail Artikel" showNavbar={true} showWrappOption={true} />
       <div className="grid grid-cols-5 gap-4">
         <section className="p-4 col-span-3">
-          <div className="grid grid-cols-3 gap-2">
+          <div className="flex flex-wrap gap-2">
             <StyledButton
               type="default"
               size="small"
               // TODO: set this dynamically
               label="Teknologi"
-              className="self-center px-2"
+              className="self-center px-2 rounded-full"
               round="true"
             />
           </div>
@@ -68,11 +68,43 @@ export default function ArticleDetail() {
             </div>
           </div>
         </section>
-        <section className="col-span-2 mt-10">
-          <span className="flex justify-center items-center gap-2">
+        <section className="col-span-2 mt-10 mx-4">
+          <span className="flex items-center gap-2 ml-4">
             <div className="w-[40px] h-[40px] rounded-full bg-[#DDD]" />
-            Ahmad Sahroni
+            {article?.author_id}
           </span>
+          {/*<div className="flex flex-wrap mt-6 gap-2 mx-2">
+            <StyledButton
+              type="default"
+              size="small"
+              // TODO: set this dynamically
+              label="Teknologi"
+              className="self-center px-2 rounded-full"
+              round="true"
+            /><StyledButton
+              type="default"
+              size="small"
+              // TODO: set this dynamically
+              label="Teknologi"
+              className="self-center px-2 rounded-full"
+              round="true"
+            /><StyledButton
+              type="default"
+              size="small"
+              // TODO: set this dynamically
+              label="Teknologi"
+              className="self-center px-2 rounded-full"
+              round="true"
+            /><StyledButton
+              type="default"
+              size="small"
+              // TODO: set this dynamically
+              label="Teknologi"
+              className="self-center px-2 rounded-full"
+              round="true"
+            />
+          </div>*/}
+          <Divider className="border-[#DDD]" />
         </section>
       </div>
     </>

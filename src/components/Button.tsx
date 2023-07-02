@@ -21,7 +21,7 @@ export default function StyledButton(props: Props): JSX.Element {
   return (
     <Button
       {...props}
-      className={`${props.className ?? ''} ${roundClass} ${activeClass} font-bold text-xl flex justify-center items-center px-4 py-5`}
+      className={`${props.className ?? ''} ${roundClass} ${activeClass} text-xl flex justify-center items-center px-4 py-5`}
     >
       {label}
     </Button>
