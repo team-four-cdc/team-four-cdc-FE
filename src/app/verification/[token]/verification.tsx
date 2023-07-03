@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation'
 import { Spin } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useVerifyMutation } from '@/services';
@@ -11,14 +11,13 @@ import { setAuth } from '@/store/auth/authSlice';
 type Status = 'success' | 'failed' | 'error';
 
 export default function Verification() {
-  const searchParams = useSearchParams()
-  const query = searchParams as unknown as { token: string }
+  const pathname = usePathname()
+  const token = pathname?.replace('/verifikasi/','')
   const [verify, { isLoading, isUninitialized }] = useVerifyMutation();
   const [status, setStatus] = useState<Status>('error');
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const token = query.token;
+  useEffect(() => { 
     if (token) {
       verify({ token })
         .unwrap()
@@ -28,7 +27,7 @@ export default function Verification() {
         })
         .catch(() => setStatus('failed'));
     }
-  }, [dispatch, query.token, verify]);
+  }, [dispatch, token, verify]);
 
   if (isUninitialized || isLoading) {
     return (
