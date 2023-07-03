@@ -27,18 +27,15 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAuth: (state, action: PayloadAction<{
-      token: string;
-      fullName: string
-    }>) => {
-      const {token, fullName} = action.payload;
+    setAuth: (state, action: PayloadAction<string | undefined>) => {
+      const token = action.payload;
+
       if (token) {
-        
         const {
           role = 'reader',
           userId = 0,
           email = '',
-
+          fullName = '',
         } = token ? jwt_decode<DecodedToken>(token) : {};
 
         state.role = role;

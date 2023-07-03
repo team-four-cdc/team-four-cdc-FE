@@ -53,11 +53,8 @@ const LoginModal = (props: Props) => {
     await axios
       .post<LoginResponse>('/api/login', body)
       .then((data) => {
-        const auth = {
-          token: data.data.data?.token ?? '',
-          fullName: data.data.data?.fullName ?? '',
-        };
-        dispatch(setAuth(auth));
+        dispatch(setAuth(data.data.data?.token));
+
         notification.success({ message: 'Login Berhasil!' });
         router.push('/dashboard-penulis');
         setVisibility(false);
