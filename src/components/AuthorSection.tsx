@@ -11,7 +11,7 @@ interface Props {
 export const AuthorSection = ({ authorName, authorId }: Props) => {
   const {
     data,
-  } = useGetRandomArticleByAuthorQuery({ authorId })
+  } = useGetRandomArticleByAuthorQuery({ authorId, limit: 5, })
 
   return (
     <>

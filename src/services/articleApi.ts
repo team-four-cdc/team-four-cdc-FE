@@ -246,9 +246,9 @@ export const articleApi = createApi({
         body: payload,
       }),
     }),
-    getRandomArticleByAuthor: builder.query<GetRandomArticlesByAuthorResponse, { authorId: number }>({
+    getRandomArticleByAuthor: builder.query<GetRandomArticlesByAuthorResponse, { authorId: number; limit: number; }>({
       query: (payload) => ({
-        url: `/article/random-listing?authorId=${payload.authorId}`
+        url: `/article/random-listing?authorId=${payload.authorId}&limit=${payload.limit}`
       })
     })
   }),
