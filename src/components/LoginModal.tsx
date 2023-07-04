@@ -1,6 +1,4 @@
-import {
-  Form, Modal, ModalProps, notification, Typography,
-} from 'antd';
+import { Form, Modal, ModalProps, notification, Typography } from 'antd';
 import Link from 'next/link';
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import TextInput from '@/components/TextInput';
@@ -13,8 +11,8 @@ import { useDispatch } from 'react-redux';
 import { setAuth } from '@/store/auth/authSlice';
 
 interface ILogin {
-  'login-email': string
-  'login-password': string
+  'login-email': string;
+  'login-password': string;
 }
 
 export type UserRole = 'pembaca' | 'penulis';
@@ -26,12 +24,10 @@ interface Props extends ModalProps {
 }
 
 const LoginModal = (props: Props) => {
-  const {
-    visible, setVisibility, role, ...modalProps
-  } = props;
+  const { visible, setVisibility, role, ...modalProps } = props;
   const [form] = Form.useForm();
-  const router = useRouter()
-  const dispatch: AppDispatch = useDispatch()
+  const router = useRouter();
+  const dispatch: AppDispatch = useDispatch();
 
   const text = {
     pembaca: 'Login dulu yuk, agar dapat membaca lebih menyenangkan dengan',
@@ -52,24 +48,32 @@ const LoginModal = (props: Props) => {
       role: roles[role],
       email: values['login-email'],
       password: values['login-password'],
-    }
+    };
 
-    await axios.post<LoginResponse>("/api/login", body).then((data) => {
-      dispatch(setAuth(data.data.data?.token))
-      notification.success({ message: 'Login Berhasil!' })
-      router.push('/dashboard-penulis')
-      setVisibility(false)
-    }).catch((err) => {
-      // eslint-disable-next-line
-      const errorResponse = err.response.data as LoginResponse
-      if (errorResponse.status === 400) {
-        return notification.error({ message: "Penulisan Username atau Password tidak sesuai!" });
-      }
-      if (errorResponse.status === 401) {
-        return notification.error({ message: "Username atau Password salah!" });
-      }
-      return notification.error({ message: "Error pada sistem!" });
-    })
+    await axios
+      .post<LoginResponse>('/api/login', body)
+      .then((data) => {
+        dispatch(setAuth(data.data.data?.token));
+
+        notification.success({ message: 'Login Berhasil!' });
+        router.push('/dashboard-penulis');
+        setVisibility(false);
+      })
+      .catch((err) => {
+        // eslint-disable-next-line
+        const errorResponse = err.response.data as LoginResponse;
+        if (errorResponse.status === 400) {
+          return notification.error({
+            message: 'Penulisan Username atau Password tidak sesuai!',
+          });
+        }
+        if (errorResponse.status === 401) {
+          return notification.error({
+            message: 'Username atau Password salah!',
+          });
+        }
+        return notification.error({ message: 'Error pada sistem!' });
+      });
   };
 
   const onRedirect = () => {
@@ -144,7 +148,11 @@ const LoginModal = (props: Props) => {
           />
           <Typography.Paragraph className="mb-0 text-12px">
             Anda belum punya akun ?
-            <Link href={`/registrasi-${role}`} onClick={onRedirect} legacyBehavior>
+            <Link
+              href={`/registrasi-${role}`}
+              onClick={onRedirect}
+              legacyBehavior
+            >
               Registrasi
             </Link>
           </Typography.Paragraph>

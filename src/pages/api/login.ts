@@ -16,11 +16,14 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     email,
     password
   }
+
   await axios.post<LoginResponse>(`${BASE_URL}/auth/login/${role}`, reqData).then(async (dataRaw) => {
     const data = dataRaw.data
     const token = data?.data?.token
+
     const auth = token ? jwt_decode<DecodedToken>(token) : {
       email: "",
+      fullName: "",
       exp: 0,
       iat: 0,
       role: 'reader',

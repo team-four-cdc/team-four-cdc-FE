@@ -5,6 +5,8 @@ export interface DecodedToken extends JwtPayload {
   email: string;
   role: 'reader' | 'creator';
   userId: number;
+  fullName: string;
+
 }
 
 export interface IUser extends DecodedToken {
@@ -17,6 +19,7 @@ const initialState: IUser = {
   isLogin: false,
   role: 'reader',
   email: '',
+  fullName: '',
   userId: 0,
 };
 
@@ -26,17 +29,21 @@ const authSlice = createSlice({
   reducers: {
     setAuth: (state, action: PayloadAction<string | undefined>) => {
       const token = action.payload;
+
       if (token) {
         const {
           role = 'reader',
           userId = 0,
           email = '',
+          fullName = '',
         } = token ? jwt_decode<DecodedToken>(token) : {};
+
         state.role = role;
         state.token = token;
         state.isLogin = true;
         state.userId = userId;
         state.email = email;
+        state.fullName = fullName;
       } else {
         state = initialState
       }
