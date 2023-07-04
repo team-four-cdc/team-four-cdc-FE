@@ -59,7 +59,11 @@ export const wrappedBaseQuery: BaseQueryFn<
     if (result.error.status === 500) {
       return {
         ...result,
-        error: new ErrorResponse('Kesalahan pada database!', result.error.status) as unknown as FetchBaseQueryError
+        error: {
+          error: 'ayam',
+          status: 'FETCH_ERROR',
+          data: undefined,
+        }
       }
     }
   }

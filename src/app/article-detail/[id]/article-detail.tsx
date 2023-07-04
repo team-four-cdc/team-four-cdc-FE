@@ -10,10 +10,12 @@ import { dateFormat } from "@/utils";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
 
-export default function ArticleDetail() {
+export default function ArticleDetail({ data }: { data: any }) {
   const [getArticleDetail] = useGetDetailArticleMutation()
   const [article, setArticle] = useState<DetailArticleResponse['data']>();
   const params = useParams() as unknown as { id: number }
+
+  console.log('aku disana', data)
 
   async function getArticle(id: number) {
     getArticleDetail({ id }).unwrap().then((data) => {

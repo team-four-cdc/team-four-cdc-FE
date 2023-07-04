@@ -48,7 +48,6 @@ export const store = configureStore({
     articleApi.middleware,
     categoriesApi.middleware,
     // redux logger
-    logger,
   ]),
 });
 
