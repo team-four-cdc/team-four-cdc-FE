@@ -20,7 +20,6 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   await axios.post<LoginResponse>(`${BASE_URL}/auth/login/${role}`, reqData).then(async (dataRaw) => {
     const data = dataRaw.data
     const token = data?.data?.token
-    const fullName = data?.data?.fullName
 
     const auth = token ? jwt_decode<DecodedToken>(token) : {
       email: "",
@@ -32,7 +31,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       userId: 0,
       isLogin: false
     };
-    req.session.auth = { ...auth, fullName, token, isLogin: true } as IUser
+    req.session.auth = { ...auth, token, isLogin: true } as IUser
     await req.session.save();
     res.json(data);
   }).catch(error => {
