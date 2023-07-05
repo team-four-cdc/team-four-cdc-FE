@@ -4,32 +4,15 @@ import StyledButton from "@/components/Button";
 import Heads from "@/layout/Head/Head";
 import { Divider, Typography } from "antd";
 import Image from "next/image";
-import { DetailArticleResponse, useGetDetailArticleMutation } from "@/services";
-import { useParams } from "next/navigation";
+import { DetailArticleResponse } from "@/services";
 import { dateFormat } from "@/utils";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
 
-export default function ArticleDetail({ data }: { data: any }) {
-  const [getArticleDetail] = useGetDetailArticleMutation()
-  const [article, setArticle] = useState<DetailArticleResponse['data']>();
-  const params = useParams() as unknown as { id: number }
+export default function ArticleDetail({ data }: { data?: DetailArticleResponse }) {
+  const article = data?.data
 
   console.log('aku disana', data)
-
-  async function getArticle(id: number) {
-    getArticleDetail({ id }).unwrap().then((data) => {
-      setArticle(data.data)
-    })
-  }
-
-  useEffect(() => {
-    getArticle(params.id)
-
-    return () => {
-
-    }
-  }, [])
 
   return (
     <>
