@@ -7,6 +7,7 @@ import { createLogger } from 'redux-logger'
 import {
   articleApi, authApi, categoriesApi, newsApi,
 } from '@/services';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const persistConfig = {
   storage,
@@ -60,3 +61,5 @@ export type Reducer = typeof rootReducer;
 export type State = ReturnType<Reducer>;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

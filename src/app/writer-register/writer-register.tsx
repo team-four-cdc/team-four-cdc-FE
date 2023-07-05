@@ -8,7 +8,7 @@ import StyledButton from '@/components/Button';
 import Heads from '@/layout/Head/Head';
 import { useRegisterMutation } from '@/services';
 import { UserRole } from '@/components/LoginModal';
-import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils';
 
 export default function WriterRegister() {
   const [creatorRegForm] = Form.useForm();

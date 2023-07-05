@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import Image from "next/legacy/image";
 import { EyeOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import StyledButton from './Button';
+import ButtonCategory from '@/components/Button';
 
 interface StandardVerifiedPageProps {
   status: 'success' | 'failed' | 'error';
@@ -64,12 +64,12 @@ export default function VerifiedPage(props: StandardVerifiedPageProps) {
         </Typography.Text>
       </div>
       <div>
-        <StyledButton
+        <ButtonCategory
           label={contents[status].labelButton}
           type={contents[status].isSuccess ? 'primary' : 'default'}
           size="large"
           icon={contents[status].isSuccess ? <EyeOutlined /> : null}
-          onClick={async() => router.push(contents[status].urlRedirect)}
+          onClick={async () => router.push(contents[status].urlRedirect)}
         />
       </div>
     </div>

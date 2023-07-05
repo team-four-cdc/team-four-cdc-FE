@@ -81,6 +81,42 @@ interface CreateArticleResponse {
   };
 }
 
+interface GetRandomArticlesByAuthorResponse {
+  status: number;
+  message: string;
+  data: {
+    id: number;
+    title: string;
+    body: string;
+    publish_date: string;
+    author_id: number;
+    photo_article?: string;
+    price: number;
+    pdf_url?: string;
+    description: string;
+    category_id: number;
+    total_clicks: number;
+    createdAt: string;
+    updatedAt: string;
+    author: {
+      id: number,
+      email: string,
+      full_name: string,
+      role: string,
+      author: string,
+      photo_url?: string,
+      createdAt: string,
+      updatedAt: string
+    },
+    category: {
+      id: number,
+      name: string,
+      createdAt: string,
+      updatedAt: string
+    }
+  }[];
+}
+
 export interface DetailArticleResponse {
   status: number;
   message: string;
@@ -98,6 +134,22 @@ export interface DetailArticleResponse {
     total_clicks: number;
     createdAt: string;
     updatedAt: string;
+    author: {
+      id: number,
+      email: string,
+      full_name: string,
+      role: string,
+      author: string,
+      photo_url?: string,
+      createdAt: string,
+      updatedAt: string
+    },
+    category: {
+      id: number,
+      name: string,
+      createdAt: string,
+      updatedAt: string
+    }
   };
   error: null;
 }
@@ -194,6 +246,11 @@ export const articleApi = createApi({
         body: payload,
       }),
     }),
+    getRandomArticleByAuthor: builder.query<GetRandomArticlesByAuthorResponse, { authorId: number; limit: number; }>({
+      query: (payload) => ({
+        url: `/article/random-listing?authorId=${payload.authorId}&limit=${payload.limit}`
+      })
+    })
   }),
 });
 
@@ -204,4 +261,5 @@ export const {
   useUpdateArticleMutation,
   useGetDetailArticleMutation,
   useGetPopularArticleMutation,
+  useGetRandomArticleByAuthorQuery,
 } = articleApi;

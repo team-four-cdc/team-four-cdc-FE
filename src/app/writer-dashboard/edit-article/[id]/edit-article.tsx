@@ -21,7 +21,7 @@ import { TextEditor } from '@/components/TextEditor';
 import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import Heads from '@/layout/Head/Head';
 import { getTypedFormData } from '@/utils/formDataTyper';
-import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
+import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils';
 
 interface TempArticleIF {
   body: string;

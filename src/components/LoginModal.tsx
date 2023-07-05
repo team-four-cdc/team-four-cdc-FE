@@ -2,7 +2,7 @@ import { Form, Modal, ModalProps, notification, Typography } from 'antd';
 import Link from 'next/link';
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import TextInput from '@/components/TextInput';
-import StyledButton from '@/components/Button';
+import ButtonCategory from '@/components/Button';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { LoginResponse } from '@/services';
@@ -140,7 +140,7 @@ const LoginModal = (props: Props) => {
           </Typography.Paragraph>
         </div>
         <div className="text-center">
-          <StyledButton
+          <ButtonCategory
             type="primary"
             label="Login"
             htmlType="submit"
