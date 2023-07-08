@@ -12,6 +12,7 @@ export interface DecodedToken extends JwtPayload {
 export interface IUser extends DecodedToken {
   token: string | null;
   isLogin?: boolean;
+  openSidebar: boolean;
 }
 
 const initialState: IUser = {
@@ -21,6 +22,7 @@ const initialState: IUser = {
   email: '',
   fullName: '',
   userId: 0,
+  openSidebar: false,
 };
 
 const authSlice = createSlice({
@@ -49,8 +51,11 @@ const authSlice = createSlice({
       }
     },
     resetAuth: () => initialState,
+    toggleSidebar: (state, action: PayloadAction<boolean>) => {
+      state.openSidebar = action.payload
+    }
   },
 });
 
-export const { setAuth, resetAuth } = authSlice.actions;
+export const { setAuth, resetAuth, toggleSidebar } = authSlice.actions;
 export default authSlice.reducer;

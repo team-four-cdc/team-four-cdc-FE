@@ -1,15 +1,14 @@
-import { CaretDownFilled } from '@ant-design/icons';
+import { CaretDownFilled, MenuOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu, Space, Typography } from 'antd';
 import classNames from 'classnames';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
 import LoginModal, { UserRole } from './LoginModal';
-import { resetAuth } from '@/store/auth/authSlice';
+import { resetAuth, toggleSidebar } from '@/store/auth/authSlice';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { RootState } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 interface NavbarProps {
   showWrapperOption: boolean;
@@ -34,8 +33,16 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const Pathname = usePathname();
   const router = useRouter();
-  const dispatch = useDispatch();
-  const { auth } = useSelector((state: RootState) => state);
+  const dispatch = useAppDispatch()
+  const { auth } = useAppSelector((state) => state);
+
+  const showDrawer = () => {
+    dispatch(toggleSidebar(true))
+  };
+
+  const onClose = () => {
+    dispatch(toggleSidebar(false))
+  };
 
   const onClickLoginButton = (role: UserRole) => {
     setUserRole(role);
@@ -245,9 +252,18 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
     <>
       <div className="sticky top-0 flex flex-row w-full bg-monocrom-color px-30px py-20px shadow-primary-box-shadow z-50">
         <div className="flex items-center justify-center">
-          <Link href={'/'} className="text-30px !text-secondary-color">
-            BacaAku
-          </Link>
+          <div className="text-[30px] !text-secondary-color">
+            <div className='flex justify-center items-center gap-2'>
+              <MenuOutlined className='cursor-pointer' onClick={() => {
+                if (auth.openSidebar) {
+                  onClose()
+                } else {
+                  showDrawer()
+                }
+              }} />
+              <Link href={'/'}>BacaAku</Link>
+            </div>
+          </div>
         </div>
         {showWrapperOption && (
           <div className="flex flex-row ml-auto p-20px space-x-30px">

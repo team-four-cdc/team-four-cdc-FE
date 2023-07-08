@@ -8,6 +8,7 @@ import { DetailArticleResponse, useGetDetailArticleMutation } from "@/services";
 import { useParams } from "next/navigation";
 import { capitalize, dateFormat } from "@/utils";
 import { AuthorSection } from "@/components/AuthorSection";
+import { useAppSelector } from "@/store";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
 
@@ -15,6 +16,7 @@ export default function ArticleDetail() {
   const [getArticleDetail] = useGetDetailArticleMutation()
   const [article, setArticle] = useState<DetailArticleResponse['data']>();
   const params = useParams() as unknown as { id: number }
+  const { auth } = useAppSelector((state) => state)
 
   async function getArticle(id: number) {
     getArticleDetail({ id }).unwrap().then((data) => {
@@ -23,12 +25,14 @@ export default function ArticleDetail() {
   }
 
   useEffect(() => {
-    getArticle(params.id)
+    if (!!params.id && !!auth) {
+      getArticle(params.id)
+    }
 
     return () => {
 
     }
-  }, [])
+  }, [params.id])
 
   return (
     <>
