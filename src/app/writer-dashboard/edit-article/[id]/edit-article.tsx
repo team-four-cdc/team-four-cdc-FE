@@ -18,7 +18,6 @@ import Image from "next/legacy/image";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { GetCategoriesResponse, UpdateArticleRequest, useGetCategoriesMutation, useUpdateArticleMutation } from '@/services';
 import { TextEditor } from '@/components/TextEditor';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
 import Heads from '@/layout/Head/Head';
 import { getTypedFormData } from '@/utils/formDataTyper';
 import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils';
@@ -183,112 +182,110 @@ export default function EditArticle() {
   return (
     <>
       <Heads title="Edit Artikel" showNavbar={true} showWrappOption={true} />
-      <WriterLayout>
-        <Layout className="py-2 px-4">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmitArticle();
-            }}
-          >
-            <div className="flex items-center">
-              <Button
-                className="mt-[-20px] mr-4 border-none bg-inherit"
-                icon={<MenuOutlined style={{ fontSize: '28px' }} />}
-              />
-              <Title>Tuliskan Artikel Anda</Title>
-            </div>
-            <div className="grid grid-cols-1">
-              <Title level={3}>Photo Artikel</Title>
-              <Upload
-                accept="image/png, image/jpeg, image/jpg"
-                className="border-2 border-black border-solid rounded-md flex flex-col justify-center items-center min-h-[300px]"
-                fileList={fileList}
-                onChange={handleChange}
-                maxCount={1}
-                beforeUpload={(file) => {
-                  const isNotImage = file.type !== 'image/png'
-                    && file.type !== 'image/jpg'
-                    && file.type !== 'image/jpeg';
-                  if (isNotImage) {
-                    notification.error({
-                      message: 'The file must be an image!',
-                    });
-                  }
+      <Layout className="py-2 px-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmitArticle();
+          }}
+        >
+          <div className="flex items-center">
+            <Button
+              className="mt-[-20px] mr-4 border-none bg-inherit"
+              icon={<MenuOutlined style={{ fontSize: '28px' }} />}
+            />
+            <Title>Tuliskan Artikel Anda</Title>
+          </div>
+          <div className="grid grid-cols-1">
+            <Title level={3}>Photo Artikel</Title>
+            <Upload
+              accept="image/png, image/jpeg, image/jpg"
+              className="border-2 border-black border-solid rounded-md flex flex-col justify-center items-center min-h-[300px]"
+              fileList={fileList}
+              onChange={handleChange}
+              maxCount={1}
+              beforeUpload={(file) => {
+                const isNotImage = file.type !== 'image/png'
+                  && file.type !== 'image/jpg'
+                  && file.type !== 'image/jpeg';
+                if (isNotImage) {
+                  notification.error({
+                    message: 'The file must be an image!',
+                  });
+                }
 
-                  return !isNotImage || Upload.LIST_IGNORE;
-                }}
-              >
-                {fileList.length >= 1 ? imgPreview : uploadButton}
-              </Upload>
-              <p style={{ textAlign: 'right', color: '#ca3143' }}>
-                jpg, jpeg, png. max 1mb
-              </p>
-            </div>
-            <div className="grid grid-cols-1 mt-4">
-              <Title level={3}>Judul Artikel</Title>
-              <Input
-                value={articleData.title}
-                onChange={(e) => {
-                  const temp = { ...articleData };
-                  temp.title = e.target.value;
-                  setArticleData(temp);
-                }}
-                className="border-2 border-black border-solid rounded-full"
-                placeholder="Tuliskan Judul Artikel Anda"
-              />
-            </div>
-            <div className="grid grid-cols-1 mt-4">
-              <Title level={3}>Kategori</Title>
-              <Select
-                value={articleData.categoryId}
-                onChange={(e: number) => {
-                  const temp = { ...articleData };
-                  temp.categoryId = e;
-                  setArticleData(temp);
-                }}
-                className="border-2 border-black border-solid w-full rounded-full overflow-hidden"
-                defaultValue={categories.length > 0 ? categories[0].id : undefined}
-                options={categories.map((val) => ({
-                  value: val.id,
-                  label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
-                }))}
-              />
-            </div>
-            <div className="grid grid-cols-1 mt-4">
-              <Title level={3}>Deskripsi Singkat Artikel</Title>
-              <TextArea
-                onChange={(e) => {
-                  const temp = { ...articleData };
-                  temp.description = e.target.value;
-                  setArticleData(temp);
-                }}
-                className="border-2 border-solid border-black rounded-md"
-                rows={10}
-                placeholder="Tuliskan deskripsi singkat, minimal 2 paragraph"
-                value={articleData.description}
-              ></TextArea>
-            </div>
-            <div className="grid grid-cols-1 mt-4">
-              <Title level={3}>Tulis Artikel</Title>
-              <TextEditor
-                currentValue={DOMPurify.sanitize(articleData.body)}
-                handleBodyChange={handleBodyChange}
-                className="border-2 border-black border-solid rounded-md overflow-hidden"
-              />
-              <Divider />
-            </div>
-            <div className="grid grid-cols-2 mt-4 justify-center gap-4">
-              <Button htmlType="reset" href="/dashboard-penulis" type="link">
-                Kembali ke dashboard
-              </Button>
-              <Button htmlType="submit" className="border-md" type="primary">
-                Edit Artikel
-              </Button>
-            </div>
-          </form>
-        </Layout>
-      </WriterLayout>
+                return !isNotImage || Upload.LIST_IGNORE;
+              }}
+            >
+              {fileList.length >= 1 ? imgPreview : uploadButton}
+            </Upload>
+            <p style={{ textAlign: 'right', color: '#ca3143' }}>
+              jpg, jpeg, png. max 1mb
+            </p>
+          </div>
+          <div className="grid grid-cols-1 mt-4">
+            <Title level={3}>Judul Artikel</Title>
+            <Input
+              value={articleData.title}
+              onChange={(e) => {
+                const temp = { ...articleData };
+                temp.title = e.target.value;
+                setArticleData(temp);
+              }}
+              className="border-2 border-black border-solid rounded-full"
+              placeholder="Tuliskan Judul Artikel Anda"
+            />
+          </div>
+          <div className="grid grid-cols-1 mt-4">
+            <Title level={3}>Kategori</Title>
+            <Select
+              value={articleData.categoryId}
+              onChange={(e: number) => {
+                const temp = { ...articleData };
+                temp.categoryId = e;
+                setArticleData(temp);
+              }}
+              className="border-2 border-black border-solid w-full rounded-full overflow-hidden"
+              defaultValue={categories.length > 0 ? categories[0].id : undefined}
+              options={categories.map((val) => ({
+                value: val.id,
+                label: val.name.charAt(0).toUpperCase() + val.name.slice(1),
+              }))}
+            />
+          </div>
+          <div className="grid grid-cols-1 mt-4">
+            <Title level={3}>Deskripsi Singkat Artikel</Title>
+            <TextArea
+              onChange={(e) => {
+                const temp = { ...articleData };
+                temp.description = e.target.value;
+                setArticleData(temp);
+              }}
+              className="border-2 border-solid border-black rounded-md"
+              rows={10}
+              placeholder="Tuliskan deskripsi singkat, minimal 2 paragraph"
+              value={articleData.description}
+            ></TextArea>
+          </div>
+          <div className="grid grid-cols-1 mt-4">
+            <Title level={3}>Tulis Artikel</Title>
+            <TextEditor
+              currentValue={DOMPurify.sanitize(articleData.body)}
+              handleBodyChange={handleBodyChange}
+              className="border-2 border-black border-solid rounded-md overflow-hidden"
+            />
+            <Divider />
+          </div>
+          <div className="grid grid-cols-2 mt-4 justify-center gap-4">
+            <Button htmlType="reset" href="/dashboard-penulis" type="link">
+              Kembali ke dashboard
+            </Button>
+            <Button htmlType="submit" className="border-md" type="primary">
+              Edit Artikel
+            </Button>
+          </div>
+        </form>
+      </Layout>
     </>
   );
 }

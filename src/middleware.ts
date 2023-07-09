@@ -24,6 +24,14 @@ export const middleware = async (req: NextRequest) => {
     return NextResponse.redirect(new URL('/', req.url))
   }
 
+  if (req.nextUrl.pathname.startsWith('/detail-artikel') && !!auth) {
+    return
+  }
+
+  if (req.nextUrl.pathname.startsWith('/kategori-artikel') && !!auth) {
+    return
+  }
+
   if (!!auth && auth.role === 'reader') {
     return NextResponse.redirect(new URL('/', req.url))
   }
@@ -32,5 +40,11 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/dashboard-penulis/(.*)", "/dashboard-penulis", "/detail-artikel", "/detail-artikel/(.*)"],
+  matcher: [
+    "/dashboard-penulis/(.*)",
+    "/dashboard-penulis",
+    "/detail-artikel",
+    "/detail-artikel/(.*)",
+    "/kategori-artikel/(.*)"
+  ],
 };

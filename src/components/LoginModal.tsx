@@ -28,7 +28,7 @@ const LoginModal = (props: Props) => {
   const [form] = Form.useForm();
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const [loginAttemp, setLoginAttemp] = useState(1);
+  const [loginAttempt, setLoginAttempt] = useState(1);
 
   const text = {
     pembaca: 'Login dulu yuk, agar dapat membaca lebih menyenangkan dengan',
@@ -51,31 +51,40 @@ const LoginModal = (props: Props) => {
       password: values['login-password'],
     };
 
-    await axios
-      .post<LoginResponse>('/api/login', body)
-      .then((data) => {
-        dispatch(setAuth(data.data.data?.token));
+    const pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
-        notification.success({ message: 'Login Berhasil!' });
-        router.push('/dashboard-penulis');
-        setVisibility(false);
-      })
-      .catch((err) => {
-        // eslint-disable-next-line
-        const errorResponse = err.response.data as LoginResponse;
-        if (errorResponse.status === 400) {
-          setLoginAttemp(prev => prev++)
-          return notification.error({
-            message: 'User tidak ditemukan!',
-          });
-        }
-        if (errorResponse.status === 401) {
-          return notification.error({
-            message: 'Username atau Password salah!',
-          });
-        }
-        return notification.error({ message: 'Error pada sistem!' });
+    if (pattern.test(body.email)) {
+      await axios
+        .post<LoginResponse>('/api/login', body)
+        .then((data) => {
+          dispatch(setAuth(data.data.data?.token));
+
+          notification.success({ message: 'Login Berhasil!' });
+          router.push('/dashboard-penulis');
+          setVisibility(false);
+        })
+        .catch((err) => {
+          // eslint-disable-next-line
+          const errorResponse = err.response.data as LoginResponse;
+          if (errorResponse.status === 400) {
+            setLoginAttempt(prev => prev + 1)
+            return notification.error({
+              message: 'User tidak ditemukan!',
+            });
+          }
+          if (errorResponse.status === 401) {
+            setLoginAttempt(prev => prev + 1)
+            return notification.error({
+              message: 'Username atau Password salah!',
+            });
+          }
+          return notification.error({ message: 'Error pada sistem!' });
+        });
+    } else {
+      notification.error({
+        message: 'Email tidak valid!',
       });
+    }
   };
 
   const onRedirect = () => {
@@ -130,7 +139,7 @@ const LoginModal = (props: Props) => {
             placeholder="Silakan tulis password"
           />
         </Form.Item>
-        <span className='w-full flex justify-center animate-shake'>Error</span>
+        {loginAttempt >= 3 ? <span className='text-red-500 w-full flex justify-center animate-shake'>Anda telah gagal login sebanyak 3x. Silahkan gunakan Lupa Password.</span> : null}
         <div className="text-right mb-30px">
           <Typography.Paragraph className="mb-0 text-12px ">
             <Link

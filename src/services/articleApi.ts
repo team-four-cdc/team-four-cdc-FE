@@ -167,21 +167,40 @@ interface DetailArticleRequest {
 export interface GetPopularArticleResponse {
   status: number;
   message: string;
-  data: [{
-    id: number,
-    title: string
-    body: string
-    publish_date: string
-    author_id: number,
-    photo_article: string
-    price: number,
-    pdf_url?: string,
-    description?: string,
-    category_id: number,
-    total_clicks: number,
-    createdAt: string
-    updatedAt: string
-  }];
+  data: [
+    {
+      id: number;
+      title: string;
+      body: string;
+      publish_date: string;
+      author_id: number;
+      photo_article: string;
+      price: number;
+      pdf_url: null,
+      description: null,
+      category_id: number;
+      total_clicks: number;
+      createdAt: string;
+      updatedAt: string;
+      author: {
+        id: number;
+        email: string;
+        full_name: string;
+        role: string;
+        author: null,
+        photo_url: null,
+        createdAt: string;
+        updatedAt: string;
+      },
+      category: {
+        id: number;
+        name: string;
+        createdAt: string;
+        updatedAt: string;
+      }
+    }
+  ],
+  error: null
 }
 
 export const articleApi = createApi({
@@ -201,21 +220,34 @@ export const articleApi = createApi({
         method: 'GET',
       }),
     }),
-    getPopularArticle: builder.mutation<GetPopularArticleResponse, {
+    getPopularArticle: builder.query<GetPopularArticleResponse, {
       limit: number
     }>({
       query: (payload) => ({
         url: `/article/popular-article?limit=${payload.limit}`,
-        method: 'GET',
       }),
     }),
-    getDetailArticle: builder.mutation<
+    getNewestArticle: builder.query<GetPopularArticleResponse, {
+      limit: number
+    }>({
+      query: (payload) => ({
+        url: `/article/newest-article?limit=${payload.limit}`,
+      }),
+    }),
+    getArticlesByCategory: builder.query<GetPopularArticleResponse, {
+      limit: number;
+      categoryId: number;
+    }>({
+      query: (payload) => ({
+        url: `/article/articles-by-category?limit=${payload.limit}&categoryId=${payload.categoryId}`,
+      }),
+    }),
+    getDetailArticle: builder.query<
       DetailArticleResponse,
       DetailArticleRequest
     >({
       query: (payload) => ({
         url: `/article/${payload.id}`,
-        method: 'GET',
       }),
     }),
     updateArticle: builder.mutation<UpdateArticleResponse, TypedFormDataUpdateArticle>({
@@ -259,7 +291,9 @@ export const {
   useDeleteArticleMutation,
   useAllArticleMutation,
   useUpdateArticleMutation,
-  useGetDetailArticleMutation,
-  useGetPopularArticleMutation,
+  useGetDetailArticleQuery,
+  useGetPopularArticleQuery,
   useGetRandomArticleByAuthorQuery,
+  useGetNewestArticleQuery,
+  useGetArticlesByCategoryQuery,
 } = articleApi;

@@ -1,7 +1,7 @@
 import React from 'react';
 import DrawerList from './DrawerList';
 
-export default function WriterLayout({ children }: { children: JSX.Element }) {
+export default function BaseLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex">
       <DrawerList />

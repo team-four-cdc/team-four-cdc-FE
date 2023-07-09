@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ArticleList from '@/components/ArticleList';
 import Heads from '@/layout/Head/Head';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+import BaseLayout from '@/layout/Head/Writer/BaseLayout';
 import { useAllArticleMutation } from '@/services';
 import { RootState } from '@/store';
 
@@ -79,9 +79,9 @@ export default function ListArticles() {
   return (
     <>
       <Heads title="Daftar artikel" showNavbar={true} showWrappOption={true} />
-      <WriterLayout>
+      <BaseLayout>
         <ArticleList fetchArticle={fetchArticle} items={dataArticle} />
-      </WriterLayout>
+      </BaseLayout>
     </>
   );
 }

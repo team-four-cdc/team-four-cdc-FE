@@ -35,10 +35,11 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     await req.session.save();
     res.json(data);
   }).catch(error => {
+    console.log(error.message)
     // eslint-disable-next-line
-    const response = error.response.data as LoginResponse
+    const response = error?.response?.data
 
-    res.status(response.status).json(response);
+    res.status(response?.status).json(response);
   })
 }
 

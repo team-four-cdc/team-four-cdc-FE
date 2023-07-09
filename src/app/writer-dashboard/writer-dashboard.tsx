@@ -3,7 +3,7 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { Layout, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 import Heads from '@/layout/Head/Head';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+import BaseLayout from '@/layout/Head/Writer/BaseLayout';
 // import PieChart from '@/components/PieChart';
 // import ColumnChart from '@/components/ColumnChart';
 import { useGetDashboardMutation } from '@/services';
@@ -77,7 +77,7 @@ export default function WriterDashboard() {
           showNavbar={true}
           showWrappOption={true}
         />
-        <WriterLayout>
+        <BaseLayout>
           <div className="grid grid-cols-1 gap-4 px-4 py-2 lg:grid-cols-2">
             <BorderedCol>
               <>
@@ -126,7 +126,7 @@ export default function WriterDashboard() {
               </>
             </BorderedCol>
           </div>
-        </WriterLayout>
+        </BaseLayout>
       </Layout>
     </>
   );

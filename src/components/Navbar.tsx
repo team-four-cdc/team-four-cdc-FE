@@ -116,7 +116,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
                 dispatch(resetAuth());
                 await axios('/api/logout');
                 // TODO: temporary solution
-                router.refresh();
+                router.push('/');
               }}
             >
               Keluar
@@ -153,7 +153,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
     );
   }
 
-  const NavbarWrapp = auth?.isLogin ? (
+  const NavbarWrap = auth?.isLogin ? (
     <>
       {auth.role == 'reader' ? (
         itemNavbarLogin.map((navbar, index: number) => {
@@ -268,7 +268,7 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
         </div>
         {showWrapperOption && (
           <div className="flex flex-row ml-auto p-20px space-x-30px">
-            {NavbarWrapp}
+            {NavbarWrap}
           </div>
         )}
       </div>

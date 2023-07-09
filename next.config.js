@@ -13,6 +13,10 @@ const nextConfig = {
         hostname: 'localhost'
       },
       {
+        protocol: 'http',
+        hostname: '0.0.0.0'
+      },
+      {
         protocol: 'https',
         hostname: 'i.pravatar.cc'
       }
@@ -81,6 +85,10 @@ const nextConfig = {
         source: '/artikel-saya',
         destination: '/my-article',
       },
+      {
+        source: '/kategori-artikel/:id',
+        destination: '/articles-by-category/:id',
+      },
     ];
   },
   async redirects() {
@@ -99,6 +107,11 @@ const nextConfig = {
         source: '/my-article',
         destination: '/artikel-saya',
         permanent: true
+      },
+      {
+        source: '/articles-by-category/:id',
+        destination: '/kategori-artikel/:id',
+        permanent: true,
       },
     ]
   }
