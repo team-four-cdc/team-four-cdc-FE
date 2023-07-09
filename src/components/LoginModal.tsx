@@ -28,7 +28,7 @@ const LoginModal = (props: Props) => {
   const [form] = Form.useForm();
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const [loginAttempt, setLoginAttempt] = useState(1);
+  const [loginAttempt, setLoginAttempt] = useState(0);
 
   const text = {
     pembaca: 'Login dulu yuk, agar dapat membaca lebih menyenangkan dengan',
