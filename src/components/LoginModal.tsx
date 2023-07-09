@@ -1,6 +1,6 @@
 import { Form, Modal, ModalProps, notification, Typography } from 'antd';
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import TextInput from '@/components/TextInput';
 import ButtonCategory from '@/components/Button';
 import { useRouter } from 'next/navigation';
@@ -28,6 +28,7 @@ const LoginModal = (props: Props) => {
   const [form] = Form.useForm();
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
+  const [loginAttemp, setLoginAttemp] = useState(1);
 
   const text = {
     pembaca: 'Login dulu yuk, agar dapat membaca lebih menyenangkan dengan',
@@ -63,8 +64,9 @@ const LoginModal = (props: Props) => {
         // eslint-disable-next-line
         const errorResponse = err.response.data as LoginResponse;
         if (errorResponse.status === 400) {
+          setLoginAttemp(prev => prev++)
           return notification.error({
-            message: 'Penulisan Username atau Password tidak sesuai!',
+            message: 'User tidak ditemukan!',
           });
         }
         if (errorResponse.status === 401) {
@@ -128,6 +130,7 @@ const LoginModal = (props: Props) => {
             placeholder="Silakan tulis password"
           />
         </Form.Item>
+        <span className='w-full flex justify-center animate-shake'>Error</span>
         <div className="text-right mb-30px">
           <Typography.Paragraph className="mb-0 text-12px ">
             <Link
@@ -139,12 +142,12 @@ const LoginModal = (props: Props) => {
             </Link>
           </Typography.Paragraph>
         </div>
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center ">
           <ButtonCategory
             type="primary"
             label="Login"
             htmlType="submit"
-            className="mb-10px"
+            className="mb-10px "
           />
           <Typography.Paragraph className="mb-0 text-12px">
             Anda belum punya akun ?

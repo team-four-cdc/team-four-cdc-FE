@@ -254,13 +254,14 @@ export default function Navbar({ showWrapperOption = true }: NavbarProps) {
         <div className="flex items-center justify-center">
           <div className="text-[30px] !text-secondary-color">
             <div className='flex justify-center items-center gap-2'>
-              <MenuOutlined className='cursor-pointer' onClick={() => {
+              {!!auth && auth.role === 'creator' ? <MenuOutlined className='cursor-pointer' onClick={() => {
                 if (auth.openSidebar) {
                   onClose()
                 } else {
                   showDrawer()
                 }
               }} />
+                : null}
               <Link href={'/'}>BacaAku</Link>
             </div>
           </div>
