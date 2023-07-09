@@ -51,6 +51,7 @@ const LoginModal = (props: Props) => {
       password: values['login-password'],
     };
 
+    // eslint-disable-next-line
     const pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
     if (pattern.test(body.email)) {
