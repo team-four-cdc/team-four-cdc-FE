@@ -1,14 +1,14 @@
 import React from 'react';
 import { Typography } from 'antd';
 import CardArticlePreview from '@/components/CardArticlePreview';
-import { useGetNewestArticleQuery } from '@/services';
+import { useGetPopularArticleQuery } from '@/services';
 import { dateFormat } from '@/utils';
 
-export default function NewArticleList() {
+export default function PopularArticleList() {
 
   const {
     data,
-  } = useGetNewestArticleQuery({ limit: 5, })
+  } = useGetPopularArticleQuery({ limit: 5, })
 
   const articles = data?.data
 
@@ -16,7 +16,7 @@ export default function NewArticleList() {
     <>
       <div className="mt-16" data-testid="newsArticleTest">
         <Typography.Title className="text-30px text-secondary-color">
-          Artikel Terbaru
+          Artikel Populer
         </Typography.Title>
         <div className="grid grid-cols-2 gap-4">
           {articles?.map((list, index) => (

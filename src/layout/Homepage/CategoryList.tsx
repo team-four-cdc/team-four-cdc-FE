@@ -40,7 +40,7 @@ export default function CategoryList() {
             <NavCategory
               key={`category-index-${index}`}
               text={capitalize(list.name)}
-              href="/"
+              href={`/kategori-artikel/${list.id}`}
             />
           ))}
         </div>

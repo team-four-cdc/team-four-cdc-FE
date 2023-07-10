@@ -9,6 +9,7 @@ interface StandardCardProps extends CardProps {
   preview: string;
   date: string;
   avatar: string;
+  articleId: number;
 }
 
 const { Meta } = Card;
@@ -17,8 +18,7 @@ export default function CardArticlePreview(
   props: StandardCardProps,
 ): JSX.Element {
   return (
-    // TODO: fix this
-    <Link href={'/detail-artikel/1'}>
+    <Link href={`/detail-artikel/${props.articleId}`}>
       <Card
         {...props}
         className="flex flex-row bg-monocrom-color shadow-primary-box-shadow rounded-radius-10px"

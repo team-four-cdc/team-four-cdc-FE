@@ -18,7 +18,7 @@ import Image from "next/legacy/image";
 import { useSelector } from 'react-redux';
 import { GetCategoriesResponse, useCreateArticleMutation, useGetCategoriesMutation } from '@/services';
 import { TypedFormDataValue, TypedFormData, getTypedFormData } from '@/utils';
-import WriterLayout from '@/layout/Head/Writer/WriterLayout';
+import BaseLayout from '@/layout/Head/Writer/BaseLayout';
 import Heads from '@/layout/Head/Head';
 import { TextEditor } from '@/components/TextEditor';
 import { RootState } from '@/store';
@@ -159,7 +159,7 @@ export default function CreateArticle() {
   return (
     <>
       <Heads title="Buat Artikel" showNavbar={true} showWrappOption={true} />
-      <WriterLayout>
+      <BaseLayout>
         <Layout className="py-2 px-4">
           <form
             onSubmit={async (e) => {
@@ -262,7 +262,7 @@ export default function CreateArticle() {
             </div>
           </form>
         </Layout>
-      </WriterLayout>
+      </BaseLayout>
     </>
   );
 }

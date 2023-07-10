@@ -36,9 +36,9 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     res.json(data);
   }).catch(error => {
     // eslint-disable-next-line
-    const response = error.response.data as LoginResponse
+    const response = error?.response?.data as LoginResponse
 
-    res.status(response.status).json(response);
+    res.status(response?.status).json(response);
   })
 }
 
