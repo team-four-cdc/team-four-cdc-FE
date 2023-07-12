@@ -6,17 +6,18 @@ import TextInput from '@/components/TextInput';
 import Heads from '@/layout/Head/Head';
 import { useUbahPassMutation } from '@/services';
 import { DbConcurrencyError, ErrorResponse, InternalServerError } from '@/utils/errorResponseHandler';
-import { useSearchParams } from 'next/navigation';
 
-export default function ChangePassword() {
-  const searchParams = useSearchParams()
-  const query = searchParams as unknown as { token: string }
+interface Props {
+  token: string
+}
+
+export default function ChangePassword({ token }: Props) {
   const [form] = Form.useForm();
   const [UbahPassword, { isLoading }] = useUbahPassMutation();
   const onFinish = (values: { newPassword: string }) => {
     UbahPassword({
       newPassword: values.newPassword,
-      resetPasswordToken: query.token,
+      resetPasswordToken: token,
     })
       .unwrap()
       .then((res) => {

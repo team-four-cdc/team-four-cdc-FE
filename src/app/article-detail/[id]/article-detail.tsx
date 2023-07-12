@@ -24,7 +24,6 @@ export default function ArticleDetail({ id }: Props) {
   const article = data?.data
 
   const isOwned = !article?.body.includes('notOwned')
-  console.log(isOwned)
 
   return (
     <>
@@ -62,20 +61,25 @@ export default function ArticleDetail({ id }: Props) {
                   className="mb-10 object-contain"
                 />
                 <div dangerouslySetInnerHTML={{ __html: (!isOwned ? article?.body.replace('notOwned', '') : article?.body) || "" }} />
-                <div className="mt-10 text-center">
-                  <Typography.Text className="text-20px !text-secondary-color font-bold">
-                    Harga {formatCurrency({ value: article?.price || 0 })}
-                  </Typography.Text>
-                </div>
-                <div className="mt-4">
-                  <StyledButton
-                    label="Untuk Lihat lebih detail, ayo beli artikel ini"
-                    type="default"
-                    size="large"
-                    block
-                    icon={<EyeOutlined />}
-                  />
-                </div>
+                {!isOwned ?
+                  <>
+                    <div className="mt-10 text-center">
+                      <Typography.Text className="text-20px !text-secondary-color font-bold">
+                        Harga {formatCurrency({ value: article?.price || 0 })}
+                      </Typography.Text>
+                    </div>
+                    <div className="mt-4">
+                      <StyledButton
+                        label="Untuk Lihat lebih detail, ayo beli artikel ini"
+                        type="default"
+                        size="large"
+                        block
+                        icon={<EyeOutlined />}
+                      />
+                    </div>
+                  </>
+                  : null}
+
               </div>
             </div>
           </section>

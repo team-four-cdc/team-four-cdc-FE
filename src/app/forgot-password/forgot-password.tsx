@@ -26,7 +26,6 @@ export default function ForgotPassword() {
     const { emailField } = values;
     forgotPassword({
       email: emailField,
-      // TODO: placeholder
       role: searchParams !== 'pembaca' ? 'creator' : 'reader',
     })
       .unwrap()
